@@ -1,0 +1,114 @@
+{
+  "NAV": {
+    "PROPERTIES": "Propiedades",
+    "ABOUT": "¿Quiénes somos?",
+    "CONTACT": "Contactar",
+    "CONTACT_PAGE": "Contacto"
+  },
+  "CONTACT": {
+    "TITLE": "Contáctanos",
+    "SUBTITLE": "Estamos listos para ayudarte a encontrar tu propiedad ideal en Cuba.",
+    "PHONE": "Teléfono",
+    "EMAIL": "Correo electrónico",
+    "ADDRESS": "Dirección",
+    "SOCIAL": "Redes sociales",
+    "WHATSAPP": "Escribir por WhatsApp",
+    "VIEW_PROPERTIES": "Ver propiedades"
+  },
+  "HOME": {
+    "TITLE": "Encuentra Tu Hogar Ideal En Cuba",
+    "SUBTITLE": "Navega por nuestra selección exclusiva de propiedades",
+    "FEATURED_TITLE": "Propiedades Destacadas",
+  "SERVICES_TITLE": "Nuestros Servicios",
+  "SERVICE_BUY_SELL_TITLE": "Compra y Venta",
+  "SERVICE_BUY_SELL_TEXT": "Te ayudamos a encontrar la propiedad ideal o vender tu inmueble al mejor precio.",
+  "SERVICE_RENT_TITLE": "Alquiler",
+  "SERVICE_RENT_TEXT": "Amplia selección de propiedades en alquiler adaptadas a tus necesidades.",
+  "SERVICE_LEGAL_TITLE": "Asesoría Legal",
+  "SERVICE_LEGAL_TEXT": "Acompañamiento profesional en todos los procesos legales.",
+  "CITIES_TITLE": "Descubre nuestras propiedades en La Habana"
+  },
+  "SEARCH": {
+    "ALL": "Todo",
+    "RENT": "Renta",
+    "SALE": "Venta",
+    "TYPE": "Tipología",
+    "ZONE": "Zona",
+    "BEDROOMS": "Dormitorios",
+    "BATHROOMS": "Baños",
+    "OTHER": "Otros",
+    "SEARCH": "Buscar"
+  },
+  "PROPERTY": {
+    "DETAILS": "Detalles",
+    "DESCRIPTION": "Descripción",
+    "FEATURES": "Características",
+    "SIMILAR": "Propiedades Similares",
+    "SALE": "En Venta",
+    "RENT": "En Alquiler",
+    "PRICE_M2": "por m²",
+    "NO_DESCRIPTION": "Esta propiedad no tiene descripción disponible.",
+    "ID": "ID de la propiedad",
+"AREA": "Tamaño de la propiedad",
+"TYPE": "Tipo de propiedad",
+"BEDROOMS": "Cantidad de dormitorios",
+"BATHROOMS": "Cantidad de baños",
+"FLOORS": "Cantidad de plantas",
+"FURNISHED": "Amueblada",
+"PHOTOS": "Fotos",
+"VIEW_MORE": "Ver más",
+"ZONE": "Zona"
+  },
+  "FEATURES": {
+    "GARAGE": "Garaje",
+    "TERRACE": "Terraza",
+    "POOL": "Piscina",
+    "GARDEN": "Jardín",
+    "RANCHON": "Ranchón",
+    "BALCONY": "Balcón",
+    "JACUZZI": "Jacuzzi",
+    "FURNISHED": "Amueblada"
+  },
+  "EMPTY": {
+    "NO_RESULTS": "No hay propiedades que coincidan con tu búsqueda",
+    "TRY_AGAIN": "Intenta cambiar algunos filtros"
+  },
+  "COMMON": {
+    "YES": "Sí",
+    "NO": "No",
+    "VIEW_MORE": "Ver más"
+  },
+  "ABOUT": {
+  "HERO_TITLE": "Conectamos Personas con Propiedades Extraordinarias",
+  "HERO_SUBTITLE": "Encuentra Tu Hogar Ideal En Cuba con Blue Havana Real Estate",
+  "VIEW_PROPERTIES": "Ver propiedades",
+  "ORIGIN_TITLE": "¿De dónde venimos?",
+  "ORIGIN_TEXT_1": "Blue Havana Real Estate transforma el mercado inmobiliario cubano con estándares internacionales de transparencia, eficiencia y excelencia. Ofrece un servicio moderno, ágil y confiable para clientes nacionales e inversionistas internacionales.",
+  "ORIGIN_TEXT_2": "Conecta personas con propiedades exclusivas, creando oportunidades seguras de inversión con asesoría legal y estudios de mercado personalizados.",
+  "TODAY_TITLE": "¿Qué hacemos hoy?",
+  "TODAY_TEXT": "Brindar soluciones inmobiliarias integrales y de alto nivel, conectando a nuestros clientes con propiedades exclusivas y oportunidades seguras de inversión.",
+  "FUTURE_TITLE": "¿A dónde vamos?",
+  "FUTURE_TEXT": "Ser la empresa inmobiliaria líder y referente en Cuba, reconocida por transformar la experiencia de compra, venta e inversión en propiedades de alto valor.",
+  "HOW_TITLE": "¿Cómo lo hacemos?",
+  "VALUE_TRUST_TITLE": "Confianza",
+  "VALUE_TRUST_TEXT": "Relaciones transparentes y seguras en cada proceso inmobiliario.",
+  "VALUE_EXPERIENCE_TITLE": "Experiencia",
+  "VALUE_EXPERIENCE_TEXT": "Conocimiento profundo del mercado cubano y oportunidades exclusivas.",
+  "VALUE_COMMITMENT_TITLE": "Compromiso",
+  "VALUE_COMMITMENT_TEXT": "Acompañamiento real desde la búsqueda hasta el cierre de la operación.",
+  "WHERE_TITLE": "¿Dónde estamos?",
+  "WHERE_TEXT_1": "Operamos principalmente en La Habana y sus zonas más exclusivas, donde se encuentran algunas de las propiedades con mayor valor y proyección del mercado inmobiliario.",
+  "WHERE_TEXT_2": "Nuestro enfoque está dirigido a conectar oportunidades premium con clientes locales e internacionales interesados en invertir en Cuba."
+},
+"NOT_FOUND": {
+  "MESSAGE": "La página que buscas no existe.",
+  "HOME": "Volver al inicio"
+},
+"FOOTER": {
+  "TAGLINE": "Encuentra tu hogar ideal en Cuba",
+  "SOCIAL": "Síguenos en redes sociales @bluehavanars",
+  "SERVICE": "Renovación y diseño. Te ayudamos con tu proyecto",
+  "ADDRESS": "Dirección",
+  "CREATED": "Creado por FourBox"
+}
+}

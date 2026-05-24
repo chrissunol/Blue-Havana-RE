@@ -1,0 +1,44 @@
+<section class="contact-hero">
+  <div class="contact-hero__content">
+    <h1>{{ 'CONTACT.TITLE' | translate }}</h1>
+    <p>{{ 'CONTACT.SUBTITLE' | translate }}</p>
+  </div>
+</section>
+
+<section class="contact">
+  <div class="container contact__grid">
+    <article class="contact__card">
+      <h2>{{ 'CONTACT.PHONE' | translate }}</h2>
+      <p><a [href]="telLink">{{ info.phone }}</a></p>
+      <p class="contact__hint">WhatsApp: <a [href]="whatsappLink" target="_blank" rel="noopener noreferrer">{{ info.whatsapp }}</a></p>
+    </article>
+
+    <article class="contact__card">
+      <h2>{{ 'CONTACT.EMAIL' | translate }}</h2>
+      <p><a [href]="mailtoLink">{{ info.email }}</a></p>
+    </article>
+
+    <article class="contact__card">
+      <h2>{{ 'CONTACT.ADDRESS' | translate }}</h2>
+      <p>{{ info.address }}</p>
+    </article>
+
+    <article class="contact__card contact__card--social">
+      <h2>{{ 'CONTACT.SOCIAL' | translate }}</h2>
+      <ul>
+        <li>Facebook: {{ info.facebook }}</li>
+        <li>Instagram: {{ info.instagram }}</li>
+        <li>X: {{ info.x }}</li>
+      </ul>
+    </article>
+  </div>
+
+  <div class="container contact__actions">
+    <a class="contact__btn contact__btn--primary" [href]="whatsappLink" target="_blank" rel="noopener noreferrer">
+      {{ 'CONTACT.WHATSAPP' | translate }}
+    </a>
+    <a class="contact__btn" routerLink="/propiedades">
+      {{ 'CONTACT.VIEW_PROPERTIES' | translate }}
+    </a>
+  </div>
+</section>

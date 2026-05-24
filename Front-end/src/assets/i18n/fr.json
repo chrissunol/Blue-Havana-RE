@@ -1,0 +1,114 @@
+{
+  "NAV": {
+    "PROPERTIES": "Propriétés",
+    "ABOUT": "Qui sommes-nous ?",
+    "CONTACT": "Contacter",
+    "CONTACT_PAGE": "Contact"
+  },
+  "CONTACT": {
+    "TITLE": "Contactez-nous",
+    "SUBTITLE": "Nous sommes prêts à vous aider à trouver votre propriété idéale à Cuba.",
+    "PHONE": "Téléphone",
+    "EMAIL": "E-mail",
+    "ADDRESS": "Adresse",
+    "SOCIAL": "Réseaux sociaux",
+    "WHATSAPP": "Écrire sur WhatsApp",
+    "VIEW_PROPERTIES": "Voir les propriétés"
+  },
+  "HOME": {
+    "TITLE": "Trouvez votre maison idéale à Cuba",
+    "SUBTITLE": "Découvrez notre sélection exclusive de propriétés",
+    "FEATURED_TITLE": "Propriétés en vedette",
+  "SERVICES_TITLE": "Nos services",
+  "SERVICE_BUY_SELL_TITLE": "Achat et vente",
+  "SERVICE_BUY_SELL_TEXT": "Nous vous aidons à trouver la propriété idéale ou à vendre votre bien au meilleur prix.",
+  "SERVICE_RENT_TITLE": "Location",
+  "SERVICE_RENT_TEXT": "Une large sélection de propriétés à louer adaptées à vos besoins.",
+  "SERVICE_LEGAL_TITLE": "Conseil juridique",
+  "SERVICE_LEGAL_TEXT": "Un accompagnement professionnel dans toutes les démarches juridiques.",
+  "CITIES_TITLE": "Découvrez nos propriétés à La Havane"
+  },
+  "SEARCH": {
+    "ALL": "Tout",
+    "RENT": "Location",
+    "SALE": "Vente",
+    "TYPE": "Type",
+    "ZONE": "Zone",
+    "BEDROOMS": "Chambres",
+    "BATHROOMS": "Salles de bain",
+    "OTHER": "Autres",
+    "SEARCH": "Rechercher"
+  },
+  "PROPERTY": {
+    "DETAILS": "Détails",
+    "DESCRIPTION": "Description",
+    "FEATURES": "Caractéristiques",
+    "SIMILAR": "Propriétés similaires",
+    "SALE": "À vendre",
+    "RENT": "À louer",
+    "PRICE_M2": "par m²",
+    "NO_DESCRIPTION": "Cette propriété n'a pas de description disponible.",
+    "ID": "ID de la propriété",
+"AREA": "Surface de la propriété",
+"TYPE": "Type de propriété",
+"BEDROOMS": "Nombre de chambres",
+"BATHROOMS": "Nombre de salles de bain",
+"FLOORS": "Nombre d’étages",
+"FURNISHED": "Meublée",
+"PHOTOS": "Photos",
+"VIEW_MORE": "Voir plus",
+"ZONE": "Zone"
+  },
+  "FEATURES": {
+    "GARAGE": "Garage",
+    "TERRACE": "Terrasse",
+    "POOL": "Piscine",
+    "GARDEN": "Jardin",
+    "RANCHON": "Rancho",
+    "BALCONY": "Balcon",
+    "JACUZZI": "Jacuzzi",
+    "FURNISHED": "Meublé"
+  },
+  "EMPTY": {
+    "NO_RESULTS": "Aucune propriété ne correspond à votre recherche",
+    "TRY_AGAIN": "Essayez de modifier certains filtres"
+  },
+  "COMMON": {
+    "YES": "Oui",
+    "NO": "Non",
+    "VIEW_MORE": "Voir plus"
+  },
+  "ABOUT": {
+  "HERO_TITLE": "Nous connectons les personnes à des propriétés extraordinaires",
+  "HERO_SUBTITLE": "Trouvez votre maison idéale à Cuba avec Blue Havana Real Estate",
+  "VIEW_PROPERTIES": "Voir les propriétés",
+  "ORIGIN_TITLE": "D’où venons-nous ?",
+  "ORIGIN_TEXT_1": "Blue Havana Real Estate transforme le marché immobilier cubain avec des standards internationaux de transparence, d’efficacité et d’excellence. L’entreprise offre un service moderne, agile et fiable aux clients locaux et aux investisseurs internationaux.",
+  "ORIGIN_TEXT_2": "Nous connectons les personnes à des propriétés exclusives, en créant des opportunités d’investissement sûres avec un accompagnement juridique et des études de marché personnalisées.",
+  "TODAY_TITLE": "Que faisons-nous aujourd’hui ?",
+  "TODAY_TEXT": "Nous proposons des solutions immobilières complètes et haut de gamme, en connectant nos clients à des propriétés exclusives et à des opportunités d’investissement sûres.",
+  "FUTURE_TITLE": "Où allons-nous ?",
+  "FUTURE_TEXT": "Devenir l’entreprise immobilière leader et de référence à Cuba, reconnue pour transformer l’expérience d’achat, de vente et d’investissement dans des propriétés de grande valeur.",
+  "HOW_TITLE": "Comment le faisons-nous ?",
+  "VALUE_TRUST_TITLE": "Confiance",
+  "VALUE_TRUST_TEXT": "Des relations transparentes et sûres à chaque étape du processus immobilier.",
+  "VALUE_EXPERIENCE_TITLE": "Expérience",
+  "VALUE_EXPERIENCE_TEXT": "Une connaissance approfondie du marché cubain et des opportunités exclusives.",
+  "VALUE_COMMITMENT_TITLE": "Engagement",
+  "VALUE_COMMITMENT_TEXT": "Un accompagnement réel depuis la recherche jusqu’à la conclusion de l’opération.",
+  "WHERE_TITLE": "Où sommes-nous ?",
+  "WHERE_TEXT_1": "Nous opérons principalement à La Havane et dans ses zones les plus exclusives, où se trouvent certaines des propriétés ayant la plus grande valeur et le plus fort potentiel du marché immobilier.",
+  "WHERE_TEXT_2": "Notre objectif est de connecter des opportunités premium avec des clients locaux et internationaux intéressés par l’investissement à Cuba."
+},
+"NOT_FOUND": {
+  "MESSAGE": "La page que vous recherchez n'existe pas.",
+  "HOME": "Retour à l'accueil"
+},
+"FOOTER": {
+  "TAGLINE": "Trouvez votre maison idéale à Cuba",
+  "SOCIAL": "Suivez-nous sur les réseaux sociaux @bluehavanars",
+  "SERVICE": "Rénovation et design. Nous vous aidons avec votre projet",
+  "ADDRESS": "Adresse",
+  "CREATED": "Créé par FourBox"
+}
+}

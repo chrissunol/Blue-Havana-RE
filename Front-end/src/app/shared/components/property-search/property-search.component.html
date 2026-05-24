@@ -1,0 +1,103 @@
+<form class="property-search" [formGroup]="form" (ngSubmit)="onSearch()">
+  <div class="property-search__tabs">
+    <button type="button" [class.active]="form.value.operation === 'all'" (click)="setOperation('all')">
+      {{ 'SEARCH.ALL' | translate }}
+    </button>
+
+    <button type="button" [class.active]="form.value.operation === 'rent'" (click)="setOperation('rent')">
+      {{ 'SEARCH.RENT' | translate }}
+    </button>
+
+    <button type="button" [class.active]="form.value.operation === 'sale'" (click)="setOperation('sale')">
+      {{ 'SEARCH.SALE' | translate }}
+    </button>
+  </div>
+
+  <div class="property-search__filters">
+    <div class="filter">
+      <button type="button" (click)="toggleDropdown('category')">
+        {{ form.value.category || ('SEARCH.TYPE' | translate) }}
+        <span>⌄</span>
+      </button>
+
+      @if (openDropdown === 'category') {
+      <div class="dropdown">
+        @for (category of categories; track category) {
+        <button type="button" (click)="selectCategory(category)">
+          {{ category }}
+        </button>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="filter">
+      <button type="button" (click)="toggleDropdown('location')">
+        {{ form.value.location || ('SEARCH.ZONE' | translate) }}
+        <span>⌄</span>
+      </button>
+
+      @if (openDropdown === 'location') {
+      <div class="dropdown dropdown-large">
+        @for (location of locations; track location) {
+        <button type="button" (click)="selectLocation(location)">
+          {{ location }}
+        </button>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="filter">
+      <button type="button" (click)="toggleDropdown('bedrooms')">
+        {{ form.value.bedrooms || ('SEARCH.BEDROOMS' | translate) }}
+        <span>⌄</span>
+      </button>
+
+      @if (openDropdown === 'bedrooms') {
+      <div class="dropdown dropdown-input">
+        <label>{{ 'SEARCH.BEDROOMS' | translate }}</label>
+        <input type="number" min="0" formControlName="bedrooms" placeholder="Ej: 3" />
+      </div>
+      }
+    </div>
+
+    <div class="filter">
+      <button type="button" (click)="toggleDropdown('bathrooms')">
+        {{ form.value.bathrooms || ('SEARCH.BATHROOMS' | translate) }}
+        <span>⌄</span>
+      </button>
+
+      @if (openDropdown === 'bathrooms') {
+      <div class="dropdown dropdown-input">
+        <label>{{ 'SEARCH.BATHROOMS' | translate }}</label>
+        <input type="number" min="0" formControlName="bathrooms" placeholder="Ej: 2" />
+      </div>
+      }
+    </div>
+
+    <div class="filter" formGroupName="features">
+      <button type="button" (click)="toggleDropdown('features')">
+        {{ 'SEARCH.OTHER' | translate }}
+        <span>⌄</span>
+      </button>
+
+      @if (openDropdown === 'features') {
+      <div class="dropdown dropdown-features">
+        <label><input type="checkbox" formControlName="garage" /> {{ 'FEATURES.GARAGE' | translate }}</label>
+        <label><input type="checkbox" formControlName="terrace" /> {{ 'FEATURES.TERRACE' | translate }}</label>
+        <label><input type="checkbox" formControlName="pool" /> {{ 'FEATURES.POOL' | translate }}</label>
+        <label><input type="checkbox" formControlName="garden" /> {{ 'FEATURES.GARDEN' | translate }}</label>
+        <label><input type="checkbox" formControlName="ranchon" /> {{ 'FEATURES.RANCHON' | translate }}</label>
+        <label><input type="checkbox" formControlName="balcony" /> {{ 'FEATURES.BALCONY' | translate }}</label>
+        <label><input type="checkbox" formControlName="jacuzzi" /> {{ 'FEATURES.JACUZZI' | translate }}</label>
+        <label><input type="checkbox" formControlName="furnished" /> {{ 'FEATURES.FURNISHED' | translate }}</label>
+      </div>
+      }
+    </div>
+
+    <button type="submit" class="property-search__submit">
+      {{ 'SEARCH.SEARCH' | translate }}
+    </button>
+  </div>
+</form>

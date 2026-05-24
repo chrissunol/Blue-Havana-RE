@@ -1,0 +1,278 @@
+.information-page {
+  color: var(--color-primary);
+  background: var(--color-background);
+}
+
+.information-container {
+  width: min(1120px, 90%);
+  margin: 0 auto;
+}
+
+.information-form {
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+}
+
+.information-top {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  align-items: center;
+}
+
+.section-search {
+  display: grid;
+  grid-template-columns: 1fr 140px;
+  align-items: center;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.section-search input {
+  width: 100%;
+  border: 0;
+  padding: 18px 22px;
+  font-size: 18px;
+  color: var(--color-primary);
+  font-family: inherit;
+  outline: none;
+}
+
+.section-search button {
+  border: 0;
+  background: var(--color-secondary);
+  color: white;
+  padding: 16px 30px;
+  font-size: 18px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.top-actions {
+  display: flex;
+  gap: 18px;
+}
+
+.top-actions button {
+  border: 2px solid var(--color-primary);
+  background: transparent;
+  color: var(--color-primary);
+  border-radius: 8px;
+  padding: 13px 34px;
+  font-size: 18px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 30px;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 24px 40px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+label.full {
+  grid-column: span 2;
+}
+
+input,
+textarea {
+  width: 100%;
+  border: 0;
+  background: #fff;
+  border-radius: 8px;
+  padding: 15px 20px;
+  font-size: 18px;
+  color: var(--color-primary);
+  font-family: inherit;
+  outline: none;
+}
+
+.social-info h2 {
+  font-size: 20px;
+  margin: 0 0 18px;
+}
+
+.social-row {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.social-row span {
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.about-info-grid {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 34px 38px;
+}
+
+.about-info-grid textarea {
+  min-height: 150px;
+  resize: none;
+  line-height: 1.45;
+}
+
+.saved-message {
+  text-align: center;
+  color: var(--color-secondary);
+  font-weight: 800;
+}
+
+/* TABLET */
+@media (max-width: 900px) {
+  .information-top,
+  .info-grid,
+  .contact-grid,
+  .about-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  label.full {
+    grid-column: span 1;
+  }
+
+  .top-actions {
+    justify-content: stretch;
+  }
+
+  .top-actions button {
+    flex: 1;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .information-container {
+    width: min(430px, 90%);
+  }
+
+  .information-form {
+    gap: 26px;
+  }
+
+  .information-top {
+    gap: 14px;
+  }
+
+  .section-search {
+    grid-template-columns: 1fr;
+    background: transparent;
+    gap: 10px;
+    border-radius: 0;
+  }
+
+  .section-search input {
+    border-radius: 8px;
+    padding: 13px 15px;
+    font-size: 15px;
+  }
+
+  .section-search button {
+    width: 100%;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 15px;
+  }
+
+  .top-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .top-actions button {
+    padding: 11px;
+    font-size: 15px;
+  }
+
+  .info-grid {
+    gap: 26px;
+  }
+
+  .contact-grid {
+    gap: 18px;
+  }
+
+  label {
+    gap: 9px;
+    font-size: 15px;
+  }
+
+  input,
+  textarea {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  .social-info h2 {
+    font-size: 18px;
+    margin-bottom: 14px;
+  }
+
+  .social-row {
+    grid-template-columns: 28px 1fr;
+    gap: 10px;
+  }
+
+  .social-row span {
+    font-size: 26px;
+  }
+
+  .about-info-grid {
+    margin-top: 16px;
+    gap: 22px;
+  }
+
+  .about-info-grid textarea {
+    min-height: 130px;
+  }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 390px) {
+  .information-container {
+    width: 92%;
+  }
+
+  .top-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .section-search input,
+  .section-search button,
+  .top-actions button,
+  input,
+  textarea {
+    font-size: 13px;
+  }
+
+  label {
+    font-size: 14px;
+  }
+
+  .about-info-grid textarea {
+    min-height: 115px;
+  }
+}

@@ -1,0 +1,25 @@
+:host {
+  display: block;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.section-heading__line {
+  width: 4px;
+  height: 38px;
+  background: var(--color-secondary, #8cc63f);
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.section-heading__title {
+  margin: 0;
+  font-size: 32px;
+  line-height: 1.1;
+  font-weight: 600;
+  color: var(--color-text);
+}

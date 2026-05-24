@@ -1,0 +1,66 @@
+<footer class="footer">
+  <div class="footer__container">
+
+    <div class="footer__col footer__text">
+      <p>{{ 'FOOTER.TAGLINE' | translate }}</p>
+    </div>
+
+    <div class="footer__col footer__contact">
+
+      <p>
+        <lucide-icon [img]="Phone" class="footer-icon"></lucide-icon>
+        {{ info.phone }}
+      </p>
+
+      <p class="footer__socials">
+
+        <span>
+          <lucide-icon [img]="Facebook" class="footer-icon"></lucide-icon>
+        </span>
+
+        <span>
+          <lucide-icon [img]="Instagram" class="footer-icon"></lucide-icon>
+        </span>
+
+        <span>
+          <lucide-icon [img]="Twitter" class="footer-icon"></lucide-icon>
+        </span>
+
+        {{ info.instagram }}
+      </p>
+
+      <p>
+        <lucide-icon [img]="Mail" class="footer-icon"></lucide-icon>
+        {{ info.email }}
+      </p>
+
+    </div>
+
+    <div class="footer__col footer__logo">
+      <img src="assets/isologo_bhre.svg" alt="Blue Havana Real Estate" />
+    </div>
+
+    <div class="footer__col footer__text">
+      <p>{{ 'FOOTER.SERVICE' | translate }}</p>
+    </div>
+
+    <div class="footer__col footer__contact">
+
+      <p>
+        <lucide-icon [img]="Phone" class="footer-icon"></lucide-icon>
+        {{ info.whatsapp }}
+      </p>
+
+      <p>
+        <lucide-icon [img]="MapPin" class="footer-icon"></lucide-icon>
+        {{ info.address }}
+      </p>
+
+    </div>
+
+  </div>
+
+  <p class="footer__created">
+    {{ 'FOOTER.CREATED' | translate }}
+  </p>
+</footer>

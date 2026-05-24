@@ -1,0 +1,248 @@
+@if (property) {
+<section class="property-detail">
+  <div class="container">
+
+    <div class="detail-header">
+      <div>
+
+        <h1>
+          {{ languageService.translateText(property.title) }}
+        </h1>
+
+        <p class="location">
+          <lucide-icon [img]="MapPin" class="detail-icon"></lucide-icon>
+          {{ languageService.translateText(property.location) }}
+         
+        </p>
+
+        <span class="status">
+          {{
+          property.operation === 'sale'
+          ? ('PROPERTY.SALE' | translate)
+          : ('PROPERTY.RENT' | translate)
+          }}
+        </span>
+      </div>
+
+      <div class="price-box">
+        <strong>
+          $ {{ property.price | number }}
+        </strong>
+
+        @if (property.pricePerM2) {
+        <span>
+          $ {{ property.pricePerM2 | number }}
+          {{ 'PROPERTY.PRICE_M2' | translate }}
+        </span>
+        }
+      </div>
+    </div>
+
+    <nav class="detail-tabs">
+      <a routerLink="." fragment="photos">
+        {{ 'PROPERTY.PHOTOS' | translate }}
+      </a>
+
+      <a routerLink="." fragment="description">
+        {{ 'PROPERTY.DESCRIPTION' | translate }}
+      </a>
+
+      <a routerLink="." fragment="details">
+        {{ 'PROPERTY.DETAILS' | translate }}
+      </a>
+
+      @if (hasFeatures) {
+      <a routerLink="." fragment="features">
+        {{ 'PROPERTY.FEATURES' | translate }}
+      </a>
+      }
+
+      <a routerLink="." fragment="similar">
+        {{ 'PROPERTY.SIMILAR' | translate }}
+      </a>
+    </nav>
+
+    <section id="photos" class="gallery">
+
+      <div class="gallery__main">
+        <img title="Foto principal" [src]="property.images[0]" [alt]="languageService.translateText(property.title)" />
+      </div>
+
+      <div class="gallery__side">
+
+        <img title="Foto de portada" [src]="property.images[1] || property.images[0]"
+          [alt]="languageService.translateText(property.title)" />
+
+        <div class="gallery__extra">
+
+          <img title="Foto extra" [src]="property.images[2] || property.images[0]"
+            [alt]="languageService.translateText(property.title)" />
+
+          @if (property.images.length > 3) {
+          <span>+{{ property.images.length - 2 }}</span>
+          }
+
+        </div>
+      </div>
+
+    </section>
+
+    <section id="description" class="section-block">
+
+      <h2>
+        {{ 'PROPERTY.DESCRIPTION' | translate }}
+      </h2>
+
+      <p>
+        {{
+        languageService.translateText(property.description)
+        || ('PROPERTY.NO_DESCRIPTION' | translate)
+        }}
+      </p>
+
+    </section>
+
+    <section class="details-features">
+
+      <div id="details" class="section-block">
+
+        <h2>
+          {{ 'PROPERTY.DETAILS' | translate }}
+        </h2>
+
+        <div class="details-table">
+
+          <div>
+            <strong>
+              {{ 'PROPERTY.AREA' | translate }}
+            </strong>
+
+            <span>
+              {{ property.area }} m2
+            </span>
+          </div>
+
+          <div>
+            <strong>
+              {{ 'PROPERTY.TYPE' | translate }}
+            </strong>
+
+            <span>
+              {{ languageService.translateText(property.category) }}
+            </span>
+          </div>
+
+          <div>
+            <strong>
+              {{ 'PROPERTY.BEDROOMS' | translate }}
+            </strong>
+
+            <span>
+              {{ property.bedrooms }}
+            </span>
+          </div>
+
+          <div>
+            <strong>
+              {{ 'PROPERTY.BATHROOMS' | translate }}
+            </strong>
+
+            <span>
+              {{ property.bathrooms }}
+            </span>
+          </div>
+
+          @if (property.floors) {
+          <div>
+            <strong>
+              {{ 'PROPERTY.FLOORS' | translate }}
+            </strong>
+
+            <span>
+              {{ property.floors }}
+            </span>
+          </div>
+          }
+
+          <div>
+            <strong>
+              {{ 'PROPERTY.FURNISHED' | translate }}
+            </strong>
+
+            <span>
+              {{
+              property.features?.furnished
+              ? ('COMMON.YES' | translate)
+              : ('COMMON.NO' | translate)
+              }}
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+      @if (hasFeatures) {
+
+      <div id="features" class="section-block">
+
+        <h2>
+          {{ 'PROPERTY.FEATURES' | translate }}
+        </h2>
+
+        <ul class="features-list">
+
+          <li *ngIf="property.features?.jacuzzi">
+            {{ 'FEATURES.JACUZZI' | translate }}
+          </li>
+
+          <li *ngIf="property.features?.garage">
+            
+            {{ 'FEATURES.GARAGE' | translate }}
+          </li>
+
+          <li *ngIf="property.features?.pool">
+            {{ 'FEATURES.POOL' | translate }}
+          </li>
+
+          <li *ngIf="property.features?.terrace">
+            {{ 'FEATURES.TERRACE' | translate }}
+          </li>
+
+          <li *ngIf="property.features?.garden">
+            {{ 'FEATURES.GARDEN' | translate }}
+          </li>
+
+          <li *ngIf="property.features?.balcony">
+            {{ 'FEATURES.BALCONY' | translate }}
+          </li>
+
+          <li *ngIf="property.features?.ranchon">
+            {{ 'FEATURES.RANCHON' | translate }}
+          </li>
+        </ul>
+
+      </div>
+
+      }
+
+    </section>
+
+    <section id="similar" class="similar">
+
+      <h2>
+        {{ 'PROPERTY.SIMILAR' | translate }}
+      </h2>
+
+      <app-property-list [properties]="similarProperties" mode="public" (view)="goToDetail($event)" />
+
+      <div class="similar__button">
+        <a routerLink="/propiedades">
+          {{ 'PROPERTY.VIEW_MORE' | translate }}
+        </a>
+      </div>
+
+    </section>
+
+  </div>
+</section>
+}

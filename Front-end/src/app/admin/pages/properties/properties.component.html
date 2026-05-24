@@ -1,0 +1,61 @@
+<section class="admin-properties">
+  <div class="admin-properties__container">
+
+    <!-- BOTÓN AÑADIR -->
+    <div class="admin-properties__top">
+      <button
+        type="button"
+        class="admin-properties__add"
+        (click)="openCreateModal()"
+      >
+        Añadir
+      </button>
+    </div>
+
+    <!-- BUSCADOR -->
+    <div class="admin-properties__search">
+      <app-property-search (search)="onSearch($event)" />
+    </div>
+
+    @if (hasSearched && properties.length === 0) {
+      <div class="no-results">
+        <p>No hay propiedades disponibles con esos filtros.</p>
+      </div>
+    }
+
+    <!-- LISTADO -->
+    <app-property-list
+      [properties]="properties"
+      mode="admin"
+      (view)="goToDetail($event)"
+      (edit)="openEditModal($event)"
+      (remove)="deleteProperty($event)"
+      (toggleVisibility)="toggleVisibility($event)"
+      (toggleFeatured)="toggleFeatured($event)"
+    />
+
+  </div>
+</section>
+
+<!-- MODAL -->
+@if (isModalOpen) {
+  <div class="modal-backdrop">
+    <div class="modal">
+
+      <button
+        type="button"
+        class="modal__close"
+        (click)="closeModal()"
+      >
+        ×
+      </button>
+
+      <app-property-forms
+        [property]="selectedProperty"
+        (cancel)="closeModal()"
+        (save)="saveProperty($event)"
+      />
+
+    </div>
+  </div>
+}

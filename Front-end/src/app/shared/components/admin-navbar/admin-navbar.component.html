@@ -1,0 +1,46 @@
+<header class="navbar">
+  <div class="navbar__container">
+    <a class="navbar__logo" routerLink="/superadmin/propiedades" (click)="closeMenu()">
+      <img src="assets/logotipo_bhre.svg" alt="Blue Havana Real Estate" />
+    </a>
+
+    <nav class="navbar__links" [class.open]="isMenuOpen">
+      @if (isSuperadmin) {
+        <a
+          routerLink="/superadmin/admins"
+          routerLinkActive="active"
+          (click)="closeMenu()"
+        >
+          Credenciales
+        </a>
+      }
+
+      <a
+        routerLink="/admin/informacion"
+        routerLinkActive="active"
+        (click)="closeMenu()"
+      >
+        Información
+      </a>
+
+      <a
+        routerLink="/admin/propiedades"
+        routerLinkActive="active"
+        (click)="closeMenu()"
+      >
+        Propiedades
+      </a>
+    </nav>
+
+    
+
+      <button type="button" class="navbar__contact" (click)="logout()">
+        Cerrar sesión
+      </button>
+
+      <button type="button" class="navbar__burger" (click)="toggleMenu()" aria-label="Menu">
+        <span class="navbar__burger-icon">☰</span>
+      </button>
+    </div>
+  
+</header>

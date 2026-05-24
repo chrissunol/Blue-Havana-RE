@@ -1,0 +1,285 @@
+.container {
+  width: min(1120px, 90%);
+  margin: 0 auto;
+}
+
+.about-hero {
+  min-height: 540px;
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(0, 113, 188, 0.35),
+      rgba(0, 113, 188, 0.05)
+    ),
+    url('../../../../assets/images/banner.png');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+}
+
+.about-hero__content {
+  width: min(1120px, 90%);
+  margin: 0 auto;
+  color: var(--color-white);
+}
+
+.about-hero h1 {
+  max-width: 520px;
+  font-size: 48px;
+  line-height: 1.2;
+  margin: 0 0 24px;
+  font-weight: 800;
+}
+
+.about-hero p {
+  max-width: 430px;
+  font-size: 17px;
+  margin-bottom: 28px;
+}
+
+.about-hero__button {
+  display: inline-block;
+  background: var(--color-secondary);
+  color: var(--color-white);
+  text-decoration: none;
+  padding: 14px 42px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+.about {
+  padding: 70px 0 40px;
+  color: var(--color-primary);
+}
+
+.about h2 {
+  position: relative;
+  font-size: 32px;
+  margin: 0 0 32px;
+  padding-left: 22px;
+  color: var(--color-primary);
+}
+
+.about h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 5px;
+  height: 38px;
+  background: var(--color-secondary);
+  border-radius: 4px;
+}
+
+.about p {
+  font-size: 17px;
+  line-height: 1.45;
+  margin: 0 0 22px;
+}
+
+.about__intro,
+.about__where {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 70px;
+  align-items: center;
+  margin-bottom: 70px;
+}
+
+.about__image img {
+  width: 100%;
+  display: block;
+  border-radius: 18px;
+}
+
+.about__block {
+  margin-bottom: 70px;
+}
+
+.values {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.value-card {
+  border: 3px solid var(--color-primary);
+  border-radius: 8px;
+  padding: 34px 24px;
+  text-align: center;
+}
+
+.value-card span {
+  display: block;
+  font-size: 46px;
+  margin-bottom: 14px;
+}
+
+.value-card h3 {
+  font-size: 30px;
+  margin: 0 0 12px;
+  color: var(--color-primary);
+}
+
+.value-card p {
+  font-size: 16px;
+  margin: 0;
+}
+
+/* TABLET */
+@media (max-width: 900px) {
+  .about__intro,
+  .about__where {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .values {
+    grid-template-columns: 1fr;
+  }
+
+  .about-hero h1 {
+    font-size: 36px;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .container {
+    width: min(430px, 84%);
+  }
+
+  .about-hero {
+    min-height: 420px;
+    padding: 40px 0;
+    background-position: center;
+    align-items: center;
+  }
+
+  .about-hero__content {
+    width: min(430px, 84%);
+  }
+
+  .about-hero h1 {
+    max-width: 360px;
+    font-size: 38px;
+    line-height: 1.25;
+    margin-bottom: 14px;
+  }
+
+  .about-hero p {
+    max-width: 340px;
+    font-size: 23px;
+    line-height: 1.35;
+    margin-bottom: 16px;
+  }
+
+  .about-hero__button {
+    padding: 9px 16px;
+    font-size: 15px;
+    border-radius: 4px;
+  }
+
+  .about {
+    padding: 34px 0 26px;
+  }
+
+  .about h2 {
+    font-size: 30px;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    padding-left: 18px;
+  }
+
+  .about h2::before {
+    top: 2px;
+    width: 4px;
+    height: 34px;
+  }
+
+  .about p {
+    font-size: 16px;
+    line-height: 1.45;
+    text-align: justify;
+    margin-bottom: 18px;
+  }
+
+  .about__intro,
+  .about__where {
+    display: block;
+    margin-bottom: 34px;
+  }
+
+  .about__block {
+    margin-bottom: 34px;
+  }
+
+  .about__image {
+    margin: 20px 0;
+  }
+
+  .about__image img {
+    border-radius: 14px;
+  }
+
+  .values {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .value-card {
+    display: grid;
+    grid-template-columns: 62px 1fr;
+    gap: 4px 14px;
+    align-items: center;
+    text-align: left;
+    padding: 14px 16px;
+    border-width: 2px;
+    border-radius: 6px;
+  }
+
+  .value-card span {
+    grid-row: span 2;
+    font-size: 44px;
+    margin: 0;
+    text-align: center;
+  }
+
+  .value-card h3 {
+    font-size: 17px;
+    margin: 0;
+  }
+
+  .value-card p {
+    font-size: 15px;
+    line-height: 1.35;
+    text-align: left;
+    margin: 0;
+  }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 480px) {
+  .container,
+  .about-hero__content {
+    width: 84%;
+  }
+
+  .about-hero {
+    min-height: 410px;
+  }
+
+  .about-hero h1 {
+    font-size: 36px;
+  }
+
+  .about-hero p {
+    font-size: 22px;
+  }
+
+  .about h2 {
+    font-size: 28px;
+  }
+}

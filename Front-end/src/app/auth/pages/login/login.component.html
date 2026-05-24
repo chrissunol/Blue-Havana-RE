@@ -1,0 +1,16 @@
+<section class="login">
+  <form class="login__card" [formGroup]="form" (ngSubmit)="login()">
+    <img src="assets/isologo_bhre.svg" alt="Blue Havana Real Estate" class="login__logo" />
+
+
+    <input type="text" formControlName="username" placeholder="Nombre de usuario" />
+
+    <input type="password" formControlName="password" placeholder="Contraseña" />
+
+    @if (errorMessage) {
+    <p class="login__error">{{ errorMessage }}</p>
+    }
+
+    <button type="submit">Entrar</button>
+  </form>
+</section>

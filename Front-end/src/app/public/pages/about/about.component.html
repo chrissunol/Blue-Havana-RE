@@ -1,0 +1,71 @@
+<section class="about-hero">
+  <div class="about-hero__content">
+    <h1>{{ 'ABOUT.HERO_TITLE' | translate }}</h1>
+    <p>{{ 'ABOUT.HERO_SUBTITLE' | translate }}</p>
+
+    <a routerLink="/propiedades" class="about-hero__button">
+      {{ 'ABOUT.VIEW_PROPERTIES' | translate }}
+    </a>
+  </div>
+</section>
+
+<section class="about">
+  <div class="container">
+    <div class="about__intro">
+      <div>
+        <h2>{{ 'ABOUT.ORIGIN_TITLE' | translate }}</h2>
+
+        <p>{{ info.originText }}</p>
+      </div>
+
+      <div class="about__image">
+        <img src="assets/images/about-1.png" alt="Blue Havana Real Estate" />
+      </div>
+    </div>
+
+    <article class="about__block">
+      <h2>{{ 'ABOUT.TODAY_TITLE' | translate }}</h2>
+      <p>{{ info.todayText }}</p>
+    </article>
+
+    <article class="about__block">
+      <h2>{{ 'ABOUT.FUTURE_TITLE' | translate }}</h2>
+      <p>{{ info.futureText }}</p>
+    </article>
+
+    <article class="about__block">
+      <h2>{{ 'ABOUT.HOW_TITLE' | translate }}</h2>
+
+      <div class="values">
+        <div class="value-card">
+          <span>♡</span>
+          <h3>{{ 'ABOUT.VALUE_TRUST_TITLE' | translate }}</h3>
+          <p>{{ 'ABOUT.VALUE_TRUST_TEXT' | translate }}</p>
+        </div>
+
+        <div class="value-card">
+          <span>⏱</span>
+          <h3>{{ 'ABOUT.VALUE_EXPERIENCE_TITLE' | translate }}</h3>
+          <p>{{ 'ABOUT.VALUE_EXPERIENCE_TEXT' | translate }}</p>
+        </div>
+
+        <div class="value-card">
+          <span>🤝</span>
+          <h3>{{ 'ABOUT.VALUE_COMMITMENT_TITLE' | translate }}</h3>
+          <p>{{ 'ABOUT.VALUE_COMMITMENT_TEXT' | translate }}</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="about__where">
+      <div class="about__image">
+        <img src="assets/images/about-2.png" alt="Blue Havana Real Estate" />
+      </div>
+
+      <div>
+        <h2>{{ 'ABOUT.WHERE_TITLE' | translate }}</h2>
+        <p>{{ info.whereText }}</p>
+      </div>
+    </div>
+  </div>
+</section>

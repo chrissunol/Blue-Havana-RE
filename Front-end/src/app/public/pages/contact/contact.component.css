@@ -1,0 +1,107 @@
+.container {
+  width: min(1120px, 90%);
+  margin: 0 auto;
+}
+
+.contact-hero {
+  min-height: 320px;
+  background: linear-gradient(135deg, #0071bc 0%, #004f84 100%);
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+
+.contact-hero__content {
+  width: min(1120px, 90%);
+  margin: 0 auto;
+}
+
+.contact-hero h1 {
+  margin: 0 0 12px;
+  font-size: 2.5rem;
+  font-weight: 800;
+}
+
+.contact-hero p {
+  margin: 0;
+  max-width: 520px;
+  opacity: 0.95;
+}
+
+.contact {
+  padding: 48px 0 72px;
+}
+
+.contact__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.contact__card {
+  background: #f7f9fc;
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid #e3e8ef;
+}
+
+.contact__card h2 {
+  margin: 0 0 12px;
+  font-size: 1.1rem;
+  color: #0071bc;
+}
+
+.contact__card p,
+.contact__card li {
+  margin: 0 0 8px;
+  line-height: 1.5;
+}
+
+.contact__card ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.contact__card a {
+  color: #004f84;
+  text-decoration: none;
+}
+
+.contact__card a:hover {
+  text-decoration: underline;
+}
+
+.contact__hint {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.contact__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.contact__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid #0071bc;
+  color: #0071bc;
+  background: #fff;
+}
+
+.contact__btn--primary {
+  background: #0071bc;
+  color: #fff;
+  border-color: #0071bc;
+}
+
+.contact__btn:hover {
+  opacity: 0.92;
+}

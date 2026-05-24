@@ -1,0 +1,11 @@
+<section class="hero">
+  <div class="hero__content">
+    <h1>{{ 'HOME.TITLE' | translate }}</h1>
+
+    <p>
+      {{ 'HOME.SUBTITLE' | translate }}
+    </p>
+
+    <app-property-search (search)="onSearch($event)" />
+  </div>
+</section>

@@ -1,0 +1,45 @@
+<app-hero-search />
+
+<section class="featured">
+  <div class="container">
+    <app-section-title class="section-title" [title]="'HOME.FEATURED_TITLE' | translate" />
+
+    <app-property-list [properties]="properties" mode="public" (view)="goToDetail($event)" />
+  </div>
+</section>
+
+<section class="services">
+  <div class="container">
+    <app-section-title class="section-title" [title]="'HOME.SERVICES_TITLE' | translate" />
+
+    <div class="services__grid">
+      <div class="service">
+        <h3>{{ 'HOME.SERVICE_BUY_SELL_TITLE' | translate }}</h3>
+        <p>{{ 'HOME.SERVICE_BUY_SELL_TEXT' | translate }}</p>
+      </div>
+
+      <div class="service">
+        <h3>{{ 'HOME.SERVICE_RENT_TITLE' | translate }}</h3>
+        <p>{{ 'HOME.SERVICE_RENT_TEXT' | translate }}</p>
+      </div>
+
+      <div class="service">
+        <h3>{{ 'HOME.SERVICE_LEGAL_TITLE' | translate }}</h3>
+        <p>{{ 'HOME.SERVICE_LEGAL_TEXT' | translate }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cities">
+  <div class="container">
+    <app-section-title class="section-title" [title]="'HOME.CITIES_TITLE' | translate" />
+
+    <div class="cities__grid">
+      <div class="city">Playa</div>
+      <div class="city">Plaza</div>
+      <div class="city">Cerro</div>
+      <div class="city">Centro Habana</div>
+    </div>
+  </div>
+</section>

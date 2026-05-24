@@ -1,0 +1,29 @@
+.container {
+  width: min(1120px, 90%);
+  margin: 0 auto;
+}
+
+.properties-page {
+  padding: 60px 0 90px;
+  background: var(--color-background);
+}
+
+.properties-page__search {
+  margin-bottom: 50px;
+}
+
+.properties-page__search app-property-search {
+  display: block;
+}
+
+.no-results {
+  text-align: center;
+  margin-top: 50px;
+  color: var(--color-primary);
+}
+
+.no-results p {
+  font-size: 20px;
+  line-height: 1.4;
+  margin: 0 0 20px;
+}

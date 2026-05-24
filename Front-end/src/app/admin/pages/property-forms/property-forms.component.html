@@ -1,0 +1,172 @@
+<form class="property-form" [formGroup]="form" (ngSubmit)="submit()">
+  <h2>
+    {{ property ? 'Editar Propiedad' : 'Añadir Propiedad' }}
+  </h2>
+
+  <div class="form-grid">
+    <div class="left-column">
+      <div class="field">
+        <label>Nombre Propiedad</label>
+        <input formControlName="title" placeholder="Nombre" />
+      </div>
+
+      <div class="field">
+        <label>Tipo de propiedad</label>
+        <select title="Tipo de propiedad" formControlName="category">
+          <option value="" disabled>Seleccione un tipo</option>
+          @for (type of propertyTypes; track type) {
+          <option [value]="type">{{ type }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Zona</label>
+        <select title="Zona" formControlName="location">
+          <option value="" disabled>Seleccione un municipio</option>
+          @for (municipality of municipalities; track municipality) {
+          <option [value]="municipality">{{ municipality }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="row-3">
+        <div class="field small">
+          <label>Tamaño (m2)</label>
+          <input type="number" formControlName="area" placeholder="0" />
+        </div>
+
+        <div class="field small">
+          <label>Dormitorios</label>
+          <input type="number" formControlName="bedrooms" placeholder="0" />
+        </div>
+      </div>
+
+      <div class="row-3">
+        <div class="field small">
+          <label>Baños</label>
+          <input type="number" formControlName="bathrooms" placeholder="0" />
+        </div>
+
+        <div class="field small">
+          <label>Plantas</label>
+          <input type="number" formControlName="floors" placeholder="0" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Descripción</label>
+        <textarea formControlName="description" placeholder="Descripción"></textarea>
+      </div>
+    </div>
+
+    <div class="right-column">
+      <div class="field">
+        <label>Identificador</label>
+        <input formControlName="id" placeholder="000000" />
+      </div>
+
+      <div class="field">
+        <label>Tipo de operación</label>
+        <select title="Tipo de operación" formControlName="operation">
+          <option value="sale">Venta</option>
+          <option value="rent">Renta</option>
+        </select>
+      </div>
+
+      <div class="field cost-field">
+        <label>
+          {{ operation === 'rent' ? 'Costo Mensual' : 'Costo' }}
+        </label>
+        <input type="number" formControlName="price" placeholder="$ 0" />
+      </div>
+
+      @if (operation === 'rent') {
+      <div class="field cost-field">
+        <label>Costo Anual</label>
+        <input type="number" formControlName="annualPrice" placeholder="$ 0" />
+      </div>
+      }
+
+      <div class="features" formGroupName="features">
+        <label>
+          <input type="checkbox" formControlName="garage" />
+          <span>Garaje</span>
+        </label>
+
+        <label>
+          <input type="checkbox" formControlName="terrace" />
+          <span>Terraza</span>
+        </label>
+
+        <label>
+          <input type="checkbox" formControlName="pool" />
+          <span>Piscina</span>
+        </label>
+
+        <label>
+          <input type="checkbox" formControlName="garden" />
+          <span>Jardín</span>
+        </label>
+
+        <label>
+          <input type="checkbox" formControlName="ranchon" />
+          <span>Ranchón</span>
+        </label>
+
+        <label>
+          <input type="checkbox" formControlName="balcony" />
+          <span>Balcón</span>
+        </label>
+
+        <label>
+          <input type="checkbox" formControlName="jacuzzi" />
+          <span>Jacuzzi</span>
+        </label>
+
+        <label>
+          <input type="checkbox" formControlName="furnished" />
+          <span>Amueblada</span>
+        </label>
+
+        <div class="other-row">
+          <label>
+            <input type="checkbox" formControlName="other" />
+            <span>Otro</span>
+          </label>
+
+          @if (otherSelected) {
+          <input formControlName="otherText" placeholder="Especificar" />
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="photos">
+    <label>Fotos</label>
+
+    <div class="photos-box">
+      <input #fileInput type="file" accept="image/*" multiple (change)="onFilesSelected($event)" hidden />
+
+      <button type="button" (click)="fileInput.click()">
+        Agregar
+      </button>
+
+      <div class="preview">
+        @for (img of previews; track $index) {
+        <img title="Eliminar imagen" [src]="img" alt="Preview" (click)="removePreview($index)" />
+        }
+      </div>
+    </div>
+  </div>
+
+  @if (formError) {
+  <p class="form-error">{{ formError }}</p>
+  }
+
+  <div class="actions">
+    <button type="submit">Aceptar</button>
+    <button type="button" (click)="cancel.emit()">Cancelar</button>
+  </div>
+</form>

@@ -1,0 +1,124 @@
+<section class="admins-page">
+  <div class="admins-container">
+    <div class="admins-top">
+      <button type="button" class="add-button" (click)="openCreateModal()">
+        Añadir
+      </button>
+    </div>
+
+    <div class="admin-search">
+      <form class="admin-search" [formGroup]="searchForm" (ngSubmit)="searchAdmins()">
+        <div class="admin-search__tab">Administradores</div>
+
+        <div class="admin-search__filters">
+          <input formControlName="fullName" placeholder="Nombre" />
+
+          <input formControlName="username" placeholder="Usuario" />
+
+          <input formControlName="id" placeholder="Identificador" />
+
+          <button type="submit" class="search-button">
+            Buscar
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="admins-table">
+      <div class="admins-table__head">
+        <span>ID</span>
+        <span>Nombre y Apellido</span>
+        <span>Teléfono</span>
+        <span>Correo Electrónico</span>
+        <span>Usuario</span>
+        <span>Contraseña</span>
+        <span></span>
+      </div>
+
+      @for (admin of filteredAdmins; track admin.id) {
+      <div class="admins-table__row">
+        <span>{{ admin.id }}</span>
+        <span>{{ admin.fullName }}</span>
+        <span>{{ admin.phone }}</span>
+        <span>{{ admin.email }}</span>
+        <span>{{ admin.username }}</span>
+        <span>************</span>
+
+        <div class="row-actions">
+          <button type="button" (click)="openEditModal(admin)">✎</button>
+          <button type="button" (click)="openDeleteModal(admin)">🗑</button>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</section>
+
+@if (isFormModal) {
+<div class="modal-backdrop">
+  <div class="modal admin-form-modal">
+    <h2>
+      {{ modalMode === 'create' ? 'Añadir Administrador' : 'Editar Administrador' }}
+    </h2>
+
+    <form [formGroup]="form" (ngSubmit)="saveAdmin()">
+      <div class="form-grid">
+        <div class="field">
+          <label>Nombre completo</label>
+          <input formControlName="fullName" placeholder="Nombre" />
+        </div>
+
+        <div class="field">
+          <label>Nombre de usuario</label>
+          <input formControlName="username" placeholder="usuario" />
+        </div>
+
+        <div class="field">
+          <label>Correo Elecrónico</label>
+          <input formControlName="email" placeholder="correo@gmail.com" />
+        </div>
+
+        <div class="field">
+          <label>Teléfono de oficina</label>
+          <input formControlName="phone" placeholder="+53 00000000" />
+        </div>
+
+        <div class="field password-field">
+          <label>Contraseña</label>
+          <div class="password-box">
+            <input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="*******" />
+            <button type="button" (click)="showPassword = !showPassword">
+              ⊘
+            </button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Identificador</label>
+          <input formControlName="id" placeholder="000000" />
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="submit">Aceptar</button>
+        <button type="button" (click)="closeModal()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+}
+
+@if (modalMode === 'delete') {
+<div class="modal-backdrop">
+  <div class="modal delete-modal">
+    <h2>Eliminar Administrador</h2>
+
+    <p>¿Estás seguro de eliminar este administrador?</p>
+
+    <div class="modal-actions">
+      <button type="button" (click)="confirmDelete()">Aceptar</button>
+      <button type="button" (click)="closeModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+}

@@ -1,0 +1,91 @@
+<section class="information-page">
+  <div class="information-container">
+    <form [formGroup]="form" (ngSubmit)="save()" class="information-form">
+
+      <div class="information-top">
+        <div class="section-search">
+          <input [formControl]="sectionSearch" placeholder="Nombre de la sección" />
+
+          <button type="button" (click)="searchSection()">Buscar</button>
+        </div>
+
+        <div class="top-actions">
+          <button type="submit">Guardar</button>
+          <button type="button" (click)="reset()">Cancelar</button>
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <div class="main-info" id="contact-info">
+          <div class="contact-grid">
+            <label>
+              Teléfono de oficina
+              <input formControlName="phone" placeholder="+53 00000000" />
+            </label>
+
+            <label class="full">
+              WhatsApp
+              <input formControlName="whatsapp" placeholder="+5352627046" />
+            </label>
+
+            <label class="full">
+              Dirección de la oficina
+              <input formControlName="address" placeholder="Dirección" />
+            </label>
+
+            <label>
+              Correo Electrónico
+              <input formControlName="email" placeholder="bluehavanars@gmail.com" />
+            </label>
+          </div>
+        </div>
+
+        <div class="social-info" id="social-info">
+          <h2>Redes sociales</h2>
+
+          <label class="social-row">
+            <span>◎</span>
+            <input formControlName="instagram" placeholder="@bluehavanars" />
+          </label>
+
+          <label class="social-row">
+            <span>f</span>
+            <input formControlName="facebook" placeholder="@bluehavanars" />
+          </label>
+
+          <label class="social-row">
+            <span>𝕏</span>
+            <input formControlName="x" placeholder="@bluehavanars" />
+          </label>
+        </div>
+      </div>
+
+      <div class="about-info-grid">
+        <label id="origin-info">
+          ¿De dónde venimos?
+          <textarea formControlName="originText"></textarea>
+        </label>
+
+        <label id="today-info">
+          ¿Qué hacemos hoy?
+          <textarea formControlName="todayText"></textarea>
+        </label>
+
+        <label id="future-info">
+          ¿A dónde vamos?
+          <textarea formControlName="futureText"></textarea>
+        </label>
+
+        <label id="where-info">
+          ¿Dónde estamos?
+          <textarea formControlName="whereText"></textarea>
+        </label>
+      </div>
+
+      @if (savedMessage) {
+      <p class="saved-message">{{ savedMessage }}</p>
+      }
+
+    </form>
+  </div>
+</section>

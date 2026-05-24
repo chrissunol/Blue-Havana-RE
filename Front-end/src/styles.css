@@ -1,0 +1,65 @@
+
+:root {
+  --color-primary: #33CCCC;   /* Azul */
+  --color-secondary: #99CC66; /* Verde */
+  --color-background: #F8F6F6; /* Blanco hueso */
+
+  --color-text: #33CCCC;
+  --color-white: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+
+@media (max-width: 390px) {
+  body {
+    font-size: 14px;
+  }
+
+  .container,
+  .navbar__container,
+  .footer__container {
+    width: 90%;
+  }
+
+  h1 {
+    font-size: 30px !important;
+    line-height: 1.15;
+  }
+
+  h2 {
+    font-size: 24px !important;
+    line-height: 1.15;
+  }
+
+  h3 {
+    font-size: 18px !important;
+  }
+
+  p,
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  label {
+    font-size: 14px !important;
+  }
+
+  section {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  img {
+    max-width: 100%;
+  }
+}

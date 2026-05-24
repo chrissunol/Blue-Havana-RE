@@ -1,0 +1,175 @@
+:host {
+  display: block;
+}
+
+.property-card {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: hidden;
+  color: var(--color-primary, #0072bc);
+  font-family: inherit;
+}
+
+/* IMAGE */
+.property-card__image {
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  cursor: pointer;
+  background: #f2f2f2;
+}
+
+.property-card__image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* BODY */
+.property-card__body {
+  padding-top: 10px;
+}
+
+/* CATEGORY */
+.property-card__category {
+  margin: 0 0 4px;
+  font-size: 16px;
+  line-height: 1.2;
+  font-weight: 400;
+  color: var(--color-primary, #0072bc);
+}
+
+/* PRICE */
+.property-card__price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.property-card__price {
+  font-size: 18px;
+  line-height: 1.1;
+  font-weight: 800;
+  color: var(--color-primary, #0072bc);
+}
+
+.property-card__m2 {
+  font-size: 15px;
+  line-height: 1.1;
+  font-weight: 400;
+  color: var(--color-primary, #0072bc);
+  white-space: nowrap;
+}
+
+/* TITLE */
+.property-card__title {
+  margin: 0 0 5px;
+  font-size: 17px;
+  line-height: 1.15;
+  font-weight: 800;
+  color: var(--color-primary, #0072bc);
+}
+
+/* LOCATION */
+.property-card__location {
+  margin: 0 0 5px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+  font-size: 15px;
+  line-height: 1.2;
+  font-weight: 400;
+  color: var(--color-primary, #0072bc);
+}
+
+/* FEATURES */
+.property-card__features {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 8px;
+  color: var(--color-primary, #0072bc);
+}
+
+.property-card__features span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 15px;
+  line-height: 1;
+  color: var(--color-primary, #0072bc);
+}
+
+/* ICONS */
+.card-icon,
+.action-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--color-primary, #0072bc);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ACTIONS */
+.property-card__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.property-card__contact {
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--color-primary, #0072bc);
+  text-decoration: none;
+  margin-right: 4px;
+}
+
+.property-card__actions button,
+.property-card__actions a:not(.property-card__contact) {
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--color-primary, #0072bc);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-primary, #0072bc);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 0;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.property-card__actions button:hover,
+.property-card__actions a:not(.property-card__contact):hover {
+  background: var(--color-primary, #0072bc);
+  color: #ffffff;
+}
+
+.property-card__actions button:hover .action-icon,
+.property-card__actions a:not(.property-card__contact):hover .action-icon {
+  color: #ffffff;
+}
+
+.action-icon.filled {
+  fill: var(--color-primary, #0072bc);
+}
+
+/* Para que los SVG de lucide respeten el color */
+:host ::ng-deep lucide-icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+}

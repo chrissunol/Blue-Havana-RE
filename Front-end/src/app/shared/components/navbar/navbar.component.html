@@ -1,0 +1,47 @@
+<header class="navbar">
+  <div class="navbar__container">
+    <a routerLink="/" class="navbar__logo" (click)="closeMobileMenu()">
+      <img src="assets/logotipo_bhre.svg" alt="Blue Havana Real Estate" />
+    </a>
+
+    <nav class="navbar__links" [class.open]="isMobileMenuOpen">
+      <a routerLink="/propiedades" routerLinkActive="active" (click)="closeMobileMenu()">
+        {{ 'NAV.PROPERTIES' | translate }}
+      </a>
+
+      <a routerLink="/quienes-somos" routerLinkActive="active" (click)="closeMobileMenu()">
+        {{ 'NAV.ABOUT' | translate }}
+      </a>
+
+      <a routerLink="/contacto" routerLinkActive="active" (click)="closeMobileMenu()">
+        {{ 'NAV.CONTACT_PAGE' | translate }}
+      </a>
+    </nav>
+
+    <div class="navbar__right">
+      <div class="navbar__language">
+        <button type="button" class="navbar__lang" (click)="toggleLanguageMenu()">
+          <span>{{ selectedLanguage.toUpperCase() }}</span>
+          <lucide-icon [img]="ChevronDown" class="navbar__icon"></lucide-icon>
+        </button>
+
+        @if (isLanguageOpen) {
+        <div class="navbar__language-menu">
+          <button type="button" (click)="changeLang('es')">Español</button>
+          <button type="button" (click)="changeLang('en')">English</button>
+          <button type="button" (click)="changeLang('fr')">Français</button>
+        </div>
+        }
+      </div>
+
+      <a [href]="whatsappLink" target="_blank" rel="noopener noreferrer" class="navbar__contact">
+        <lucide-icon [img]="Phone" class="navbar__contact-icon"></lucide-icon>
+        <span>{{ 'NAV.CONTACT' | translate }}</span>
+      </a>
+
+      <button type="button" class="navbar__burger" (click)="toggleMobileMenu()" aria-label="Abrir menú">
+        <lucide-icon [img]="Menu" class="navbar__burger-icon"></lucide-icon>
+      </button>
+    </div>
+  </div>
+</header>

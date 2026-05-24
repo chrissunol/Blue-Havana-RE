@@ -1,0 +1,100 @@
+<article class="property-card">
+  <div class="property-card__image" (click)="view.emit(property)">
+    <img title="img" [src]="mainImage" [alt]="languageService.translateText(property.title)" />
+  </div>
+
+  <div class="property-card__body">
+    <p class="property-card__category">
+      {{ languageService.translateText(property.category) }}
+    </p>
+
+    <div class="property-card__price-row">
+      <strong class="property-card__price">
+        $ {{ property.price | number }}
+      </strong>
+
+      <span class="property-card__m2">
+        @if (pricePerM2 > 0) {
+        ${{ pricePerM2 }}/m2
+        }
+      </span>
+    </div>
+
+    <h3 class="property-card__title">
+      {{ languageService.translateText(property.title) }}
+    </h3>
+
+    <p class="property-card__location">
+      <lucide-icon [img]="MapPin" class="card-icon"></lucide-icon>
+      {{ languageService.translateText(property.location) }}
+    </p>
+
+    <div class="property-card__features">
+      <span>
+        <lucide-icon [img]="BedDouble" class="card-icon"></lucide-icon>
+        {{ property.bedrooms }}
+      </span>
+
+      <span>
+        <lucide-icon [img]="Bath" class="card-icon"></lucide-icon>
+        {{ property.bathrooms }}
+      </span>
+
+      <span>
+        <lucide-icon [img]="Square" class="card-icon"></lucide-icon>
+        {{ property.area }} m2
+      </span>
+    </div>
+
+    <div class="property-card__actions">
+      @if (mode === 'public') {
+      <a class="property-card__contact" [href]="whatsappLink" target="_blank" rel="noopener noreferrer">
+        Contactar
+      </a>
+
+      <button type="button" (click)="view.emit(property)" aria-label="Ver propiedad">
+        <lucide-icon [img]="Search" class="action-icon"></lucide-icon>
+      </button>
+
+      <a [href]="telLink" aria-label="Llamar">
+        <lucide-icon [img]="Phone" class="action-icon"></lucide-icon>
+      </a>
+
+      <a [href]="mailtoLink" aria-label="Enviar correo">
+        <lucide-icon [img]="Mail" class="action-icon"></lucide-icon>
+      </a>
+
+      <a [href]="whatsappLink" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+        <lucide-icon [img]="MessageCircle" class="action-icon"></lucide-icon>
+      </a>
+      }
+
+      @if (mode === 'admin') {
+      <button type="button" (click)="view.emit(property)" aria-label="Ver propiedad">
+        <lucide-icon [img]="Search" class="action-icon"></lucide-icon>
+      </button>
+
+      <button type="button" (click)="toggleFeatured.emit(property)"
+        [title]="property.featured ? 'Quitar de destacadas' : 'Marcar como destacada'" aria-label="Destacar propiedad">
+        <lucide-icon [img]="Heart" class="action-icon" [class.filled]="property.featured"></lucide-icon>
+      </button>
+
+      <button type="button" (click)="edit.emit(property)" aria-label="Editar propiedad">
+        <lucide-icon [img]="Pencil" class="action-icon"></lucide-icon>
+      </button>
+
+      <button type="button" (click)="toggleVisibility.emit(property)" aria-label="Cambiar visibilidad">
+        @if (property.visible) {
+        <lucide-icon [img]="EyeOff" class="action-icon"></lucide-icon>
+        } @else {
+        <lucide-icon [img]="Eye" class="action-icon"></lucide-icon>
+        }
+      </button>
+
+      <button type="button" (click)="remove.emit(property)" aria-label="Eliminar propiedad">
+        <lucide-icon [img]="Trash2" class="action-icon"></lucide-icon>
+      </button>
+      }
+    </div>
+  </div>
+</article>

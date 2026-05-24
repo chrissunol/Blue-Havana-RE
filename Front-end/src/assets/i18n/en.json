@@ -1,0 +1,114 @@
+{
+  "NAV": {
+    "PROPERTIES": "Properties",
+    "ABOUT": "About us",
+    "CONTACT": "Contact",
+    "CONTACT_PAGE": "Contact us"
+  },
+  "CONTACT": {
+    "TITLE": "Contact us",
+    "SUBTITLE": "We are ready to help you find your ideal property in Cuba.",
+    "PHONE": "Phone",
+    "EMAIL": "Email",
+    "ADDRESS": "Address",
+    "SOCIAL": "Social media",
+    "WHATSAPP": "Message on WhatsApp",
+    "VIEW_PROPERTIES": "View properties"
+  },
+  "HOME": {
+    "TITLE": "Find Your Ideal Home in Cuba",
+    "SUBTITLE": "Browse our exclusive property selection",
+    "FEATURED_TITLE": "Featured Properties",
+  "SERVICES_TITLE": "Our Services",
+  "SERVICE_BUY_SELL_TITLE": "Buying and Selling",
+  "SERVICE_BUY_SELL_TEXT": "We help you find the ideal property or sell your home at the best price.",
+  "SERVICE_RENT_TITLE": "Rentals",
+  "SERVICE_RENT_TEXT": "A wide selection of rental properties adapted to your needs.",
+  "SERVICE_LEGAL_TITLE": "Legal Advice",
+  "SERVICE_LEGAL_TEXT": "Professional support throughout every legal process.",
+  "CITIES_TITLE": "Discover our properties in Havana"
+  },
+  "SEARCH": {
+    "ALL": "All",
+    "RENT": "Rent",
+    "SALE": "Sale",
+    "TYPE": "Type",
+    "ZONE": "Location",
+    "BEDROOMS": "Bedrooms",
+    "BATHROOMS": "Bathrooms",
+    "OTHER": "Other",
+    "SEARCH": "Search"
+  },
+  "PROPERTY": {
+    "DETAILS": "Details",
+    "DESCRIPTION": "Description",
+    "FEATURES": "Features",
+    "SIMILAR": "Similar Properties",
+    "SALE": "For Sale",
+    "RENT": "For Rent",
+    "PRICE_M2": "per m²",
+    "NO_DESCRIPTION": "This property has no description available.",
+    "ID": "Property ID",
+"AREA": "Property size",
+"TYPE": "Property type",
+"BEDROOMS": "Number of bedrooms",
+"BATHROOMS": "Number of bathrooms",
+"FLOORS": "Number of floors",
+"FURNISHED": "Furnished",
+"PHOTOS": "Photos",
+"VIEW_MORE": "View more",
+"ZONE": "Area"
+  },
+  "FEATURES": {
+    "GARAGE": "Garage",
+    "TERRACE": "Terrace",
+    "POOL": "Pool",
+    "GARDEN": "Garden",
+    "RANCHON": "Ranch",
+    "BALCONY": "Balcony",
+    "JACUZZI": "Jacuzzi",
+    "FURNISHED": "Furnished"
+  },
+  "EMPTY": {
+    "NO_RESULTS": "No properties match your search",
+    "TRY_AGAIN": "Try changing some filters"
+  },
+  "COMMON": {
+    "YES": "Yes",
+    "NO": "No",
+    "VIEW_MORE": "View more"
+  },
+  "ABOUT": {
+  "HERO_TITLE": "We Connect People with Extraordinary Properties",
+  "HERO_SUBTITLE": "Find Your Ideal Home in Cuba with Blue Havana Real Estate",
+  "VIEW_PROPERTIES": "View properties",
+  "ORIGIN_TITLE": "Where do we come from?",
+  "ORIGIN_TEXT_1": "Blue Havana Real Estate transforms the Cuban real estate market with international standards of transparency, efficiency, and excellence. It offers a modern, agile, and reliable service for local clients and international investors.",
+  "ORIGIN_TEXT_2": "We connect people with exclusive properties, creating safe investment opportunities with legal guidance and personalized market studies.",
+  "TODAY_TITLE": "What do we do today?",
+  "TODAY_TEXT": "We provide comprehensive, high-level real estate solutions, connecting our clients with exclusive properties and secure investment opportunities.",
+  "FUTURE_TITLE": "Where are we going?",
+  "FUTURE_TEXT": "To become the leading and benchmark real estate company in Cuba, recognized for transforming the experience of buying, selling, and investing in high-value properties.",
+  "HOW_TITLE": "How do we do it?",
+  "VALUE_TRUST_TITLE": "Trust",
+  "VALUE_TRUST_TEXT": "Transparent and secure relationships throughout every real estate process.",
+  "VALUE_EXPERIENCE_TITLE": "Experience",
+  "VALUE_EXPERIENCE_TEXT": "Deep knowledge of the Cuban market and exclusive opportunities.",
+  "VALUE_COMMITMENT_TITLE": "Commitment",
+  "VALUE_COMMITMENT_TEXT": "Real support from the property search to the closing of the transaction.",
+  "WHERE_TITLE": "Where are we?",
+  "WHERE_TEXT_1": "We operate mainly in Havana and its most exclusive areas, where some of the highest-value and highest-potential properties in the real estate market are located.",
+  "WHERE_TEXT_2": "Our focus is on connecting premium opportunities with local and international clients interested in investing in Cuba."
+},
+"NOT_FOUND": {
+  "MESSAGE": "The page you are looking for does not exist.",
+  "HOME": "Back to home"
+},
+"FOOTER": {
+  "TAGLINE": "Find your ideal home in Cuba",
+  "SOCIAL": "Follow us on social media @bluehavanars",
+  "SERVICE": "Renovation and design. We help you with your project",
+  "ADDRESS": "Address",
+  "CREATED": "Created by FourBox"
+}
+}

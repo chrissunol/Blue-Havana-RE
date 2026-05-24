@@ -1,0 +1,19 @@
+<section class="properties-page">
+  <div class="container">
+    <app-section-title title="Propiedades" />
+
+    <div class="properties-page__search">
+      <app-property-search (search)="onSearch($event)" />
+
+    </div>
+    @if (hasSearched && properties.length === 0) {
+    <div class="no-results">
+      <p>No hay propiedades que coincidan con tus criterios de búsqueda.</p>
+      <p>Intenta cambiar algunos de los filtros.</p>
+    </div>
+    }
+    @if (properties.length > 0) {
+    <app-property-list [properties]="properties" mode="public" (view)="goToDetail($event)" />
+    }
+  </div>
+</section>

@@ -1,0 +1,12 @@
+<section class="property-list">
+  <app-property-card
+    *ngFor="let property of properties"
+    [property]="property"
+    [mode]="mode"
+    (view)="view.emit($event)"
+    (edit)="edit.emit($event)"
+    (remove)="remove.emit($event)"
+    (toggleVisibility)="toggleVisibility.emit($event)"
+    (toggleFeatured)="toggleFeatured.emit($event)"
+  />
+</section>
