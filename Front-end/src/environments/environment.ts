@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://127.0.0.1:4000/api',
+  apiUrl: 'https://blue-havana-re.onrender.com/api',
 };

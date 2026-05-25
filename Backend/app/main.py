@@ -15,9 +15,22 @@ app = FastAPI(
     version="1.1.0",
 )
 
+allowed_origins = list(settings.cors_origin_list)
+
+extra_origins = [
+    "http://localhost:4200",
+    "http://127.0.0.1:4200",
+    "https://bluehavanare.csunol73.workers.dev",
+    "https://bluehavanars.csunol73.workers.dev",
+]
+
+for origin in extra_origins:
+    if origin not in allowed_origins:
+        allowed_origins.append(origin)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origin_list,
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -38,3 +51,11 @@ def startup() -> None:
 @app.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
+
+
+@app.get("/debug-cors")
+def debug_cors() -> dict:
+    return {
+        "allowed_origins": allowed_origins,
+        "settings_cors_origin_list": settings.cors_origin_list,
+    }
