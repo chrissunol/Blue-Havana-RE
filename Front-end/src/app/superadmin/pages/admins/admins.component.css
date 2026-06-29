@@ -94,6 +94,7 @@
 
 .admins-table__row {
   font-size: 19px;
+  color: var(--color-info);
 }
 
 .admins-table__row span {

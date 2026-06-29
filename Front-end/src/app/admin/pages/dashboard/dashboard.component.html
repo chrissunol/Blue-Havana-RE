@@ -1,1 +1,47 @@
-<p>dashboard works!</p>
+<section class="admin-dashboard">
+    <header class="admin-dashboard__header">
+        <div>
+            <span class="admin-dashboard__eyebrow">
+                Administración
+            </span>
+
+            <h1>Dashboard</h1>
+
+            <p>
+                Gestiona las reseñas y consulta el historial de ventas y rentas
+                de la inmobiliaria.
+            </p>
+        </div>
+
+        <span class="admin-dashboard__header-icon" aria-hidden="true">
+            <lucide-icon [img]="LayoutDashboardIcon" size="26"></lucide-icon>
+        </span>
+    </header>
+
+    <div class="admin-dashboard__stats">
+        <app-dashboard-stat-card title="Reseñas pendientes" [value]="pendingReviews" [icon]="ClockIcon"
+            variant="pending"></app-dashboard-stat-card>
+
+        <app-dashboard-stat-card title="Reseñas publicadas" [value]="approvedReviews" [icon]="CheckCircleIcon"
+            variant="approved"></app-dashboard-stat-card>
+
+        <app-dashboard-stat-card title="Propiedades vendidas" [value]="soldProperties" [icon]="BuildingIcon"
+            variant="sold"></app-dashboard-stat-card>
+
+        <app-dashboard-stat-card title="Propiedades rentadas" [value]="rentedProperties" [icon]="KeyIcon"
+            variant="rented"></app-dashboard-stat-card>
+    </div>
+
+    <div class="admin-dashboard__modules">
+        <app-review-management [reviews]="reviews" (approve)="approveReview($event)" (reject)="rejectReview($event)"
+            (remove)="deleteReview($event)"></app-review-management>
+
+        <app-transaction-history [transactions]="transactions"
+            (viewTransaction)="viewTransaction($event)"></app-transaction-history>
+    </div>
+</section>
+<app-transaction-detail-modal
+  [isOpen]="transactionDetailOpen"
+  [transaction]="selectedTransaction"
+  (closed)="closeTransactionDetail()"
+></app-transaction-detail-modal>

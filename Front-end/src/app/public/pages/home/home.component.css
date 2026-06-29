@@ -1,119 +1,1158 @@
+:host {
+  display: block;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* =====================================================
+   CONTENEDOR GENERAL
+===================================================== */
+
 .container {
   width: min(1120px, 90%);
   margin: 0 auto;
 }
 
 .section-title {
-  font-size: 32px;
-  color: var(--color-text);
-  margin-bottom: 40px;
+  display: block;
+  width: 100%;
+  margin-bottom: 32px;
 }
 
-/* FEATURED */
+/* =====================================================
+   ABOUT MARKET
+===================================================== */
+
+.about-market {
+  width: 100%;
+  padding: 70px 0 60px;
+  background: var(--color-background);
+}
+
+.about-market__container {
+  width: min(1120px, 90%);
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  align-items: center;
+  gap: clamp(50px, 7vw, 85px);
+}
+
+/* =====================================================
+   ABOUT: COLUMNA MULTIMEDIA
+===================================================== */
+
+.about-market__media {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* =====================================================
+   REDES SOCIALES
+===================================================== */
+
+.about-market__socials {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  overflow: hidden;
+
+  background: #ffffff;
+  border: 1px solid rgba(45, 196, 202, 0.22);
+  border-radius: 14px;
+
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
+}
+
+.about-market__social-link {
+  min-width: 0;
+  min-height: 76px;
+  padding: 11px 6px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  position: relative;
+
+  color: var(--color-primary, #2dc4ca);
+  background: #ffffff;
+
+  font-size: 12px;
+  line-height: 1.2;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+
+  transition:
+    color 0.25s ease,
+    background-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.about-market__social-link:not(:last-child) {
+  border-right: 1px solid rgba(45, 196, 202, 0.2);
+}
+
+.about-market__social-link:hover {
+  color: #ffffff;
+  background: var(--color-primary, #2dc4ca);
+}
+
+.about-market__social-link:active {
+  transform: scale(0.97);
+}
+
+.about-market__social-link:focus-visible {
+  z-index: 2;
+  outline: 3px solid rgba(140, 198, 63, 0.45);
+  outline-offset: -3px;
+}
+
+.about-market__social-link lucide-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =====================================================
+   VIDEO TEMPORAL
+===================================================== */
+
+.about-market__video-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 260px;
+  padding: 30px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  position: relative;
+  overflow: hidden;
+
+  color: #ffffff;
+  text-align: center;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(255, 255, 255, 0.2),
+      transparent 42%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(0, 57, 120, 0.96),
+      rgba(45, 196, 202, 0.86)
+    );
+
+  border-radius: 18px;
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.14);
+}
+
+.about-market__play {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 78px;
+  height: 78px;
+
+  position: relative;
+  z-index: 1;
+
+  color: var(--color-primary, #2dc4ca);
+  background: #ffffff;
+
+  border-radius: 50%;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+}
+
+.about-market__play lucide-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-market__video-placeholder strong {
+  position: relative;
+  z-index: 1;
+
+  margin-top: 8px;
+
+  font-size: 21px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.about-market__video-placeholder > span {
+  position: relative;
+  z-index: 1;
+
+  color: rgba(255, 255, 255, 0.82);
+
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* =====================================================
+   VIDEO REAL DE YOUTUBE
+===================================================== */
+
+.about-market__video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+
+  overflow: hidden;
+
+  background: #000000;
+  border-radius: 18px;
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.14);
+}
+
+.about-market__video iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* =====================================================
+   ABOUT: CONTENIDO
+===================================================== */
+
+.about-market__content {
+  width: 100%;
+  min-width: 0;
+}
+
+.about-market__content p {
+  max-width: 520px;
+  margin: 0 0 28px;
+
+  color: var(--color-info);
+  font-size: 20px;
+  line-height: 1.55;
+}
+
+.about-market__list {
+  margin: 0 0 32px;
+  padding: 0;
+
+  display: grid;
+  gap: 7px;
+
+  list-style: none;
+}
+
+.about-market__list li {
+  position: relative;
+  padding-left: 28px;
+
+  color: var(--color-info);
+  font-size: 20px;
+  line-height: 1.55;
+}
+
+.about-market__list li::before {
+  content: "✓";
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  color: var(--color-primary, #2dc4ca);
+  font-weight: 700;
+}
+
+/* =====================================================
+   BOTONES DE CONTACTO
+===================================================== */
+
+.about-market__button,
+.featured-services__button {
+  width: fit-content;
+  min-height: 42px;
+  padding: 0 22px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  color: #ffffff;
+  background: var(--color-secondary, #8cc63f);
+
+  border-radius: 8px;
+
+  font-size: 15px;
+  line-height: 1.2;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.about-market__button:hover,
+.featured-services__button:hover {
+  transform: translateY(-2px);
+  opacity: 0.94;
+  box-shadow: 0 9px 20px rgba(0, 0, 0, 0.12);
+}
+
+.about-market__button:focus-visible,
+.featured-services__button:focus-visible {
+  outline: 3px solid rgba(140, 198, 63, 0.4);
+  outline-offset: 3px;
+}
+
+.about-market__button lucide-icon,
+.featured-services__button lucide-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =====================================================
+   SERVICIOS DESTACADOS + GALERÍA DE RESEÑAS
+===================================================== */
+
+.featured-services {
+  width: 100%;
+  padding: 65px 0 70px;
+  background: var(--color-background);
+}
+
+.featured-services__container {
+  width: min(1120px, 90%);
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 380px);
+  align-items: center;
+  gap: clamp(40px, 6vw, 70px);
+}
+
+.featured-services__content {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.featured-services__title {
+  width: 100%;
+  margin-bottom: 32px;
+}
+
+.featured-services__title .section-title {
+  margin-bottom: 0;
+}
+
+.featured-services__description {
+  max-width: 540px;
+  margin: 0 0 34px;
+
+  color: var(--color-info);
+
+  font-size: 20px;
+  line-height: 1.55;
+}
+
+.featured-services__list {
+  margin: 0 0 36px;
+  padding: 0;
+
+  display: grid;
+  gap: 8px;
+
+  list-style: none;
+}
+
+.featured-services__list li {
+  position: relative;
+
+  padding-left: 28px;
+
+  color: var(--color-info);
+
+  font-size: 20px;
+  line-height: 1.55;
+}
+
+.featured-services__list li::before {
+  content: "✓";
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  color: var(--color-primary, #2dc4ca);
+  font-weight: 700;
+}
+
+/* =====================================================
+   GALERÍA DE RESEÑAS
+===================================================== */
+
+.reviews-gallery {
+  width: 100%;
+  height: 90%;
+  min-width: 0;
+  padding: 28px;
+
+  display: flex;
+  flex-direction: column;
+
+  position: relative;
+
+  background: #ffffff;
+
+  border: 1px solid rgba(45, 196, 202, 0.24);
+  border-top: 4px solid var(--color-primary, #2dc4ca);
+  border-radius: 18px;
+
+  box-shadow:
+    0 18px 40px rgba(0, 57, 120, 0.09),
+    0 5px 14px rgba(0, 0, 0, 0.05);
+}
+
+/* =====================================================
+   ENCABEZADO DE LA GALERÍA
+===================================================== */
+
+.reviews-gallery__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+
+  margin-bottom: 14px;
+}
+
+.reviews-gallery__header > div:first-child {
+  min-width: 0;
+}
+
+.reviews-gallery__eyebrow {
+  display: block;
+  margin-bottom: 7px;
+
+  color: var(--color-primary, #2dc4ca);
+
+  font-size: 11px;
+  line-height: 1.3;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.reviews-gallery__header h2 {
+  margin: 0;
+
+  color: #003978;
+
+  font-size: clamp(22px, 2.5vw, 28px);
+  line-height: 1.18;
+  font-weight: 800;
+}
+
+.reviews-gallery__quote {
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+
+  display: grid;
+  place-items: center;
+
+  color: #003978;
+  background: rgba(45, 196, 202, 0.12);
+
+  border-radius: 50%;
+}
+
+.reviews-gallery__quote lucide-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =====================================================
+   CONTENIDO DE LA RESEÑA
+===================================================== */
+
+.reviews-gallery__review {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.reviews-gallery__stars {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+
+  margin-bottom: 16px;
+}
+
+.reviews-gallery__star {
+  color: #f5b700;
+
+  font-size: 19px;
+  line-height: 1;
+}
+
+.reviews-gallery__star--empty {
+  color: #d8dee5;
+}
+
+.reviews-gallery blockquote {
+  min-height: 112px;
+  margin: 0 0 0 0;
+
+  color: var(--color-info, #52606d);
+
+  font-size: 15px;
+  line-height: 1.7;
+  font-style: normal;
+}
+
+/* =====================================================
+   AUTOR DE LA RESEÑA
+===================================================== */
+
+.reviews-gallery__author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.reviews-gallery__avatar {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+
+  display: grid;
+  place-items: center;
+
+  color: #ffffff;
+  background: #003978;
+
+  border-radius: 50%;
+
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.reviews-gallery__author > div {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.reviews-gallery__author strong {
+  overflow: hidden;
+
+  color: #263442;
+
+  font-size: 14px;
+  line-height: 1.3;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reviews-gallery__author div > span {
+  color: #7a8793;
+
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+/* =====================================================
+   NAVEGACIÓN DEL CARRUSEL
+===================================================== */
+
+.reviews-gallery__navigation {
+  width: 100%;
+  margin-top: 14px;
+
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) 38px;
+  align-items: center;
+  gap: 12px;
+}
+
+.reviews-gallery__arrow {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+
+  display: grid;
+  place-items: center;
+
+  color: #003978;
+  background: #ffffff;
+
+  border: 1px solid rgba(0, 57, 120, 0.16);
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.reviews-gallery__arrow lucide-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reviews-gallery__arrow:hover {
+  color: #ffffff;
+  background: var(--color-primary);
+  border-color: var(--color-primary, #2dc4ca);
+
+  transform: translateY(-1px);
+}
+
+.reviews-gallery__dots {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+.reviews-gallery__dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+
+  background: #cad3dc;
+
+  border: 0;
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  transition:
+    width 0.2s ease,
+    background-color 0.2s ease,
+    border-radius 0.2s ease;
+}
+
+.reviews-gallery__dot--active {
+  width: 22px;
+
+  background: var(--color-primary, #2dc4ca);
+
+  border-radius: 10px;
+}
+
+/* =====================================================
+   BOTÓN DEJAR RESEÑA
+===================================================== */
+
+.reviews-gallery__button {
+  width: 100%;
+  min-height: 46px;
+  margin-top: 14px;
+  padding: 0 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+  background: var(--color-secondary, #8cc63f);
+
+  border: 0;
+  border-radius: 9px;
+
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.reviews-gallery__button:hover {
+  opacity: 0.94;
+  transform: translateY(-2px);
+
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+}
+
+/* =====================================================
+   ESTADO SIN RESEÑAS
+===================================================== */
+
+.reviews-gallery__empty {
+  min-height: 170px;
+
+  display: grid;
+  place-items: center;
+
+  text-align: center;
+}
+
+.reviews-gallery__empty p {
+  margin: 0;
+
+  color: var(--color-info, #52606d);
+
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* =====================================================
+   ACCESIBILIDAD
+===================================================== */
+
+.reviews-gallery__button:focus-visible,
+.reviews-gallery__arrow:focus-visible,
+.reviews-gallery__dot:focus-visible {
+  outline: 3px solid rgba(45, 196, 202, 0.4);
+  outline-offset: 3px;
+}
+/* =====================================================
+   PROPIEDADES DESTACADAS
+===================================================== */
+
 .featured {
   padding: 80px 0;
   background: var(--color-background);
 }
 
-/* SERVICES */
-.services {
-  padding: 80px 0;
-  background: var(--color-background);
-}
+/* =====================================================
+   CIUDADES
+===================================================== */
 
-.services__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
-}
-
-.service {
-  background: var(--color-background);
-  padding: 24px;
-  border-radius: 10px;
-  text-align: center;
-}
-
-.service h3 {
-  margin-bottom: 12px;
-  color: var(--color-text);
-}
-
-/* CITIES */
 .cities {
-  padding: 80px 0;
+  padding: 80px 0 90px;
+  overflow: hidden;
+  background: var(--color-background);
+}
+
+.cities .container {
+  width: min(1120px, 90%);
+  margin: 0 auto;
+}
+
+.cities__header {
+  margin-bottom: 38px;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 430px);
+  align-items: start;
+  gap: 60px;
+}
+
+.cities__header .section-title {
+  margin-bottom: 0;
+}
+
+.cities__description {
+  margin: 0;
+
+  color: var(--color-info);
+  font-size: 20px;
+  line-height: 1.55;
 }
 
 .cities__grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: start;
+  gap: 16px;
 }
+
+/* =====================================================
+   TARJETA DE CIUDAD
+===================================================== */
 
 .city {
-  background: var(--color-background);
-  color: var(--color-text);
-  padding: 40px;
-  border-radius: 10px;
-  text-align: center;
-  font-weight: bold;
+  height: 265px;
+  padding: 22px 18px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  position: relative;
+  overflow: hidden;
+
+  color: #ffffff;
+  text-decoration: none;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  border-radius: 4px;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.18);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
 }
 
+.city::before {
+  content: "";
 
-@media (max-width: 768px) {
-  .featured,
-  .services,
-  .cities {
-    padding: 34px 0;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+
+  background: linear-gradient(
+    180deg,
+    rgba(0, 57, 120, 0.12) 0%,
+    rgba(0, 0, 0, 0.25) 45%,
+    rgba(0, 0, 0, 0.62) 100%
+  );
+}
+
+.city:hover {
+  transform: translateY(-6px);
+  filter: saturate(1.05);
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.26);
+}
+
+.city:focus-visible {
+  outline: 3px solid var(--color-secondary, #8cc63f);
+  outline-offset: 4px;
+}
+
+.city--down {
+  margin-top: 52px;
+}
+
+.city__content,
+.city__link {
+  position: relative;
+  z-index: 2;
+}
+
+.city__content span {
+  display: block;
+  margin-bottom: 4px;
+
+  font-size: 15px;
+  line-height: 1.1;
+  font-weight: 400;
+}
+
+.city__content strong {
+  display: block;
+
+  font-size: 24px;
+  line-height: 1.1;
+  font-weight: 800;
+}
+
+.city__link {
+  width: fit-content;
+
+  display: inline-flex;
+  align-items: center;
+
+  color: #ffffff;
+
+  font-size: 15px;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+.city__link::after {
+  content: "›";
+  margin-left: 8px;
+  font-size: 22px;
+  line-height: 1;
+}
+
+/* =====================================================
+   TABLETS
+===================================================== */
+
+@media (max-width: 900px) {
+  .about-market {
+    padding: 55px 0 45px;
   }
 
-  .container {
-    width: min(430px, 84%);
+  .about-market__container {
+    grid-template-columns: 1fr;
+    gap: 44px;
+  }
+
+  .about-market__content {
+    order: 1;
+  }
+
+  .about-market__media {
+    order: 2;
+  }
+
+  .about-market__content p {
+    max-width: 100%;
+  }
+
+  .featured-services {
+    padding: 55px 0 60px;
+  }
+
+  .featured-services__container {
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+
+  .featured-services__description {
+    max-width: 100%;
+  }
+
+ 
+
+  .cities__header {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .cities__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .city--down {
+    margin-top: 0;
+  }
+}
+
+/* =====================================================
+   MÓVILES MEDIANOS
+===================================================== */
+
+@media (max-width: 768px) {
+  .container,
+  .about-market__container,
+  .featured-services__container,
+  .cities .container {
+    width: min(100% - 32px, 620px);
+  }
+
+  .featured,
+  .cities {
+    padding: 55px 0;
   }
 
   .section-title {
     margin-bottom: 24px;
   }
 
-  .services__grid {
-    grid-template-columns: 1fr;
-    gap: 18px;
+  .about-market__content p,
+  .about-market__list li,
+  .featured-services__description,
+  .featured-services__list li,
+  .cities__description {
+    font-size: 16px;
   }
 
-  .service {
-    padding: 22px 18px;
-    border-radius: 12px;
+  .about-market__video-placeholder {
+    min-height: 230px;
   }
 
-  .service h3 {
-    font-size: 22px;
-    margin-bottom: 10px;
-  }
+  
 
-  .service p {
-    font-size: 15px;
-    line-height: 1.45;
-  }
-
-  .cities__grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
+  .cities__header {
+    margin-bottom: 30px;
   }
 
   .city {
-    min-height: 96px;
-    font-size: 20px;
+    height: 220px;
     border-radius: 12px;
   }
 }
 
-@media (max-width: 480px) {
+/* =====================================================
+   MÓVILES PEQUEÑOS
+===================================================== */
+
+@media (max-width: 520px) {
+  .container,
+  .about-market__container,
+  .featured-services__container,
+  .cities .container {
+    width: min(100% - 28px, 480px);
+  }
+
+  .about-market {
+    padding: 45px 0 35px;
+  }
+
+  .about-market__container {
+    gap: 36px;
+  }
+
+  .about-market__socials {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .about-market__social-link {
+    min-height: 67px;
+    border-right: 0;
+  }
+
+  .about-market__social-link:nth-child(odd) {
+    border-right: 1px solid rgba(45, 196, 202, 0.2);
+  }
+
+  .about-market__social-link:nth-child(-n + 2) {
+    border-bottom: 1px solid rgba(45, 196, 202, 0.2);
+  }
+
+  .about-market__video-placeholder {
+    min-height: 205px;
+    padding: 22px;
+  }
+
+  .about-market__play {
+    width: 64px;
+    height: 64px;
+  }
+
+  .about-market__video-placeholder strong {
+    font-size: 18px;
+  }
+
+  .about-market__content p {
+    margin-bottom: 22px;
+  }
+
+  .about-market__list {
+    margin-bottom: 26px;
+  }
+
+  .about-market__button,
+  .featured-services__button {
+    width: 100%;
+  }
+
+  .featured-services {
+    padding: 45px 0 50px;
+  }
+
+  .featured-services__title {
+    margin-bottom: 24px;
+  }
+
+  .featured-services__description {
+    margin-bottom: 28px;
+  }
+
+  .featured-services__list {
+    margin-bottom: 30px;
+  }
+
+  .reviews-cta {
+    padding: 28px 22px;
+    gap: 20px;
+    border-radius: 18px;
+  }
+
+  .reviews-cta__icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 15px;
+  }
+
+  .reviews-cta h2 {
+    font-size: 1.65rem;
+  }
+
+  .reviews-cta__button {
+    min-height: 48px;
+  }
+
+  .cities__header {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    margin-bottom: 26px;
+  }
+
+  .cities__header .section-title {
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .cities__description {
+    width: 100%;
+    margin: 0;
+    font-size: 14.5px;
+  }
+
   .cities__grid {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .city {
-    min-height: 82px;
+    height: 215px;
+  }
+
+  .city__content strong {
+    font-size: 23px;
   }
 }
 
+/* =====================================================
+   REDUCIR ANIMACIONES
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .about-market__social-link,
+  .about-market__button,
+  .featured-services__button,
+  .reviews-cta__button,
+  .city {
+    transition: none;
+  }
+}

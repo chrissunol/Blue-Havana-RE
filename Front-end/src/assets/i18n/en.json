@@ -1,9 +1,14 @@
 {
   "NAV": {
+    "HOME": "Home",
     "PROPERTIES": "Properties",
+      "SALE": "Sale",
+      "RENT": "Rent",
+      "BUSINESSES": "Businesses",
     "ABOUT": "About us",
     "CONTACT": "Contact",
-    "CONTACT_PAGE": "Contact us"
+    "DESIGN_RENOVATION": "Design and Renovation",
+    "BLOG": "Blog"
   },
   "CONTACT": {
     "TITLE": "Contact us",
@@ -18,15 +23,58 @@
   "HOME": {
     "TITLE": "Find Your Ideal Home in Cuba",
     "SUBTITLE": "Browse our exclusive property selection",
+    "ABOUT": {
+      "TITLE": "We Are Leaders in the Cuban Real Estate Market",
+      "DESCRIPTION": "With proven experience and an unwavering commitment to excellence, we are the number one choice in the Cuban real estate sector.",
+      "ITEM_1": "Wide Coverage",
+      "ITEM_2": "Expert Advice",
+      "ITEM_3": "Proven Results",
+      "BUTTON": "Contact Us Now"},
+      
+  "SOCIALS": {
+    "NAV_LABEL": "Social media",
+    "INSTAGRAM_LABEL": "Visit Instagram",
+    "FACEBOOK_LABEL": "Visit Facebook",
+    "TELEGRAM_LABEL": "Visit Telegram",
+    "YOUTUBE_LABEL": "Visit YouTube"
+  },
+  "VIDEO": {
+    "TITLE": "YouTube video",
+    "COMING_SOON": "Coming soon"
+  },
+  "REVIEWS": {
+    "EYEBROW": "Real experiences",
+  "GALLERY_TITLE": "What our clients say",
+  "RATING_LABEL": "{{rating}}-star rating",
+  "VERIFIED_CLIENT": "Verified client",
+  "PREVIOUS": "Previous review",
+  "NEXT": "Next review",
+  "GO_TO_REVIEW": "Show review {{number}}",
+  "EMPTY": "There are no published reviews yet.",
+  "BUTTON": "Leave a review"
+  }
+
+    ,
     "FEATURED_TITLE": "Featured Properties",
-  "SERVICES_TITLE": "Our Services",
-  "SERVICE_BUY_SELL_TITLE": "Buying and Selling",
-  "SERVICE_BUY_SELL_TEXT": "We help you find the ideal property or sell your home at the best price.",
-  "SERVICE_RENT_TITLE": "Rentals",
-  "SERVICE_RENT_TEXT": "A wide selection of rental properties adapted to your needs.",
-  "SERVICE_LEGAL_TITLE": "Legal Advice",
-  "SERVICE_LEGAL_TEXT": "Professional support throughout every legal process.",
-  "CITIES_TITLE": "Discover our properties in Havana"
+ "SERVICES": {
+  "TITLE": "Featured Services",
+  "DESCRIPTION": "Discover the full range of services we offer to make your real estate experience exceptional.",
+  "ITEM_1": "Property Management",
+  "ITEM_2": "Valuations",
+  "ITEM_3": "Personalized Advice",
+  "ITEM_4": "Legal Support",
+  "BUTTON": "Contact Us Now"
+},
+   "CITIES_TITLE": "Discover Our Properties in Havana’s Neighborhoods",
+    "CITIES_DESCRIPTION": "Explore our exclusive selection of properties in Havana’s main areas. Each location offers a unique mix of culture, history, and charm.",
+    "CITIES_PROPERTIES_COUNT": "{{count}} Properties",
+    "CITIES_MORE_DETAILS": "More Details",
+    "CITIES": {
+      "PLAYA": "Playa",
+      "VEDADO": "Vedado",
+      "CERRO": "Cerro",
+      "CENTRO_HABANA": "Central Havana"
+    }
   },
   "SEARCH": {
     "ALL": "All",
@@ -48,6 +96,7 @@
     "RENT": "For Rent",
     "PRICE_M2": "per m²",
     "NO_DESCRIPTION": "This property has no description available.",
+    "PUBLISHED_ON": "Published on",
     "ID": "Property ID",
 "AREA": "Property size",
 "TYPE": "Property type",
@@ -110,5 +159,235 @@
   "SERVICE": "Renovation and design. We help you with your project",
   "ADDRESS": "Address",
   "CREATED": "Created by FourBox"
+},
+"DESIGN_RENOVATION": {
+  "HERO": {
+    "EYEBROW": "Design, renovation and value",
+    "TITLE": "We transform properties into extraordinary spaces",
+    "DESCRIPTION": "Discover architectural styles, design solutions, specifications and processes that can increase a property's functionality and value.",
+    "VIEW_PROPERTIES": "View properties",
+    "ABOUT_COMPANY": "Learn about the company",
+    "VISUAL_TITLE": "Design created for better living",
+    "VISUAL_SUBTITLE": "Functionality, aesthetics and value",
+    "CUSTOM_SOLUTIONS": "Customized solutions",
+    "PROPERTY_POTENTIAL": "Properties with potential"
+  },
+  "SERVICES": {
+    "EYEBROW": "Our services",
+    "TITLE": "Solutions to improve every space",
+    "DESCRIPTION": "Every property requires different decisions based on its style, condition, location and use.",
+    "ITEMS": {
+      "ARCHITECTURAL": {
+        "TITLE": "Architectural design",
+        "DESCRIPTION": "Planning of functional spaces, interior layouts and solutions adapted to each property."
+      },
+      "RENOVATION": {
+        "TITLE": "Complete renovation",
+        "DESCRIPTION": "Transformation of homes, apartments and commercial spaces, from structure to finishes."
+      },
+      "INTERIOR": {
+        "TITLE": "Interior design",
+        "DESCRIPTION": "Selection of colors, materials, furniture, lighting and decorative elements."
+      },
+      "CONSULTING": {
+        "TITLE": "Technical consulting",
+        "DESCRIPTION": "Space evaluation, construction recommendations and specification development."
+      }
+    }
+  },
+  "ARCHITECTURE": {
+    "EYEBROW": "Architectural inspiration",
+    "TITLE": "Styles that define a property's personality",
+    "DESCRIPTION": "Each style offers different possibilities for layout, materials, decoration and renovation.",
+    "ITEMS": {
+      "COLONIAL": {
+        "TITLE": "Colonial",
+        "DESCRIPTION": "A style that preserves historical character through courtyards, high ceilings and traditional elements.",
+        "FEATURES": {
+          "ONE": "Interior courtyards and corridors",
+          "TWO": "Wooden doors and windows",
+          "THREE": "Hydraulic or traditional floors"
+        }
+      },
+      "ART_DECO": {
+        "TITLE": "Art Deco",
+        "DESCRIPTION": "Geometry, symmetry and decorative details that bring elegance and personality.",
+        "FEATURES": {
+          "ONE": "Geometric shapes",
+          "TWO": "Metal details",
+          "THREE": "Contrasting colors"
+        }
+      },
+      "MODERN": {
+        "TITLE": "Modern",
+        "DESCRIPTION": "Open spaces, clean lines and a balance between function and aesthetics.",
+        "FEATURES": {
+          "ONE": "Open floor plans",
+          "TWO": "Large windows",
+          "THREE": "Low-maintenance materials"
+        }
+      },
+      "MINIMALIST": {
+        "TITLE": "Minimalist",
+        "DESCRIPTION": "Uncluttered environments, neutral tones and elements selected for their usefulness.",
+        "FEATURES": {
+          "ONE": "Neutral color palette",
+          "TWO": "Functional furniture",
+          "THREE": "Integrated storage"
+        }
+      },
+      "TROPICAL": {
+        "TITLE": "Tropical",
+        "DESCRIPTION": "Solutions that promote ventilation, natural light and connection with the outdoors.",
+        "FEATURES": {
+          "ONE": "Cross ventilation",
+          "TWO": "Integrated vegetation",
+          "THREE": "Weather-resistant materials"
+        }
+      },
+      "CONTEMPORARY": {
+        "TITLE": "Contemporary",
+        "DESCRIPTION": "A modern combination of technology, comfort, energy efficiency and design.",
+        "FEATURES": {
+          "ONE": "Efficient lighting",
+          "TWO": "Integrated technology",
+          "THREE": "Contemporary materials"
+        }
+      }
+    }
+  },
+  "SPECIFICATIONS": {
+    "EYEBROW": "Specifications",
+    "TITLE": "Important considerations before renovating",
+    "DESCRIPTION": "A renovation requires clear decisions about materials, layout, lighting, functionality and durability.",
+    "ITEMS": {
+      "QUALITY": {
+        "TITLE": "Quality and durability",
+        "DESCRIPTION": "Selection of suitable materials according to use, location and property conditions."
+      },
+      "COMFORT": {
+        "TITLE": "Comfort and functionality",
+        "DESCRIPTION": "Layouts designed to improve circulation, storage and use of space."
+      },
+      "LIGHTING": {
+        "TITLE": "Lighting and ventilation",
+        "DESCRIPTION": "Use of natural light, cross ventilation and efficient lighting solutions."
+      },
+      "PLANNING": {
+        "TITLE": "Clear specifications",
+        "DESCRIPTION": "Definition of finishes, dimensions, materials and scope before starting each stage."
+      }
+    }
+  },
+  "PROCESS": {
+    "EYEBROW": "Our process",
+    "TITLE": "From the initial analysis to the final result",
+    "DESCRIPTION": "A successful renovation begins with clear objectives, defined specifications and an organized process.",
+    "STEPS": {
+      "EVALUATION": {
+        "TITLE": "Initial evaluation",
+        "DESCRIPTION": "We analyze the property's condition, possibilities and the client's needs."
+      },
+      "PROPOSAL": {
+        "TITLE": "Design proposal",
+        "DESCRIPTION": "We define the layout, style, materials, colors and overall project scope."
+      },
+      "PLANNING": {
+        "TITLE": "Planning",
+        "DESCRIPTION": "We organize priorities, specifications, execution phases and estimated timelines."
+      },
+      "EXECUTION": {
+        "TITLE": "Execution and monitoring",
+        "DESCRIPTION": "We monitor each stage to ensure the result follows the design and specifications."
+      }
+    }
+  },
+  "CTA": {
+    "EYEBROW": "Discover new possibilities",
+    "TITLE": "A property can become much more",
+    "DESCRIPTION": "Request information about design, renovation and the potential of a property.",
+    "BUTTON": "Request information",
+    "WHATSAPP_MESSAGE": "Hello, I would like information about your design and renovation services."
+  }
+},
+"BLOG": {
+  "HERO": {
+    "EYEBROW": "Ideas, advice and current topics",
+    "TITLE": "Real estate knowledge for better decisions",
+    "DESCRIPTION": "Explore articles about buying, selling, investing, architecture, design and property renovation."
+  },
+  "SEARCH": {
+    "LABEL": "Search articles",
+    "PLACEHOLDER": "Search by title, category or topic...",
+    "CLEAR": "Clear search"
+  },
+  "CATEGORIES": {
+    "LABEL": "Blog categories",
+    "ALL": "All",
+    "MARKET": "Real estate market",
+    "RENOVATION": "Design and renovation",
+    "INVESTMENT": "Investment",
+    "ARCHITECTURE": "Architecture",
+    "TIPS": "Advice"
+  },
+  "FEATURED": "Featured article",
+  "MINUTES": "min read",
+  "READ_ARTICLE": "Read article",
+  "READ_MORE": "Read more",
+  "RESULTS": "articles",
+  "LATEST": {
+    "EYEBROW": "Latest publications",
+    "TITLE": "Recent articles"
+  },
+  "EMPTY": {
+    "TITLE": "No articles found",
+    "DESCRIPTION": "Try another search or select a different category.",
+    "CLEAR": "Clear filters"
+  },
+  "ARTICLES": {
+    "RENOVATE_OLD_HOUSE": {
+      "TITLE": "How to renovate an old house without losing its character",
+      "EXCERPT": "Discover how to preserve a home's historic elements while improving its functionality, safety and comfort."
+    },
+    "ARCHITECTURAL_STYLES": {
+      "TITLE": "Architectural styles that can increase a property's value",
+      "EXCERPT": "Learn which colonial, modern, tropical and contemporary features can make a property more attractive."
+    },
+    "BUYING_MISTAKES": {
+      "TITLE": "Common mistakes to avoid when buying a property",
+      "EXCERPT": "A good real estate decision requires reviewing documents, location, structural condition and additional expenses."
+    },
+    "INVESTMENT_PROPERTY": {
+      "TITLE": "How to evaluate a property before investing",
+      "EXCERPT": "We analyze location, demand, profitability, expenses and appreciation potential before making an investment."
+    },
+    "MARKET_TRENDS": {
+      "TITLE": "Trends transforming the real estate market",
+      "EXCERPT": "Technology, energy efficiency and new buyer preferences are changing the industry."
+    },
+    "VALUE_IMPROVEMENTS": {
+      "TITLE": "Improvements that can increase a home's value",
+      "EXCERPT": "Kitchens, bathrooms, lighting, paint and layout can directly influence the perception and price of a property."
+    }
+  }
+},
+"BLOG_DETAIL": {
+  "BACK": "Back to blog",
+  "WRITTEN_BY": "Written by",
+  "AUTHOR_DESCRIPTION": "Content prepared by the Blue Havana Real Estate team to help buyers, sellers and investors make informed decisions.",
+  "HIGHLIGHTS": {
+    "EYEBROW": "Important points",
+    "TITLE": "Things to remember"
+  },
+  "RELATED": {
+    "EYEBROW": "Continue learning",
+    "TITLE": "Related articles",
+    "VIEW_ALL": "View all articles"
+  },
+  "NOT_FOUND": {
+    "TITLE": "Article not found",
+    "DESCRIPTION": "The article you are trying to open does not exist or is no longer available.",
+    "BUTTON": "Return to blog"
+  }
 }
 }

@@ -12,60 +12,102 @@
 <section class="about">
   <div class="container">
     <div class="about__intro">
+      <div class="about__block">
       <div>
-        <h2>{{ 'ABOUT.ORIGIN_TITLE' | translate }}</h2>
+
+        <app-section-title
+        class="section-title"
+        [title]="'ABOUT.ORIGIN_TITLE' | translate"
+      />
+
 
         <p>{{ info.originText }}</p>
       </div>
 
-      <div class="about__image">
-        <img src="assets/images/about-1.png" alt="Blue Havana Real Estate" />
-      </div>
-    </div>
+      <div class="about-market__images">
+      <img
+        class="about-market__img about-market__img--main"
+        src="assets/images/house-1867187_640.jpg"
+        alt="Casa principal"
+      />
 
-    <article class="about__block">
-      <h2>{{ 'ABOUT.TODAY_TITLE' | translate }}</h2>
+      <img
+        class="about-market__img about-market__img--secondary"
+        src="assets/images/house-1836070_640.jpg"
+        alt="Casa secundaria"
+      />
+    </div>
+</div>
+    <article >
+      <app-section-title
+        class="section-title"
+        [title]="'ABOUT.TODAY_TITLE' | translate"
+      />
+
       <p>{{ info.todayText }}</p>
     </article>
 
-    <article class="about__block">
-      <h2>{{ 'ABOUT.FUTURE_TITLE' | translate }}</h2>
+    <article >
+      <app-section-title
+        class="section-title"
+        [title]="'ABOUT.FUTURE_TITLE' | translate"
+      />
       <p>{{ info.futureText }}</p>
     </article>
 
-    <article class="about__block">
-      <h2>{{ 'ABOUT.HOW_TITLE' | translate }}</h2>
+    <article >
+      <app-section-title
+        class="section-title"
+        [title]="'ABOUT.HOW_TITLE' | translate"
+      />
 
       <div class="values">
         <div class="value-card">
-          <span>♡</span>
+          <lucide-icon [img]="HandHart" class="card-icon" size="50"></lucide-icon>
           <h3>{{ 'ABOUT.VALUE_TRUST_TITLE' | translate }}</h3>
           <p>{{ 'ABOUT.VALUE_TRUST_TEXT' | translate }}</p>
         </div>
 
         <div class="value-card">
-          <span>⏱</span>
+          <lucide-icon [img]="Timer" class="card-icon" size="50"></lucide-icon>
           <h3>{{ 'ABOUT.VALUE_EXPERIENCE_TITLE' | translate }}</h3>
           <p>{{ 'ABOUT.VALUE_EXPERIENCE_TEXT' | translate }}</p>
         </div>
 
         <div class="value-card">
-          <span>🤝</span>
+          <lucide-icon [img]="HandShake" class="card-icon" size="50"></lucide-icon>
           <h3>{{ 'ABOUT.VALUE_COMMITMENT_TITLE' | translate }}</h3>
           <p>{{ 'ABOUT.VALUE_COMMITMENT_TEXT' | translate }}</p>
         </div>
       </div>
     </article>
 
-    <div class="about__where">
-      <div class="about__image">
-        <img src="assets/images/about-2.png" alt="Blue Havana Real Estate" />
-      </div>
-
+    
+    <div class="about__block">
       <div>
-        <h2>{{ 'ABOUT.WHERE_TITLE' | translate }}</h2>
+        <app-section-title
+        class="section-title"
+        [title]="'ABOUT.WHERE_TITLE' | translate"
+      />
         <p>{{ info.whereText }}</p>
       </div>
+
+      <div class="featured-services__images">
+      <img
+        class="featured-services__img featured-services__img--small"
+        src="assets/images/holiday-4741622_640.jpg"
+        alt="Servicio inmobiliario"
+      />
+
+      <img
+        class="featured-services__img featured-services__img--main"
+        src="assets/images/holiday-4741622_640.jpg"
+        alt="Casa con piscina"
+      />
     </div>
-  </div>
+    </div>
+
+    </div>
+    </div>
 </section>
+  

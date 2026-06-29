@@ -1,17 +1,57 @@
 <header class="navbar">
   <div class="navbar__container">
-    <a class="navbar__logo" routerLink="/superadmin/propiedades" (click)="closeMenu()">
-      <img src="assets/logotipo_bhre.svg" alt="Blue Havana Real Estate" />
+    <a
+      class="navbar__logo"
+      [routerLink]="homeLink"
+      (click)="closeMenu()"
+    >
+      <img
+        class="navbar__logo-icon"
+        src="assets/icono_bhre.svg"
+        alt=""
+        aria-hidden="true"
+      />
+
+      <img
+        class="navbar__logo-text"
+        src="assets/logotipo_bhre.svg"
+        alt="Blue Havana Real Estate"
+      />
     </a>
 
-    <nav class="navbar__links" [class.open]="isMenuOpen">
+    <nav
+      class="navbar__links"
+      [class.open]="isMenuOpen"
+    >
       @if (isSuperadmin) {
+        <a
+          routerLink="/superadmin/dashboard"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{
+            exact: true
+          }"
+          (click)="closeMenu()"
+        >
+          Dashboard
+        </a>
+
         <a
           routerLink="/superadmin/admins"
           routerLinkActive="active"
           (click)="closeMenu()"
         >
           Credenciales
+        </a>
+      } @else {
+        <a
+          routerLink="/admin/dashboard"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{
+            exact: true
+          }"
+          (click)="closeMenu()"
+        >
+          Dashboard
         </a>
       }
 
@@ -30,17 +70,44 @@
       >
         Propiedades
       </a>
+
+      <a
+        routerLink="/admin/blog"
+        routerLinkActive="active"
+        (click)="closeMenu()"
+      >
+        Blog
+      </a>
     </nav>
 
-    
+    <div class="navbar__right">
+      <button
+        type="button"
+        class="navbar__contact"
+        (click)="logout()"
+      >
+        <lucide-icon
+          [img]="LogOut"
+          class="navbar__contact-icon"
+          [size]="17"
+        ></lucide-icon>
 
-      <button type="button" class="navbar__contact" (click)="logout()">
-        Cerrar sesión
+        <span>Cerrar sesión</span>
       </button>
 
-      <button type="button" class="navbar__burger" (click)="toggleMenu()" aria-label="Menu">
-        <span class="navbar__burger-icon">☰</span>
+      <button
+        type="button"
+        class="navbar__burger"
+        aria-label="Abrir menú de administración"
+        [attr.aria-expanded]="isMenuOpen"
+        (click)="toggleMenu()"
+      >
+        <lucide-icon
+          [img]="isMenuOpen ? XIcon : Menu"
+          class="navbar__burger-icon"
+          [size]="29"
+        ></lucide-icon>
       </button>
     </div>
-  
+  </div>
 </header>

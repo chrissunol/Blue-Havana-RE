@@ -36,20 +36,23 @@
       </div>
 
       @for (admin of filteredAdmins; track admin.id) {
-      <div class="admins-table__row">
-        <span>{{ admin.id }}</span>
-        <span>{{ admin.fullName }}</span>
-        <span>{{ admin.phone }}</span>
-        <span>{{ admin.email }}</span>
-        <span>{{ admin.username }}</span>
-        <span>************</span>
+  <div class="admins-table__row">
+    <span>{{ admin.id }}</span>
+    <span>{{ admin.fullName }}</span>
+    <span>{{ admin.phone }}</span>
+    <span>{{ admin.email }}</span>
+    <span>{{ admin.username }}</span>
+    <span>************</span>
 
-        <div class="row-actions">
-          <button type="button" (click)="openEditModal(admin)">✎</button>
-          <button type="button" (click)="openDeleteModal(admin)">🗑</button>
-        </div>
-      </div>
+    <div class="row-actions">
+      <button type="button" (click)="openEditModal(admin)">✎</button>
+
+      @if (!isSuperadmin(admin)) {
+        <button type="button" (click)="openDeleteModal(admin)">🗑</button>
       }
+    </div>
+  </div>
+}
     </div>
   </div>
 </section>
@@ -88,7 +91,7 @@
           <div class="password-box">
             <input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="*******" />
             <button type="button" (click)="showPassword = !showPassword">
-              ⊘
+              
             </button>
           </div>
         </div>
@@ -122,3 +125,14 @@
   </div>
 </div>
 }
+<app-confirmation-modal
+  [isOpen]="adminDeleteModalOpen"
+  action="delete"
+  title="Eliminar administrador"
+  message="¿Estás seguro de que deseas eliminar las credenciales de este administrador?"
+  confirmLabel="Sí, eliminar administrador"
+  warningMessage="El administrador perderá el acceso al sistema. Esta acción no se puede deshacer."
+  [itemName]="pendingAdminName"
+  (confirmed)="confirmDeleteAdmin()"
+  (cancelled)="cancelDeleteAdmin()"
+></app-confirmation-modal>

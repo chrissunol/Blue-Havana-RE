@@ -1,0 +1,286 @@
+<main class="design-page">
+  <section class="design-hero">
+    <div class="design-hero__content">
+      <span class="design-eyebrow">
+        {{ 'DESIGN_RENOVATION.HERO.EYEBROW' | translate }}
+      </span>
+
+      <h1>
+        {{ 'DESIGN_RENOVATION.HERO.TITLE' | translate }}
+      </h1>
+
+      <p>
+        {{ 'DESIGN_RENOVATION.HERO.DESCRIPTION' | translate }}
+      </p>
+
+      <div class="design-hero__actions">
+        <a
+          routerLink="/propiedades"
+          class="design-button design-button--primary"
+        >
+          {{ 'DESIGN_RENOVATION.HERO.VIEW_PROPERTIES' | translate }}
+
+          <lucide-icon
+            [img]="ArrowRightIcon"
+            size="18"
+          ></lucide-icon>
+        </a>
+
+        <a
+          routerLink="/quienes-somos"
+          class="design-button design-button--secondary"
+        >
+          {{ 'DESIGN_RENOVATION.HERO.ABOUT_COMPANY' | translate }}
+        </a>
+      </div>
+    </div>
+
+    <div class="design-hero__visual">
+      <div class="design-hero__visual-main">
+        <lucide-icon
+          [img]="DraftingIcon"
+          size="66"
+        ></lucide-icon>
+
+        <strong>
+          {{ 'DESIGN_RENOVATION.HERO.VISUAL_TITLE' | translate }}
+        </strong>
+
+        <span>
+          {{ 'DESIGN_RENOVATION.HERO.VISUAL_SUBTITLE' | translate }}
+        </span>
+      </div>
+
+      <article
+        class="design-hero__floating-card design-hero__floating-card--top"
+      >
+        <lucide-icon
+          [img]="CheckIcon"
+          size="22"
+        ></lucide-icon>
+
+        <strong>
+          {{ 'DESIGN_RENOVATION.HERO.CUSTOM_SOLUTIONS' | translate }}
+        </strong>
+      </article>
+
+      <article
+        class="design-hero__floating-card design-hero__floating-card--bottom"
+      >
+        <lucide-icon
+          [img]="BuildingIcon"
+          size="22"
+        ></lucide-icon>
+
+        <strong>
+          {{ 'DESIGN_RENOVATION.HERO.PROPERTY_POTENTIAL' | translate }}
+        </strong>
+      </article>
+    </div>
+  </section>
+
+  <section class="design-section">
+    <div class="design-section__heading">
+      <span class="design-eyebrow">
+        {{ 'DESIGN_RENOVATION.SERVICES.EYEBROW' | translate }}
+      </span>
+
+      <h2>
+        {{ 'DESIGN_RENOVATION.SERVICES.TITLE' | translate }}
+      </h2>
+
+      <p>
+        {{ 'DESIGN_RENOVATION.SERVICES.DESCRIPTION' | translate }}
+      </p>
+    </div>
+
+    <div class="service-grid">
+      @for (service of services; track service.titleKey) {
+        <article class="service-card">
+          <span class="service-card__icon">
+            <lucide-icon
+              [img]="service.icon"
+              size="27"
+            ></lucide-icon>
+          </span>
+
+          <h3>
+            {{ service.titleKey | translate }}
+          </h3>
+
+          <p>
+            {{ service.descriptionKey | translate }}
+          </p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="design-section design-section--soft">
+    <div class="design-section__heading">
+      <span class="design-eyebrow">
+        {{ 'DESIGN_RENOVATION.ARCHITECTURE.EYEBROW' | translate }}
+      </span>
+
+      <h2>
+        {{ 'DESIGN_RENOVATION.ARCHITECTURE.TITLE' | translate }}
+      </h2>
+
+      <p>
+        {{ 'DESIGN_RENOVATION.ARCHITECTURE.DESCRIPTION' | translate }}
+      </p>
+    </div>
+
+    <div class="architecture-grid">
+      @for (
+        architecturalStyle of architecturalStyles;
+        track architecturalStyle.titleKey
+      ) {
+        <article class="architecture-card">
+          <div class="architecture-card__header">
+            <span class="architecture-card__icon">
+              <lucide-icon
+                [img]="architecturalStyle.icon"
+                size="28"
+              ></lucide-icon>
+            </span>
+
+            <h3>
+              {{ architecturalStyle.titleKey | translate }}
+            </h3>
+          </div>
+
+          <p>
+            {{ architecturalStyle.descriptionKey | translate }}
+          </p>
+
+          <ul>
+            @for (
+              featureKey of architecturalStyle.featureKeys;
+              track featureKey
+            ) {
+              <li>
+                <lucide-icon
+                  [img]="CheckIcon"
+                  size="16"
+                ></lucide-icon>
+
+                <span>
+                  {{ featureKey | translate }}
+                </span>
+              </li>
+            }
+          </ul>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="design-section">
+    <div class="design-section__heading">
+      <span class="design-eyebrow">
+        {{ 'DESIGN_RENOVATION.SPECIFICATIONS.EYEBROW' | translate }}
+      </span>
+
+      <h2>
+        {{ 'DESIGN_RENOVATION.SPECIFICATIONS.TITLE' | translate }}
+      </h2>
+
+      <p>
+        {{ 'DESIGN_RENOVATION.SPECIFICATIONS.DESCRIPTION' | translate }}
+      </p>
+    </div>
+
+    <div class="specification-grid">
+      @for (
+        specification of specifications;
+        track specification.titleKey
+      ) {
+        <article class="specification-card">
+          <span class="specification-card__icon">
+            <lucide-icon
+              [img]="specification.icon"
+              size="24"
+            ></lucide-icon>
+          </span>
+
+          <div>
+            <h3>
+              {{ specification.titleKey | translate }}
+            </h3>
+
+            <p>
+              {{ specification.descriptionKey | translate }}
+            </p>
+          </div>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="design-section design-process">
+    <div class="design-process__introduction">
+      <span class="design-eyebrow">
+        {{ 'DESIGN_RENOVATION.PROCESS.EYEBROW' | translate }}
+      </span>
+
+      <h2>
+        {{ 'DESIGN_RENOVATION.PROCESS.TITLE' | translate }}
+      </h2>
+
+      <p>
+        {{ 'DESIGN_RENOVATION.PROCESS.DESCRIPTION' | translate }}
+      </p>
+    </div>
+
+    <div class="design-process__steps">
+      @for (step of processSteps; track step.number) {
+        <article class="process-step">
+          <span class="process-step__number">
+            {{ step.number }}
+          </span>
+
+          <div>
+            <h3>
+              {{ step.titleKey | translate }}
+            </h3>
+
+            <p>
+              {{ step.descriptionKey | translate }}
+            </p>
+          </div>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="design-cta">
+    <div>
+      <span class="design-eyebrow">
+        {{ 'DESIGN_RENOVATION.CTA.EYEBROW' | translate }}
+      </span>
+
+      <h2>
+        {{ 'DESIGN_RENOVATION.CTA.TITLE' | translate }}
+      </h2>
+
+      <p>
+        {{ 'DESIGN_RENOVATION.CTA.DESCRIPTION' | translate }}
+      </p>
+    </div>
+
+    <a
+      [href]="whatsappLink"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="design-button design-button--light"
+    >
+      {{ 'DESIGN_RENOVATION.CTA.BUTTON' | translate }}
+
+      <lucide-icon
+        [img]="ArrowRightIcon"
+        size="18"
+      ></lucide-icon>
+    </a>
+  </section>
+</main>

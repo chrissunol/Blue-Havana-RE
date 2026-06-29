@@ -50,6 +50,12 @@ export class AdminService {
     };
   }
 
+  private toBackendDelete(user: Admin) {
+    return {
+      is_active: false,
+    };
+  }
+
   getUsers(): Observable<Admin[]> {
     return this.http.get<any[]>(`${this.apiUrl}/users`).pipe(
       map(users => users.map(user => this.fromBackendUser(user)))
@@ -85,6 +91,6 @@ export class AdminService {
   }
 
   delete(id: string): Observable<any> {
-    return this.deactivateUser(id);
-  }
+  return this.http.delete<any>(`${this.apiUrl}/users/${id}`);
+}
 }

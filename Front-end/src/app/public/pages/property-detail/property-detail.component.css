@@ -2,14 +2,22 @@ html {
   scroll-behavior: smooth;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 .property-detail {
   padding: 42px 20px 70px;
   background: var(--color-background);
   color: var(--color-primary);
+  overflow-x: hidden;
 }
 
-.container {
-  /*width: min(1120px, 90%);*/
+.property-detail .container {
+  width: min(1120px, 90%);
+  max-width: 100%;
   margin: 0 auto;
 }
 
@@ -18,6 +26,7 @@ html {
   justify-content: space-between;
   gap: 40px;
   margin-bottom: 22px;
+  min-width: 0;
 }
 
 .breadcrumb {
@@ -29,6 +38,8 @@ html {
   font-size: 34px;
   margin: 0 0 12px;
   line-height: 1.15;
+  overflow-wrap: break-word;
+  color: var(--color-info);
 }
 
 .location {
@@ -38,9 +49,38 @@ html {
   gap: 8px;
 }
 
+.location span {
+  color: var(--color-info);
+  font-size: 20px;
+}
+
+.publication-date {
+  margin: -6px 0 18px;
+
+  display: flex;
+  gap: 8px;
+
+  color: var(--color-info);
+}
+
+.publication-date span {
+  color: var(--color-info);
+  font-size: 15px;
+  line-height: 1.4;
+  opacity: 0.8;
+}
+
+.publication-date lucide-icon {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 auto;
+
+  color: var(--color-primary);
+}
+
 .detail-icon {
   width: 18px;
-  height: 18px;
+  height: 20px;
   flex: 0 0 auto;
 }
 
@@ -52,7 +92,7 @@ html {
 
 .status {
   display: inline-block;
-  background: var(--color-primary);
+  background: var(--color-secondary);
   color: #fff;
   padding: 12px 30px;
   border-radius: 6px;
@@ -63,6 +103,8 @@ html {
 .price-box {
   text-align: right;
   padding-top: 70px;
+  flex: 0 0 auto;
+  color: var(--color-info);
 }
 
 .price-box strong {
@@ -72,7 +114,7 @@ html {
 }
 
 .price-box span {
-  font-size: 17px;
+  font-size: 20px;
 }
 
 .detail-tabs {
@@ -88,26 +130,49 @@ html {
   font-weight: 500;
 }
 
+/* GALERÍA CORREGIDA */
 .gallery {
   display: grid;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: minmax(0, 3fr) minmax(260px, 1fr);
   gap: 16px;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
 }
 
-.gallery img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.gallery__main,
+.gallery__side,
+.gallery__extra {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .gallery__main {
   height: 470px;
+  border-radius: 16px;
 }
 
 .gallery__side {
+  height: 470px;
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
   gap: 16px;
+}
+
+.gallery__side > *,
+.gallery__extra {
+  min-height: 0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.gallery img {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
 }
 
 .gallery__extra {
@@ -153,12 +218,19 @@ html {
 .section-block p {
   font-size: 17px;
   line-height: 1.55;
+  color: var(--color-info);
 }
 
 .details-features {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 90px;
+}
+
+.details-features strong, 
+.details-features span {
+  color: var(--color-info);
+  font-size: 20px;
 }
 
 .details-table div {
@@ -180,6 +252,7 @@ html {
   list-style: none;
   padding: 0;
   margin: 0;
+  color: var(--color-info);
 }
 
 .features-list li {
@@ -190,7 +263,9 @@ html {
 .features-list li::before {
   content: '✓ ';
   font-weight: 800;
+  color: var(--color-primary);
 }
+
 
 .similar {
   margin-top: 58px;
@@ -236,6 +311,17 @@ html {
   .gallery__main {
     height: 330px;
   }
+
+  .gallery__side {
+    height: auto;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: none;
+  }
+
+  .gallery__side > *,
+  .gallery__extra {
+    height: 170px;
+  }
 }
 
 /* MOBILE */
@@ -269,6 +355,9 @@ html {
   .location {
     font-size: 15px;
   }
+  .publication-date span {
+  font-size: 14px;
+}
 
   .status {
     font-size: 18px;
@@ -309,34 +398,26 @@ html {
   .gallery {
     grid-template-columns: 1fr;
     gap: 12px;
+    overflow: visible;
   }
 
   .gallery__main {
-    height: auto;
-  }
-
-  .gallery__main img {
     height: 280px;
     border-radius: 14px;
   }
 
   .gallery__side {
+    height: auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: none;
     gap: 12px;
   }
 
-  .gallery__side img,
-  .gallery__extra img {
-    height: 120px;
-    border-radius: 12px;
-  }
-
+  .gallery__side > *,
   .gallery__extra {
     height: 120px;
     border-radius: 12px;
-    overflow: hidden;
   }
 
   .gallery__extra span {
@@ -422,13 +503,12 @@ html {
     font-size: 29px;
   }
 
-  .gallery__main img {
+  .gallery__main {
     height: 240px;
   }
 
-  .gallery__side img,
-  .gallery__extra,
-  .gallery__extra img {
+  .gallery__side > *,
+  .gallery__extra {
     height: 105px;
   }
 

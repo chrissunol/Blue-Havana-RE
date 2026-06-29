@@ -1,0 +1,128 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.dashboard-stat {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 90px;
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  border: 1px solid rgba(0, 57, 120, 0.1);
+  border-radius: 16px;
+
+  box-shadow: 0 10px 28px rgba(0, 57, 120, 0.06);
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+.dashboard-stat:hover {
+  transform: translateY(-2px);
+
+  border-color: rgba(0, 57, 120, 0.18);
+
+  box-shadow: 0 15px 34px rgba(0, 57, 120, 0.1);
+}
+
+.dashboard-stat__icon {
+  display: grid;
+  place-items: center;
+
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+
+  border-radius: 14px;
+}
+
+.dashboard-stat__icon lucide-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard-stat__content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  min-width: 0;
+}
+
+.dashboard-stat__content strong {
+  color: var(--color-info);
+
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 800;
+}
+
+.dashboard-stat__content span {
+  overflow: hidden;
+
+  color: #6b7885;
+
+  font-size: 13px;
+  line-height: 1.35;
+  font-weight: 600;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Pendientes */
+
+.dashboard-stat--pending .dashboard-stat__icon {
+  color: #926400;
+  background: #fff3c4;
+}
+
+/* Publicadas */
+
+.dashboard-stat--approved .dashboard-stat__icon {
+  color: #18724a;
+  background: #dff6e9;
+}
+
+/* Vendidas */
+
+.dashboard-stat--sold .dashboard-stat__icon {
+  color: #003978;
+  background: #e4edf7;
+}
+
+/* Rentadas */
+
+.dashboard-stat--rented .dashboard-stat__icon {
+  color: #4d7e24;
+  background: #e6f4dc;
+}
+
+@media (max-width: 520px) {
+  .dashboard-stat {
+    min-height: 82px;
+    padding: 17px;
+  }
+
+  .dashboard-stat__icon {
+    width: 43px;
+    height: 43px;
+    flex-basis: 43px;
+  }
+
+  .dashboard-stat__content strong {
+    font-size: 25px;
+  }
+}

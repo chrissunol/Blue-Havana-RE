@@ -28,10 +28,12 @@
       [properties]="properties"
       mode="admin"
       (view)="goToDetail($event)"
-      (edit)="openEditModal($event)"
-      (remove)="deleteProperty($event)"
+      (edit)="requestEditConfirmation($event)"
+      (remove)="requestDeleteConfirmation($event)"
       (toggleVisibility)="toggleVisibility($event)"
       (toggleFeatured)="toggleFeatured($event)"
+      (toggleTransactionStatus)="toggleTransactionStatus($event)"
+      (transactionRequested)="openTransactionModal($event)"
     />
 
   </div>
@@ -59,3 +61,25 @@
     </div>
   </div>
 }
+
+<app-transaction-modal
+  [isOpen]="transactionModalOpen"
+  [property]="selectedProperty"
+  [transactionType]="selectedTransactionType"
+  (closed)="closeTransactionModal()"
+  (confirmed)="confirmTransaction($event)"
+></app-transaction-modal>
+
+<app-confirmation-modal
+  [isOpen]="confirmationModalOpen"
+  [action]="confirmationAction"
+  [itemName]="
+    propertyPendingAction
+      ? languageService.translateText(
+          propertyPendingAction.title
+        )
+      : ''
+  "
+  (confirmed)="confirmPropertyAction()"
+  (cancelled)="closeConfirmationModal()"
+></app-confirmation-modal>

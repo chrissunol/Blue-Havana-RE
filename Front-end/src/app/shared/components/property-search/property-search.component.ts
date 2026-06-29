@@ -4,6 +4,7 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { PropertyFilters } from '../../../core/models/property-filter.model';
 import { TranslateModule } from '@ngx-translate/core';
 import { HAVANA_MUNICIPALITIES, PROPERTY_TYPES } from '../../../core/constants/property-options';
+import { LucideAngularModule, ChevronDown } from 'lucide-angular';
 
 
 type Dropdown = 'category' | 'location' | 'bedrooms' | 'bathrooms' | 'features' | null;
@@ -11,7 +12,7 @@ type Dropdown = 'category' | 'location' | 'bedrooms' | 'bathrooms' | 'features' 
 @Component({
   selector: 'app-property-search',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TranslateModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule, LucideAngularModule],
   templateUrl: './property-search.component.html',
   styleUrl: './property-search.component.css',
 })
@@ -19,6 +20,7 @@ export class PropertySearchComponent {
   @Output() search = new EventEmitter<PropertyFilters>();
 
   openDropdown: Dropdown = null;
+  readonly ChevronDown = ChevronDown;
 
   categories = PROPERTY_TYPES;
   locations = HAVANA_MUNICIPALITIES;

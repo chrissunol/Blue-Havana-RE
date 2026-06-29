@@ -1,0 +1,107 @@
+@if (isOpen) {
+  <div
+    class="confirmation-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="confirmation-modal-title"
+  >
+    <button
+      type="button"
+      class="confirmation-modal__backdrop"
+      aria-label="Cerrar confirmación"
+      (click)="cancel()"
+    ></button>
+
+    <section
+      class="confirmation-modal__content"
+      [class.confirmation-modal__content--delete]="
+        isDeleteAction
+      "
+    >
+      <button
+        type="button"
+        class="confirmation-modal__close"
+        aria-label="Cerrar"
+        (click)="cancel()"
+      >
+        <lucide-icon
+          [img]="CloseIcon"
+          size="20"
+        ></lucide-icon>
+      </button>
+
+      <span
+        class="confirmation-modal__icon"
+        [class.confirmation-modal__icon--delete]="
+          isDeleteAction
+        "
+      >
+        <lucide-icon
+          [img]="
+            isDeleteAction
+              ? DeleteIcon
+              : EditIcon
+          "
+          size="28"
+        ></lucide-icon>
+      </span>
+
+      <h2 id="confirmation-modal-title">
+        {{ modalTitle }}
+      </h2>
+
+      <p>
+        {{ modalMessage }}
+      </p>
+
+      @if (itemName) {
+        <strong class="confirmation-modal__property">
+          {{ itemName }}
+        </strong>
+      }
+
+      @if (isDeleteAction && warningMessage) {
+        <div class="confirmation-modal__warning">
+          <lucide-icon
+            [img]="WarningIcon"
+            size="18"
+          ></lucide-icon>
+
+          <span>
+            {{ warningMessage }}
+          </span>
+        </div>
+      }
+
+      <div class="confirmation-modal__actions">
+        <button
+          type="button"
+          class="confirmation-modal__cancel"
+          (click)="cancel()"
+        >
+          Cancelar
+        </button>
+
+        <button
+          type="button"
+          class="confirmation-modal__confirm"
+          [class.confirmation-modal__confirm--delete]="
+            isDeleteAction
+          "
+          (click)="confirm()"
+        >
+          <lucide-icon
+            [img]="
+              isDeleteAction
+                ? DeleteIcon
+                : EditIcon
+            "
+            size="18"
+          ></lucide-icon>
+
+          {{ confirmButtonLabel }}
+        </button>
+      </div>
+    </section>
+  </div>
+}

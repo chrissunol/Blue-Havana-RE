@@ -1,23 +1,10 @@
 <form class="property-search" [formGroup]="form" (ngSubmit)="onSearch()">
-  <div class="property-search__tabs">
-    <button type="button" [class.active]="form.value.operation === 'all'" (click)="setOperation('all')">
-      {{ 'SEARCH.ALL' | translate }}
-    </button>
-
-    <button type="button" [class.active]="form.value.operation === 'rent'" (click)="setOperation('rent')">
-      {{ 'SEARCH.RENT' | translate }}
-    </button>
-
-    <button type="button" [class.active]="form.value.operation === 'sale'" (click)="setOperation('sale')">
-      {{ 'SEARCH.SALE' | translate }}
-    </button>
-  </div>
 
   <div class="property-search__filters">
     <div class="filter">
       <button type="button" (click)="toggleDropdown('category')">
         {{ form.value.category || ('SEARCH.TYPE' | translate) }}
-        <span>⌄</span>
+        <lucide-icon [img]="ChevronDown" class="navbar__icon"></lucide-icon>
       </button>
 
       @if (openDropdown === 'category') {
@@ -34,7 +21,7 @@
     <div class="filter">
       <button type="button" (click)="toggleDropdown('location')">
         {{ form.value.location || ('SEARCH.ZONE' | translate) }}
-        <span>⌄</span>
+       <lucide-icon [img]="ChevronDown" class="navbar__icon"></lucide-icon>
       </button>
 
       @if (openDropdown === 'location') {
@@ -51,7 +38,7 @@
     <div class="filter">
       <button type="button" (click)="toggleDropdown('bedrooms')">
         {{ form.value.bedrooms || ('SEARCH.BEDROOMS' | translate) }}
-        <span>⌄</span>
+        <lucide-icon [img]="ChevronDown" class="navbar__icon"></lucide-icon>
       </button>
 
       @if (openDropdown === 'bedrooms') {
@@ -65,7 +52,7 @@
     <div class="filter">
       <button type="button" (click)="toggleDropdown('bathrooms')">
         {{ form.value.bathrooms || ('SEARCH.BATHROOMS' | translate) }}
-        <span>⌄</span>
+        <lucide-icon [img]="ChevronDown" class="navbar__icon"></lucide-icon>
       </button>
 
       @if (openDropdown === 'bathrooms') {
@@ -79,7 +66,7 @@
     <div class="filter" formGroupName="features">
       <button type="button" (click)="toggleDropdown('features')">
         {{ 'SEARCH.OTHER' | translate }}
-        <span>⌄</span>
+        <lucide-icon [img]="ChevronDown" class="navbar__icon"></lucide-icon >
       </button>
 
       @if (openDropdown === 'features') {

@@ -36,6 +36,7 @@
   max-width: 430px;
   font-size: 17px;
   margin-bottom: 28px;
+
 }
 
 .about-hero__button {
@@ -73,31 +74,60 @@
 }
 
 .about p {
-  font-size: 17px;
+  color: var(--color-info);
+  font-size: 20px;
   line-height: 1.45;
   margin: 0 0 22px;
 }
 
+.about-market__images {
+  position: relative;
+  min-height: 330px;
+}
+
+.about-market__img {
+  display: block;
+  object-fit: cover;
+  border-radius: 18px;
+}
+
+.about-market__img--main {
+  width: 365px;
+  height: 305px;
+}
+
+.about-market__img--secondary {
+  position: absolute;
+  right: 5px;
+  left: 100px;
+  bottom: 0px;
+
+  width: 300px;
+  height: 215px;
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.12);
+}
+
+
 .about__intro,
 .about__where {
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
+  /* grid-template-columns: 1.1fr 0.9fr; */
   gap: 70px;
   align-items: center;
   margin-bottom: 70px;
 }
 
-.about__image img {
-  width: 100%;
-  display: block;
-  border-radius: 18px;
-}
+
 
 .about__block {
-  margin-bottom: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .values {
+  
+  margin-top: 15px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 28px;
@@ -127,6 +157,41 @@
   margin: 0;
 }
 
+.about__block .about__image {
+  margin: 40px 0;
+}
+.featured-services__images {
+  position: relative;
+  min-height: 330px;
+}
+
+.featured-services__img {
+  display: block;
+  object-fit: cover;
+  border-radius: 18px;
+}
+
+.featured-services__img--main {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  width: 365px;
+  height: 310px;
+}
+
+.featured-services__img--small {
+  position: absolute;
+  right: 100px;
+  bottom: 0px;
+  z-index: 2;
+
+  width: 300px;
+  height: 215px;
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.12);
+}
+
+
 /* TABLET */
 @media (max-width: 900px) {
   .about__intro,
@@ -142,8 +207,12 @@
   .about-hero h1 {
     font-size: 36px;
   }
-}
 
+  .about__block {
+    flex-direction: column;
+    gap: 36px;
+}
+}
 /* MOBILE */
 @media (max-width: 768px) {
   .container {
@@ -231,10 +300,8 @@
 
   .value-card {
     display: grid;
-    grid-template-columns: 62px 1fr;
     gap: 4px 14px;
     align-items: center;
-    text-align: left;
     padding: 14px 16px;
     border-width: 2px;
     border-radius: 6px;
@@ -282,4 +349,39 @@
   .about h2 {
     font-size: 28px;
   }
+
+  .about-market__images {
+    min-height: 300px;
+  }
+
+  .about-market__img--main {
+    width: 78%;
+    height: 270px;
+  }
+
+  .about-market__img--secondary {
+    width: 62%;
+    height: 190px;
+    right: 0;
+    bottom: 0;
+  }
+
+
+  .featured-services__images {
+    min-height: 245px;
+  }
+
+  .featured-services__img--main {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    border-radius: 16px;
+  }
+
+  .featured-services__img--small {
+    width: 64%;
+    height: 145px;
+    border-radius: 16px;
+  }
+
 }

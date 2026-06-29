@@ -1,0 +1,421 @@
+<main class="blog-admin">
+  <header class="blog-admin__header">
+    <div>
+      <span class="blog-admin__eyebrow">
+        Administración
+      </span>
+
+      <h1>Gestión del Blog</h1>
+
+      <p>
+        Crea, edita, publica y organiza los
+        artículos del sitio web.
+      </p>
+    </div>
+
+    <a
+      routerLink="crear"
+      class="blog-admin__create"
+    >
+      <lucide-icon
+        [img]="AddIcon"
+        size="19"
+      ></lucide-icon>
+
+      Crear artículo
+    </a>
+  </header>
+
+  <section class="blog-admin__stats">
+    <article class="blog-stat">
+      <span class="blog-stat__icon">
+        <lucide-icon
+          [img]="ArticleIcon"
+          size="22"
+        ></lucide-icon>
+      </span>
+
+      <div>
+        <strong>{{ totalArticles }}</strong>
+        <span>Total de artículos</span>
+      </div>
+    </article>
+
+    <article class="blog-stat">
+      <span class="blog-stat__icon">
+        <lucide-icon
+          [img]="PublishedIcon"
+          size="22"
+        ></lucide-icon>
+      </span>
+
+      <div>
+        <strong>
+          {{ publishedArticlesCount }}
+        </strong>
+
+        <span>Publicados</span>
+      </div>
+    </article>
+
+    <article class="blog-stat">
+      <span class="blog-stat__icon">
+        <lucide-icon
+          [img]="DraftIcon"
+          size="22"
+        ></lucide-icon>
+      </span>
+
+      <div>
+        <strong>
+          {{ draftArticlesCount }}
+        </strong>
+
+        <span>Borradores</span>
+      </div>
+    </article>
+
+    <article class="blog-stat">
+      <span class="blog-stat__icon">
+        <lucide-icon
+          [img]="FeaturedIcon"
+          size="22"
+        ></lucide-icon>
+      </span>
+
+      <div>
+        <strong>
+          {{ featuredArticleCount }}
+        </strong>
+
+        <span>Destacados</span>
+      </div>
+    </article>
+  </section>
+
+  <section class="blog-admin__panel">
+    <div class="blog-admin__filters">
+      <div class="blog-admin__search">
+        <lucide-icon
+          [img]="SearchIcon"
+          size="19"
+        ></lucide-icon>
+
+        <input
+          type="search"
+          [value]="searchTerm"
+          placeholder="Buscar artículos..."
+          aria-label="Buscar artículos"
+          (input)="onSearch($event)"
+        />
+
+        @if (searchTerm) {
+          <button
+            type="button"
+            aria-label="Limpiar búsqueda"
+            (click)="clearSearch()"
+          >
+            <lucide-icon
+              [img]="CloseIcon"
+              size="17"
+            ></lucide-icon>
+          </button>
+        }
+      </div>
+
+      <select
+        [(ngModel)]="selectedStatus"
+        aria-label="Filtrar por estado"
+      >
+        <option value="all">
+          Todos los estados
+        </option>
+
+        <option value="published">
+          Publicados
+        </option>
+
+        <option value="draft">
+          Borradores
+        </option>
+      </select>
+
+      <select
+        [(ngModel)]="selectedCategory"
+        aria-label="Filtrar por categoría"
+      >
+        @for (
+          option of categoryOptions;
+          track option.value
+        ) {
+          <option [value]="option.value">
+            {{ option.label }}
+          </option>
+        }
+      </select>
+
+      @if (hasActiveFilters) {
+        <button
+          type="button"
+          class="blog-admin__clear-filters"
+          (click)="clearFilters()"
+        >
+          Limpiar filtros
+        </button>
+      }
+    </div>
+
+    @if (filteredArticles.length > 0) {
+      <div class="blog-table-wrapper">
+        <table class="blog-table">
+          <thead>
+            <tr>
+              <th>Artículo</th>
+              <th>Categoría</th>
+              <th>Estado</th>
+              <th>Lectura</th>
+              <th>Fecha</th>
+              <th>Destacado</th>
+              <th class="blog-table__actions-heading">
+                Acciones
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (
+              article of filteredArticles;
+              track article.id
+            ) {
+              <tr>
+                <td>
+                  <div class="blog-table__article">
+                    <img
+                      [src]="article.coverImage"
+                      [alt]="article.title.es"
+                      (error)="handleImageError($event)"
+                    />
+
+                    <div>
+                      <strong>
+                        {{ article.title.es }}
+                      </strong>
+
+                      <span>
+                        {{ article.author }}
+                      </span>
+                    </div>
+                  </div>
+                </td>
+
+                <td>
+                  <span class="blog-table__category">
+                    {{
+                      getCategoryLabel(
+                        article.category
+                      )
+                    }}
+                  </span>
+                </td>
+
+                <td>
+                  <span
+                    class="blog-table__status"
+                    [class.blog-table__status--published]="
+                      article.status === 'published'
+                    "
+                    [class.blog-table__status--draft]="
+                      article.status === 'draft'
+                    "
+                  >
+                    {{
+                      getStatusLabel(
+                        article.status
+                      )
+                    }}
+                  </span>
+                </td>
+
+                <td>
+                  <span class="blog-table__reading">
+                    <lucide-icon
+                      [img]="ClockIcon"
+                      size="15"
+                    ></lucide-icon>
+
+                    {{ article.readingTime }} min
+                  </span>
+                </td>
+
+                <td>
+                  {{
+                    (
+                      article.publishedAt ||
+                      article.createdAt
+                    ) | date:'dd/MM/yyyy'
+                  }}
+                </td>
+
+                <td>
+                  <button
+                    type="button"
+                    class="blog-action blog-action--featured"
+                    [class.blog-action--active]="
+                      article.featured
+                    "
+                    [attr.aria-label]="
+                      article.featured
+                        ? 'Quitar artículo destacado'
+                        : 'Marcar como destacado'
+                    "
+                    (click)="toggleFeatured(article)"
+                  >
+                    <lucide-icon
+                      [img]="FeaturedIcon"
+                      size="18"
+                    ></lucide-icon>
+                  </button>
+                </td>
+
+                <td>
+                  <div class="blog-table__actions">
+                    <button
+                      type="button"
+                      class="blog-action"
+                      [attr.aria-label]="
+                        article.status === 'published'
+                          ? 'Convertir en borrador'
+                          : 'Publicar artículo'
+                      "
+                      (click)="
+                        toggleArticleStatus(article)
+                      "
+                    >
+                      <lucide-icon
+                        [img]="
+                          article.status === 'published'
+                            ? DraftIcon
+                            : PublishedIcon
+                        "
+                        size="18"
+                      ></lucide-icon>
+                    </button>
+
+                    <a
+                      [routerLink]="[
+                        article.id,
+                        'editar'
+                      ]"
+                      class="blog-action"
+                      aria-label="Editar artículo"
+                    >
+                      <lucide-icon
+                        [img]="EditIcon"
+                        size="18"
+                      ></lucide-icon>
+                    </a>
+
+                    <button
+                      type="button"
+                      class="blog-action blog-action--danger"
+                      aria-label="Eliminar artículo"
+                      (click)="requestDelete(article)"
+                    >
+                      <lucide-icon
+                        [img]="DeleteIcon"
+                        size="18"
+                      ></lucide-icon>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    } @else {
+      <div class="blog-admin__empty">
+        <span>
+          <lucide-icon
+            [img]="ArticleIcon"
+            size="35"
+          ></lucide-icon>
+        </span>
+
+        <h2>No se encontraron artículos</h2>
+
+        <p>
+          No existen artículos que coincidan con
+          los filtros seleccionados.
+        </p>
+
+        @if (hasActiveFilters) {
+          <button
+            type="button"
+            (click)="clearFilters()"
+          >
+            Limpiar filtros
+          </button>
+        }
+      </div>
+    }
+  </section>
+
+  @if (deleteCandidate; as articleToDelete) {
+    <div
+      class="delete-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="delete-title"
+    >
+      <button
+        type="button"
+        class="delete-modal__backdrop"
+        aria-label="Cerrar ventana"
+        (click)="cancelDelete()"
+      ></button>
+
+      <section class="delete-modal__content">
+        <span class="delete-modal__icon">
+          <lucide-icon
+            [img]="DeleteIcon"
+            size="26"
+          ></lucide-icon>
+        </span>
+
+        <h2 id="delete-title">
+          Eliminar artículo
+        </h2>
+
+        <p>
+          ¿Estás seguro de que deseas eliminar
+          <strong>
+            {{ articleToDelete.title.es }}
+          </strong>?
+        </p>
+
+        <p class="delete-modal__warning">
+          Esta acción no se puede deshacer.
+        </p>
+
+        <div class="delete-modal__actions">
+          <button
+            type="button"
+            class="delete-modal__cancel"
+            (click)="cancelDelete()"
+          >
+            Cancelar
+          </button>
+
+          <button
+            type="button"
+            class="delete-modal__confirm"
+            (click)="confirmDelete()"
+          >
+            Eliminar
+          </button>
+        </div>
+      </section>
+    </div>
+  }
+</main>

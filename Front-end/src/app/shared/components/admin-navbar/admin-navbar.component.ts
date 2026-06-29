@@ -1,40 +1,64 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import {
+  RouterLink,
+  RouterLinkActive
+} from '@angular/router';
+import {
+  LucideAngularModule,
+  LogOut,
+  Menu,
+  FileText,
+  X
+} from 'lucide-angular';
+
 import { AuthService } from '../../../core/services/auth.service';
-import { RouterLink } from '@angular/router';
-import { LucideAngularModule, Menu, LogOut } from 'lucide-angular';
 
 @Component({
   selector: 'app-admin-navbar',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule, RouterLink],
+  imports: [
+    CommonModule,
+    LucideAngularModule,
+    RouterLink,
+    RouterLinkActive
+  ],
   templateUrl: './admin-navbar.component.html',
-  styleUrl: './admin-navbar.component.css',
+  styleUrl: './admin-navbar.component.css'
 })
 export class AdminNavbarComponent {
   isMenuOpen = false;
+
   readonly Menu = Menu;
   readonly LogOut = LogOut;
+  readonly BlogIcon = FileText;
+  readonly XIcon = X;
 
-  constructor(private authService: AuthService) {}
+
+  constructor(
+    private readonly authService: AuthService
+  ) {}
 
   get isSuperadmin(): boolean {
     return this.authService.getUserRole() === 'superadmin';
   }
 
   get homeLink(): string {
-    return this.isSuperadmin ? '/superadmin/propiedades' : '/admin/propiedades';
+    return this.isSuperadmin
+      ? '/superadmin/dashboard'
+      : '/admin/propiedades';
   }
 
-  logout() {
+  logout(): void {
+    this.closeMenu();
     this.authService.logout();
   }
 
-  toggleMenu() {
+  toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  closeMenu() {
+  closeMenu(): void {
     this.isMenuOpen = false;
   }
 }

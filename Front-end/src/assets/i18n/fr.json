@@ -1,9 +1,14 @@
 {
   "NAV": {
+    "HOME": "Accueil",
     "PROPERTIES": "Propriétés",
+    "SALE": "Vente",
+    "RENT": "Location",
+    "BUSINESSES": "Affaires",
     "ABOUT": "Qui sommes-nous ?",
     "CONTACT": "Contacter",
-    "CONTACT_PAGE": "Contact"
+    "DESIGN_RENOVATION": "Design et Rénovation",
+    "BLOG": "Blog"
   },
   "CONTACT": {
     "TITLE": "Contactez-nous",
@@ -18,15 +23,56 @@
   "HOME": {
     "TITLE": "Trouvez votre maison idéale à Cuba",
     "SUBTITLE": "Découvrez notre sélection exclusive de propriétés",
+     "ABOUT": {
+      "TITLE": "Nous Sommes Leaders du Marché Immobilier Cubain",
+      "DESCRIPTION": "Avec une expérience éprouvée et un engagement inébranlable envers l'excellence, nous sommes le choix numéro un dans le secteur immobilier cubain.",
+      "ITEM_1": "Large Couverture",
+      "ITEM_2": "Conseil Expert",
+      "ITEM_3": "Résultats Prouvés",
+      "BUTTON": "Contactez-nous Maintenant"},
+      "SOCIALS": {
+    "NAV_LABEL": "Réseaux sociaux",
+    "INSTAGRAM_LABEL": "Visiter Instagram",
+    "FACEBOOK_LABEL": "Visiter Facebook",
+    "TELEGRAM_LABEL": "Visiter Telegram",
+    "YOUTUBE_LABEL": "Visiter YouTube"
+  },
+  "VIDEO": {
+    "TITLE": "Vidéo YouTube",
+    "COMING_SOON": "Bientôt disponible"
+  },
+  "REVIEWS": {
+      "EYEBROW": "Expériences réelles",
+  "GALLERY_TITLE": "Ce que disent nos clients",
+  "RATING_LABEL": "Évaluation de {{rating}} étoiles",
+  "VERIFIED_CLIENT": "Client vérifié",
+  "PREVIOUS": "Avis précédent",
+  "NEXT": "Avis suivant",
+  "GO_TO_REVIEW": "Afficher l’avis {{number}}",
+  "EMPTY": "Il n’y a pas encore d’avis publiés.",
+  "BUTTON": "Laisser un avis"
+  
+    },
     "FEATURED_TITLE": "Propriétés en vedette",
-  "SERVICES_TITLE": "Nos services",
-  "SERVICE_BUY_SELL_TITLE": "Achat et vente",
-  "SERVICE_BUY_SELL_TEXT": "Nous vous aidons à trouver la propriété idéale ou à vendre votre bien au meilleur prix.",
-  "SERVICE_RENT_TITLE": "Location",
-  "SERVICE_RENT_TEXT": "Une large sélection de propriétés à louer adaptées à vos besoins.",
-  "SERVICE_LEGAL_TITLE": "Conseil juridique",
-  "SERVICE_LEGAL_TEXT": "Un accompagnement professionnel dans toutes les démarches juridiques.",
-  "CITIES_TITLE": "Découvrez nos propriétés à La Havane"
+  "SERVICES": {
+  "TITLE": "Services en Vedette",
+  "DESCRIPTION": "Découvrez la gamme complète de services que nous offrons pour rendre votre expérience immobilière exceptionnelle.",
+  "ITEM_1": "Gestion de Propriétés",
+  "ITEM_2": "Évaluations",
+  "ITEM_3": "Conseil Personnalisé",
+  "ITEM_4": "Support Juridique",
+  "BUTTON": "Contactez-nous Maintenant"
+},
+  "CITIES_TITLE": "Découvrez nos propriétés dans les quartiers de La Havane",
+    "CITIES_DESCRIPTION": "Explorez notre sélection exclusive de propriétés dans les principales zones de La Havane. Chaque emplacement offre un mélange unique de culture, d’histoire et de charme.",
+    "CITIES_PROPERTIES_COUNT": "{{count}} Propriétés",
+    "CITIES_MORE_DETAILS": "Plus de détails",
+    "CITIES": {
+      "PLAYA": "Playa",
+      "VEDADO": "Vedado",
+      "CERRO": "Cerro",
+      "CENTRO_HABANA": "Centre de La Havane"
+    }
   },
   "SEARCH": {
     "ALL": "Tout",
@@ -57,7 +103,8 @@
 "FURNISHED": "Meublée",
 "PHOTOS": "Photos",
 "VIEW_MORE": "Voir plus",
-"ZONE": "Zone"
+"ZONE": "Zone",
+"PUBLISHED_ON": "Publié le"
   },
   "FEATURES": {
     "GARAGE": "Garage",
@@ -110,5 +157,235 @@
   "SERVICE": "Rénovation et design. Nous vous aidons avec votre projet",
   "ADDRESS": "Adresse",
   "CREATED": "Créé par FourBox"
+},
+"DESIGN_RENOVATION": {
+  "HERO": {
+    "EYEBROW": "Design, rénovation et valeur",
+    "TITLE": "Nous transformons les propriétés en espaces extraordinaires",
+    "DESCRIPTION": "Découvrez les styles architecturaux, les solutions de design, les spécifications et les processus pouvant améliorer la fonctionnalité et la valeur d'une propriété.",
+    "VIEW_PROPERTIES": "Voir les propriétés",
+    "ABOUT_COMPANY": "Découvrir l'entreprise",
+    "VISUAL_TITLE": "Un design pensé pour mieux vivre",
+    "VISUAL_SUBTITLE": "Fonctionnalité, esthétique et valeur",
+    "CUSTOM_SOLUTIONS": "Solutions personnalisées",
+    "PROPERTY_POTENTIAL": "Propriétés à fort potentiel"
+  },
+  "SERVICES": {
+    "EYEBROW": "Nos services",
+    "TITLE": "Des solutions pour améliorer chaque espace",
+    "DESCRIPTION": "Chaque propriété nécessite des décisions différentes selon son style, son état, son emplacement et son usage.",
+    "ITEMS": {
+      "ARCHITECTURAL": {
+        "TITLE": "Conception architecturale",
+        "DESCRIPTION": "Planification d'espaces fonctionnels, aménagement intérieur et solutions adaptées à chaque propriété."
+      },
+      "RENOVATION": {
+        "TITLE": "Rénovation complète",
+        "DESCRIPTION": "Transformation de maisons, appartements et espaces commerciaux, de la structure aux finitions."
+      },
+      "INTERIOR": {
+        "TITLE": "Design d'intérieur",
+        "DESCRIPTION": "Sélection des couleurs, matériaux, meubles, éclairage et éléments décoratifs."
+      },
+      "CONSULTING": {
+        "TITLE": "Conseil technique",
+        "DESCRIPTION": "Évaluation des espaces, recommandations de construction et définition des spécifications."
+      }
+    }
+  },
+  "ARCHITECTURE": {
+    "EYEBROW": "Inspiration architecturale",
+    "TITLE": "Des styles qui définissent la personnalité d'une propriété",
+    "DESCRIPTION": "Chaque style offre différentes possibilités d'aménagement, de matériaux, de décoration et de rénovation.",
+    "ITEMS": {
+      "COLONIAL": {
+        "TITLE": "Colonial",
+        "DESCRIPTION": "Un style qui préserve le caractère historique grâce aux patios, aux hauts plafonds et aux éléments traditionnels.",
+        "FEATURES": {
+          "ONE": "Patios intérieurs et couloirs",
+          "TWO": "Portes et fenêtres en bois",
+          "THREE": "Sols hydrauliques ou traditionnels"
+        }
+      },
+      "ART_DECO": {
+        "TITLE": "Art déco",
+        "DESCRIPTION": "Géométrie, symétrie et détails décoratifs apportant élégance et personnalité.",
+        "FEATURES": {
+          "ONE": "Formes géométriques",
+          "TWO": "Détails métalliques",
+          "THREE": "Couleurs contrastées"
+        }
+      },
+      "MODERN": {
+        "TITLE": "Moderne",
+        "DESCRIPTION": "Espaces ouverts, lignes épurées et équilibre entre fonctionnalité et esthétique.",
+        "FEATURES": {
+          "ONE": "Plans ouverts",
+          "TWO": "Grandes fenêtres",
+          "THREE": "Matériaux faciles d'entretien"
+        }
+      },
+      "MINIMALIST": {
+        "TITLE": "Minimaliste",
+        "DESCRIPTION": "Espaces épurés, tons neutres et éléments sélectionnés pour leur utilité.",
+        "FEATURES": {
+          "ONE": "Palette de couleurs neutres",
+          "TWO": "Mobilier fonctionnel",
+          "THREE": "Rangements intégrés"
+        }
+      },
+      "TROPICAL": {
+        "TITLE": "Tropical",
+        "DESCRIPTION": "Solutions favorisant la ventilation, la lumière naturelle et la relation avec l'extérieur.",
+        "FEATURES": {
+          "ONE": "Ventilation croisée",
+          "TWO": "Végétation intégrée",
+          "THREE": "Matériaux résistants au climat"
+        }
+      },
+      "CONTEMPORARY": {
+        "TITLE": "Contemporain",
+        "DESCRIPTION": "Une combinaison moderne de technologie, de confort, d'efficacité énergétique et de design.",
+        "FEATURES": {
+          "ONE": "Éclairage efficace",
+          "TWO": "Technologie intégrée",
+          "THREE": "Matériaux contemporains"
+        }
+      }
+    }
+  },
+  "SPECIFICATIONS": {
+    "EYEBROW": "Spécifications",
+    "TITLE": "Éléments importants avant une rénovation",
+    "DESCRIPTION": "Une rénovation nécessite des décisions claires concernant les matériaux, l'aménagement, l'éclairage, la fonctionnalité et la durabilité.",
+    "ITEMS": {
+      "QUALITY": {
+        "TITLE": "Qualité et durabilité",
+        "DESCRIPTION": "Sélection de matériaux adaptés à l'usage, à l'emplacement et aux conditions de la propriété."
+      },
+      "COMFORT": {
+        "TITLE": "Confort et fonctionnalité",
+        "DESCRIPTION": "Aménagements conçus pour améliorer la circulation, le rangement et l'utilisation de l'espace."
+      },
+      "LIGHTING": {
+        "TITLE": "Éclairage et ventilation",
+        "DESCRIPTION": "Utilisation de la lumière naturelle, ventilation croisée et solutions d'éclairage efficaces."
+      },
+      "PLANNING": {
+        "TITLE": "Spécifications claires",
+        "DESCRIPTION": "Définition des finitions, dimensions, matériaux et portée avant chaque étape."
+      }
+    }
+  },
+  "PROCESS": {
+    "EYEBROW": "Notre processus",
+    "TITLE": "De l'analyse initiale au résultat final",
+    "DESCRIPTION": "Une rénovation réussie commence par des objectifs clairs, des spécifications définies et un processus organisé.",
+    "STEPS": {
+      "EVALUATION": {
+        "TITLE": "Évaluation initiale",
+        "DESCRIPTION": "Nous analysons l'état de la propriété, ses possibilités et les besoins du client."
+      },
+      "PROPOSAL": {
+        "TITLE": "Proposition de design",
+        "DESCRIPTION": "Nous définissons l'aménagement, le style, les matériaux, les couleurs et la portée générale du projet."
+      },
+      "PLANNING": {
+        "TITLE": "Planification",
+        "DESCRIPTION": "Nous organisons les priorités, les spécifications, les phases d'exécution et les délais estimés."
+      },
+      "EXECUTION": {
+        "TITLE": "Exécution et suivi",
+        "DESCRIPTION": "Nous suivons chaque étape afin de garantir le respect du design et des spécifications."
+      }
+    }
+  },
+  "CTA": {
+    "EYEBROW": "Découvrez de nouvelles possibilités",
+    "TITLE": "Une propriété peut devenir bien plus",
+    "DESCRIPTION": "Demandez des informations sur le design, la rénovation et le potentiel d'une propriété.",
+    "BUTTON": "Demander des informations",
+    "WHATSAPP_MESSAGE": "Bonjour, je souhaite obtenir des informations sur vos services de design et de rénovation."
+  }
+},
+"BLOG": {
+  "HERO": {
+    "EYEBROW": "Ideas, advice and current topics",
+    "TITLE": "Real estate knowledge for better decisions",
+    "DESCRIPTION": "Explore articles about buying, selling, investing, architecture, design and property renovation."
+  },
+  "SEARCH": {
+    "LABEL": "Search articles",
+    "PLACEHOLDER": "Search by title, category or topic...",
+    "CLEAR": "Clear search"
+  },
+  "CATEGORIES": {
+    "LABEL": "Blog categories",
+    "ALL": "All",
+    "MARKET": "Real estate market",
+    "RENOVATION": "Design and renovation",
+    "INVESTMENT": "Investment",
+    "ARCHITECTURE": "Architecture",
+    "TIPS": "Advice"
+  },
+  "FEATURED": "Featured article",
+  "MINUTES": "min read",
+  "READ_ARTICLE": "Read article",
+  "READ_MORE": "Read more",
+  "RESULTS": "articles",
+  "LATEST": {
+    "EYEBROW": "Latest publications",
+    "TITLE": "Recent articles"
+  },
+  "EMPTY": {
+    "TITLE": "No articles found",
+    "DESCRIPTION": "Try another search or select a different category.",
+    "CLEAR": "Clear filters"
+  },
+  "ARTICLES": {
+    "RENOVATE_OLD_HOUSE": {
+      "TITLE": "How to renovate an old house without losing its character",
+      "EXCERPT": "Discover how to preserve a home's historic elements while improving its functionality, safety and comfort."
+    },
+    "ARCHITECTURAL_STYLES": {
+      "TITLE": "Architectural styles that can increase a property's value",
+      "EXCERPT": "Learn which colonial, modern, tropical and contemporary features can make a property more attractive."
+    },
+    "BUYING_MISTAKES": {
+      "TITLE": "Common mistakes to avoid when buying a property",
+      "EXCERPT": "A good real estate decision requires reviewing documents, location, structural condition and additional expenses."
+    },
+    "INVESTMENT_PROPERTY": {
+      "TITLE": "How to evaluate a property before investing",
+      "EXCERPT": "We analyze location, demand, profitability, expenses and appreciation potential before making an investment."
+    },
+    "MARKET_TRENDS": {
+      "TITLE": "Trends transforming the real estate market",
+      "EXCERPT": "Technology, energy efficiency and new buyer preferences are changing the industry."
+    },
+    "VALUE_IMPROVEMENTS": {
+      "TITLE": "Improvements that can increase a home's value",
+      "EXCERPT": "Kitchens, bathrooms, lighting, paint and layout can directly influence the perception and price of a property."
+    }
+  }
+},
+"BLOG_DETAIL": {
+  "BACK": "Retour au blog",
+  "WRITTEN_BY": "Écrit par",
+  "AUTHOR_DESCRIPTION": "Contenu préparé par l'équipe de Blue Havana Real Estate pour aider les acheteurs, vendeurs et investisseurs à prendre des décisions éclairées.",
+  "HIGHLIGHTS": {
+    "EYEBROW": "Points importants",
+    "TITLE": "Éléments à retenir"
+  },
+  "RELATED": {
+    "EYEBROW": "Continuez à apprendre",
+    "TITLE": "Articles similaires",
+    "VIEW_ALL": "Voir tous les articles"
+  },
+  "NOT_FOUND": {
+    "TITLE": "Article introuvable",
+    "DESCRIPTION": "L'article que vous essayez d'ouvrir n'existe pas ou n'est plus disponible.",
+    "BUTTON": "Retourner au blog"
+  }
 }
 }

@@ -1,0 +1,237 @@
+@if (isOpen && transaction) {
+  <div
+    class="transaction-detail__overlay"
+    role="presentation"
+    (click)="closeFromBackdrop($event)"
+  >
+    <section
+      class="transaction-detail"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="transaction-detail-title"
+      (click)="$event.stopPropagation()"
+    >
+      <button
+        type="button"
+        class="transaction-detail__close"
+        aria-label="Cerrar detalle"
+        (click)="closeModal()"
+      >
+        <lucide-icon
+          [img]="CloseIcon"
+          size="21"
+        ></lucide-icon>
+      </button>
+
+      <header class="transaction-detail__header">
+        <span
+          class="transaction-detail__main-icon"
+          [class.transaction-detail__main-icon--rent]="!isSale"
+          aria-hidden="true"
+        >
+          <lucide-icon
+            [img]="isSale ? BuildingIcon : KeyIcon"
+            size="25"
+          ></lucide-icon>
+        </span>
+
+        <div>
+          <span class="transaction-detail__eyebrow">
+            Detalle de operación
+          </span>
+
+          <h2 id="transaction-detail-title">
+            {{ typeLabel }} registrada
+          </h2>
+
+          <p>
+            Información guardada en el historial de la inmobiliaria.
+          </p>
+        </div>
+      </header>
+
+      <div class="transaction-detail__property">
+        <span>Propiedad</span>
+
+        <strong>
+          {{ transaction.propertyTitle }}
+        </strong>
+
+        <small>
+          ID: {{ transaction.propertyId }}
+        </small>
+      </div>
+
+      <div class="transaction-detail__grid">
+
+        <article class="transaction-detail__item">
+          <span class="transaction-detail__item-icon">
+            <lucide-icon
+              [img]="isSale ? BuildingIcon : KeyIcon"
+              size="19"
+            ></lucide-icon>
+          </span>
+
+          <div>
+            <span>Tipo de operación</span>
+            <strong>{{ typeLabel }}</strong>
+          </div>
+        </article>
+
+        <article class="transaction-detail__item">
+          <span class="transaction-detail__item-icon">
+            <lucide-icon
+              [img]="MoneyIcon"
+              size="19"
+            ></lucide-icon>
+          </span>
+
+          <div>
+            <span>{{ amountLabel }}</span>
+
+            <strong>
+              ${{ transaction.finalAmount | number:'1.0-2' }}
+
+              @if (!isSale) {
+                <small>/ mes</small>
+              }
+            </strong>
+          </div>
+        </article>
+
+        <article class="transaction-detail__item">
+          <span class="transaction-detail__item-icon">
+            <lucide-icon
+              [img]="ClientIcon"
+              size="19"
+            ></lucide-icon>
+          </span>
+
+          <div>
+            <span>Cliente</span>
+
+            <strong>
+              {{ transaction.clientName || 'No registrado' }}
+            </strong>
+          </div>
+        </article>
+
+        <article class="transaction-detail__item">
+          <span class="transaction-detail__item-icon">
+            <lucide-icon
+              [img]="CalendarIcon"
+              size="19"
+            ></lucide-icon>
+          </span>
+
+          <div>
+            <span>Fecha de cierre</span>
+
+            <strong>
+              {{ transaction.closedAt | date:'dd/MM/yyyy' }}
+            </strong>
+          </div>
+        </article>
+
+        <article class="transaction-detail__item">
+          <span class="transaction-detail__item-icon">
+            <lucide-icon
+              [img]="ClientIcon"
+              size="19"
+            ></lucide-icon>
+          </span>
+
+          <div>
+            <span>Registrado por</span>
+
+            <strong>
+              {{ transaction.createdBy }}
+            </strong>
+          </div>
+        </article>
+
+        <article class="transaction-detail__item">
+          <span
+            class="transaction-detail__item-icon"
+            [class.transaction-detail__item-icon--cancelled]="
+              transaction.status === 'cancelled'
+            "
+          >
+            <lucide-icon
+              [img]="
+                transaction.status === 'cancelled'
+                  ? CancelledIcon
+                  : CompletedIcon
+              "
+              size="19"
+            ></lucide-icon>
+          </span>
+
+          <div>
+            <span>Estado</span>
+
+            <strong
+              class="transaction-detail__status"
+              [class.transaction-detail__status--cancelled]="
+                transaction.status === 'cancelled'
+              "
+            >
+              {{ statusLabel }}
+            </strong>
+          </div>
+        </article>
+
+      </div>
+
+      <article class="transaction-detail__notes">
+        <div class="transaction-detail__notes-title">
+          <lucide-icon
+            [img]="NotesIcon"
+            size="19"
+          ></lucide-icon>
+
+          <strong>Notas</strong>
+        </div>
+
+        <p>
+          {{
+            transaction.notes ||
+            'No se agregaron notas para esta operación.'
+          }}
+        </p>
+      </article>
+
+      @if (transaction.status === 'cancelled') {
+        <article class="transaction-detail__cancelled">
+          <strong>Información de cancelación</strong>
+
+          <div>
+            <span>Cancelada por:</span>
+            <p>{{ transaction.cancelledBy || 'No registrado' }}</p>
+          </div>
+
+          <div>
+            <span>Fecha de cancelación:</span>
+
+            <p>
+              {{
+                transaction.cancelledAt
+                  ? (transaction.cancelledAt | date:'dd/MM/yyyy, h:mm a')
+                  : 'No registrada'
+              }}
+            </p>
+          </div>
+        </article>
+      }
+
+      <footer class="transaction-detail__footer">
+        <button
+          type="button"
+          (click)="closeModal()"
+        >
+          Cerrar
+        </button>
+      </footer>
+    </section>
+  </div>
+}

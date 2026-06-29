@@ -1,0 +1,285 @@
+<main class="blog-page">
+  <section class="blog-hero">
+    <div class="blog-hero__content">
+      <span class="blog-eyebrow">
+        {{ 'BLOG.HERO.EYEBROW' | translate }}
+      </span>
+
+      <h1>
+        {{ 'BLOG.HERO.TITLE' | translate }}
+      </h1>
+
+      <p>
+        {{ 'BLOG.HERO.DESCRIPTION' | translate }}
+      </p>
+    </div>
+
+    <div
+      class="blog-hero__icon"
+      aria-hidden="true"
+    >
+      <lucide-icon
+        [img]="BlogIcon"
+        size="55"
+      ></lucide-icon>
+    </div>
+  </section>
+
+  <section class="blog-controls">
+    <div class="blog-search">
+      <lucide-icon
+        [img]="SearchIcon"
+        size="20"
+      ></lucide-icon>
+
+      <input
+        type="search"
+        [value]="searchTerm"
+        [placeholder]="'BLOG.SEARCH.PLACEHOLDER' | translate"
+        [attr.aria-label]="'BLOG.SEARCH.LABEL' | translate"
+        (input)="onSearch($event)"
+      />
+
+      @if (searchTerm) {
+        <button
+          type="button"
+          class="blog-search__clear"
+          [attr.aria-label]="'BLOG.SEARCH.CLEAR' | translate"
+          (click)="clearSearch()"
+        >
+          <lucide-icon
+            [img]="CloseIcon"
+            size="18"
+          ></lucide-icon>
+        </button>
+      }
+    </div>
+
+    <div
+      class="blog-categories"
+      role="group"
+      [attr.aria-label]="'BLOG.CATEGORIES.LABEL' | translate"
+    >
+      @for (
+        category of categories;
+        track category.value
+      ) {
+        <button
+          type="button"
+          class="blog-category"
+          [class.blog-category--active]="
+            selectedCategory === category.value
+          "
+          (click)="selectCategory(category.value)"
+        >
+          {{ category.labelKey | translate }}
+        </button>
+      }
+    </div>
+  </section>
+
+  @if (featuredArticle; as featured) {
+    <section class="blog-featured">
+      <div class="blog-featured__image">
+        <img
+          [src]="featured.coverImage"
+          [alt]="getArticleTitle(featured)"
+          (error)="handleImageError($event)"
+        />
+
+        <span class="blog-featured__badge">
+          <lucide-icon
+            [img]="FeaturedIcon"
+            size="16"
+          ></lucide-icon>
+
+          {{ 'BLOG.FEATURED' | translate }}
+        </span>
+      </div>
+
+      <div class="blog-featured__content">
+        <span class="blog-article__category">
+          {{
+            getCategoryLabelKey(featured.category)
+              | translate
+          }}
+        </span>
+
+        <h2>
+          {{ getArticleTitle(featured) }}
+        </h2>
+
+        <p>
+          {{ getArticleExcerpt(featured) }}
+        </p>
+
+        <div class="blog-article__meta">
+          <span>
+            <lucide-icon
+              [img]="CalendarIcon"
+              size="16"
+            ></lucide-icon>
+
+            @if (featured.publishedAt) {
+              {{
+                featured.publishedAt
+                  | date:'dd/MM/yyyy'
+              }}
+            }
+          </span>
+
+          <span>
+            <lucide-icon
+              [img]="ClockIcon"
+              size="16"
+            ></lucide-icon>
+
+            {{ featured.readingTime }}
+            {{ 'BLOG.MINUTES' | translate }}
+          </span>
+        </div>
+
+        <a
+          [routerLink]="['/blog', featured.slug]"
+          class="blog-read-button"
+        >
+          {{ 'BLOG.READ_ARTICLE' | translate }}
+
+          <lucide-icon
+            [img]="ArrowRightIcon"
+            size="18"
+          ></lucide-icon>
+        </a>
+      </div>
+    </section>
+
+    @if (remainingArticles.length > 0) {
+      <section class="blog-results">
+        <div class="blog-results__heading">
+          <div>
+            <span class="blog-eyebrow">
+              {{ 'BLOG.LATEST.EYEBROW' | translate }}
+            </span>
+
+            <h2>
+              {{ 'BLOG.LATEST.TITLE' | translate }}
+            </h2>
+          </div>
+
+          <span class="blog-results__count">
+            {{ filteredArticles.length }}
+            {{ 'BLOG.RESULTS' | translate }}
+          </span>
+        </div>
+
+        <div class="blog-grid">
+          @for (
+            article of remainingArticles;
+            track article.id
+          ) {
+            <article class="blog-card">
+              <a
+                [routerLink]="['/blog', article.slug]"
+                class="blog-card__image"
+                [attr.aria-label]="getArticleTitle(article)"
+              >
+                <img
+                  [src]="article.coverImage"
+                  [alt]="getArticleTitle(article)"
+                  (error)="handleImageError($event)"
+                />
+              </a>
+
+              <div class="blog-card__body">
+                <span class="blog-article__category">
+                  {{
+                    getCategoryLabelKey(article.category)
+                      | translate
+                  }}
+                </span>
+
+                <h3>
+                  <a
+                    [routerLink]="['/blog', article.slug]"
+                  >
+                    {{ getArticleTitle(article) }}
+                  </a>
+                </h3>
+
+                <p>
+                  {{ getArticleExcerpt(article) }}
+                </p>
+
+                <div class="blog-card__footer">
+                  <div class="blog-article__meta">
+                    <span>
+                      <lucide-icon
+                        [img]="CalendarIcon"
+                        size="15"
+                      ></lucide-icon>
+
+                      @if (article.publishedAt) {
+                        {{
+                          article.publishedAt
+                            | date:'dd/MM/yyyy'
+                        }}
+                      }
+                    </span>
+
+                    <span>
+                      <lucide-icon
+                        [img]="ClockIcon"
+                        size="15"
+                      ></lucide-icon>
+
+                      {{ article.readingTime }}
+                      {{ 'BLOG.MINUTES' | translate }}
+                    </span>
+                  </div>
+
+                  <a
+                    [routerLink]="['/blog', article.slug]"
+                    class="blog-card__link"
+                  >
+                    {{ 'BLOG.READ_MORE' | translate }}
+
+                    <lucide-icon
+                      [img]="ArrowRightIcon"
+                      size="17"
+                    ></lucide-icon>
+                  </a>
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+      </section>
+    }
+  } @else {
+    <section class="blog-empty">
+      <span class="blog-empty__icon">
+        <lucide-icon
+          [img]="SearchIcon"
+          size="35"
+        ></lucide-icon>
+      </span>
+
+      <h2>
+        {{ 'BLOG.EMPTY.TITLE' | translate }}
+      </h2>
+
+      <p>
+        {{ 'BLOG.EMPTY.DESCRIPTION' | translate }}
+      </p>
+
+      @if (hasActiveFilters) {
+        <button
+          type="button"
+          (click)="clearFilters()"
+        >
+          {{ 'BLOG.EMPTY.CLEAR' | translate }}
+        </button>
+      }
+    </section>
+  }
+</main>

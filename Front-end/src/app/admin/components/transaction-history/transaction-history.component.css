@@ -1,0 +1,422 @@
+:host {
+  display: block;
+}
+
+.transaction-history {
+  padding: 24px;
+
+  background: #ffffff;
+
+  border: 1px solid rgba(0, 57, 120, 0.1);
+  border-radius: 18px;
+
+  box-shadow: 0 12px 32px rgba(0, 57, 120, 0.06);
+}
+
+.transaction-history__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+
+  margin-bottom: 20px;
+}
+
+.transaction-history__title {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+
+  min-width: 0;
+}
+
+.transaction-history__title-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 46px;
+
+  width: 46px;
+  height: 46px;
+
+  color: #003978;
+  background: rgba(45, 196, 202, 0.14);
+
+  border-radius: 14px;
+}
+
+.transaction-history__title h2 {
+  margin: 0 0 4px;
+
+  color: #003978;
+
+  font-size: 20px;
+}
+
+.transaction-history__title p {
+  margin: 0;
+
+  color: #778490;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Buscador */
+
+.transaction-history__search {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  width: min(100%, 330px);
+  min-height: 43px;
+  padding: 0 13px;
+
+  color: #7b8792;
+  background: #f7f9fb;
+
+  border: 1px solid #dce4ea;
+  border-radius: 11px;
+}
+
+.transaction-history__search input {
+  width: 100%;
+  min-width: 0;
+
+  color: #2c3d4d;
+  background: transparent;
+
+  border: 0;
+  outline: 0;
+
+  font: inherit;
+  font-size: 13px;
+}
+
+/* Filtros */
+
+.transaction-history__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+
+  margin-bottom: 20px;
+}
+
+.transaction-history__filters button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  min-height: 38px;
+  padding: 0 14px;
+
+  color: #5e6c79;
+  background: #f4f7f9;
+
+  border: 1px solid #e0e6eb;
+  border-radius: 999px;
+
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease;
+}
+
+.transaction-history__filters button > span {
+  display: grid;
+  place-items: center;
+
+  min-width: 21px;
+  height: 21px;
+  padding: 0 5px;
+
+  color: #003978;
+  background: #ffffff;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+}
+
+.transaction-history__filter--active {
+  color: #ffffff !important;
+  background: #003978 !important;
+  border-color: #003978 !important;
+}
+
+/* Tabla */
+
+.transaction-history__table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+
+  border: 1px solid #e5ebf0;
+  border-radius: 14px;
+}
+
+.transaction-history__table {
+  width: 100%;
+  min-width: 980px;
+
+  border-collapse: collapse;
+}
+
+.transaction-history__table th {
+  padding: 13px 14px;
+
+  color: #6f7d89;
+  background: #f6f8fa;
+
+  border-bottom: 1px solid #dfe6eb;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.transaction-history__table td {
+  padding: 15px 14px;
+
+  color: #4f5f6e;
+  background: #ffffff;
+
+  border-bottom: 1px solid #edf1f4;
+
+  font-size: 13px;
+  vertical-align: middle;
+}
+
+.transaction-history__table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.transaction-history__table tbody tr {
+  transition: background-color 180ms ease;
+}
+
+.transaction-history__table tbody tr:hover td {
+  background: #fbfcfd;
+}
+
+/* Propiedad */
+
+.transaction-property {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  min-width: 240px;
+}
+
+.transaction-property__icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 40px;
+
+  width: 40px;
+  height: 40px;
+
+  color: #003978;
+  background: #e4edf7;
+
+  border-radius: 11px;
+}
+
+.transaction-property__icon--rent {
+  color: #4d7e24;
+  background: #e6f4dc;
+}
+
+.transaction-property__content {
+  display: grid;
+  gap: 3px;
+
+  min-width: 0;
+}
+
+.transaction-property__content strong {
+  max-width: 240px;
+  overflow: hidden;
+
+  color: #26394b;
+
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.transaction-property__content span {
+  color: #8a959f;
+
+  font-size: 11px;
+}
+
+/* Tipo */
+
+.transaction-type {
+  display: inline-flex;
+
+  padding: 6px 10px;
+
+  color: #003978;
+  background: #e4edf7;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.transaction-type--rent {
+  color: #4d7e24;
+  background: #e6f4dc;
+}
+
+/* Precio */
+
+.transaction-price {
+  color: #26394b;
+
+  font-size: 13px;
+}
+
+.transaction-price__period {
+  color: #8a959f;
+
+  font-size: 11px;
+}
+
+.transaction-muted {
+  color: #929ca5;
+
+  font-size: 12px;
+}
+
+/* Estado */
+
+.transaction-status {
+  display: inline-flex;
+
+  padding: 6px 10px;
+
+  color: #17653f;
+  background: #dff4e7;
+
+  border-radius: 999px;
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.transaction-status--cancelled {
+  color: #9a322b;
+  background: #fde6e3;
+}
+
+/* Botón ver */
+
+.transaction-view {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  min-height: 35px;
+  padding: 0 11px;
+
+  color: #003978;
+  background: #ffffff;
+
+  border: 1px solid #d5dfe7;
+  border-radius: 8px;
+
+  font: inherit;
+  font-size: 12px;
+  font-weight: 750;
+
+  cursor: pointer;
+
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease;
+}
+
+.transaction-view:hover {
+  color: #ffffff;
+  background: var(--color-secondary);
+  border-color: var(--color-secondary);
+}
+
+/* Estado vacío */
+
+.transaction-history__empty {
+  display: grid;
+  place-items: center;
+  gap: 7px;
+
+  min-height: 210px;
+  padding: 30px;
+
+  color: #91a0ad;
+
+  text-align: center;
+}
+
+.transaction-history__empty strong {
+  color: #506171;
+}
+
+.transaction-history__empty p {
+  max-width: 420px;
+  margin: 0;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Responsive */
+
+@media (max-width: 760px) {
+  .transaction-history {
+    padding: 18px;
+  }
+
+  .transaction-history__header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .transaction-history__search {
+    width: 100%;
+  }
+}
+
+@media (max-width: 520px) {
+  .transaction-history {
+    padding: 16px;
+
+    border-radius: 14px;
+  }
+
+  .transaction-history__title-icon {
+    width: 42px;
+    height: 42px;
+    flex-basis: 42px;
+  }
+
+  .transaction-history__title h2 {
+    font-size: 18px;
+  }
+}

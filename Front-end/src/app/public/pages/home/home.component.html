@@ -1,45 +1,356 @@
 <app-hero-search />
 
-<section class="featured">
-  <div class="container">
-    <app-section-title class="section-title" [title]="'HOME.FEATURED_TITLE' | translate" />
+<section class="about-market">
+  <div class="about-market__container">
 
-    <app-property-list [properties]="properties" mode="public" (view)="goToDetail($event)" />
+    <!-- Columna izquierda: redes sociales y video -->
+    <div class="about-market__media">
+      <nav
+        class="about-market__socials"
+        [attr.aria-label]="'HOME.SOCIALS.NAV_LABEL' | translate"
+      >
+        <a
+          class="about-market__social-link"
+          href="https://www.instagram.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          [attr.aria-label]="'HOME.SOCIALS.INSTAGRAM_LABEL' | translate"
+        >
+          <lucide-icon [img]="InstagramIcon" size="21"></lucide-icon>
+          <span>Instagram</span>
+        </a>
+
+        <a
+          class="about-market__social-link"
+          href="https://www.facebook.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          [attr.aria-label]="'HOME.SOCIALS.FACEBOOK_LABEL' | translate"
+        >
+          <lucide-icon [img]="FacebookIcon" size="21"></lucide-icon>
+          <span>Facebook</span>
+        </a>
+
+        <a
+          class="about-market__social-link"
+          href="https://t.me/"
+          target="_blank"
+          rel="noopener noreferrer"
+          [attr.aria-label]="'HOME.SOCIALS.TELEGRAM_LABEL' | translate"
+        >
+          <lucide-icon [img]="TelegramIcon" size="21"></lucide-icon>
+          <span>Telegram</span>
+        </a>
+
+        <a
+          class="about-market__social-link"
+          href="https://www.youtube.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          [attr.aria-label]="'HOME.SOCIALS.YOUTUBE_LABEL' | translate"
+        >
+          <lucide-icon [img]="YoutubeIcon" size="22"></lucide-icon>
+          <span>YouTube</span>
+        </a>
+      </nav>
+
+      <!-- Temporal hasta que el cliente seleccione el video -->
+      <div class="about-market__video-placeholder">
+        <div class="about-market__play">
+          <lucide-icon [img]="YoutubeIcon" size="42"></lucide-icon>
+        </div>
+
+        <strong>{{ 'HOME.VIDEO.TITLE' | translate }}</strong>
+        <span>{{ 'HOME.VIDEO.COMING_SOON' | translate }}</span>
+      </div>
+    </div>
+
+    <!-- Columna derecha: información del mercado -->
+    <div class="about-market__content">
+      <app-section-title
+        class="section-title"
+        [title]="'HOME.ABOUT.TITLE' | translate"
+      />
+
+      <p>
+        {{ 'HOME.ABOUT.DESCRIPTION' | translate }}
+      </p>
+
+      <ul class="about-market__list">
+        <li>{{ 'HOME.ABOUT.ITEM_1' | translate }}</li>
+        <li>{{ 'HOME.ABOUT.ITEM_2' | translate }}</li>
+        <li>{{ 'HOME.ABOUT.ITEM_3' | translate }}</li>
+      </ul>
+
+      <a
+        class="about-market__button"
+        [href]="whatsappLink"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <lucide-icon [img]="Phone" size="16"></lucide-icon>
+        {{ 'HOME.ABOUT.BUTTON' | translate }}
+      </a>
+    </div>
   </div>
 </section>
 
-<section class="services">
-  <div class="container">
-    <app-section-title class="section-title" [title]="'HOME.SERVICES_TITLE' | translate" />
+<section class="featured-services">
+  <div class="featured-services__container">
 
-    <div class="services__grid">
-      <div class="service">
-        <h3>{{ 'HOME.SERVICE_BUY_SELL_TITLE' | translate }}</h3>
-        <p>{{ 'HOME.SERVICE_BUY_SELL_TEXT' | translate }}</p>
+    <!-- Columna izquierda: servicios destacados -->
+    <div class="featured-services__content">
+      <div class="featured-services__title">
+        <app-section-title
+          class="section-title"
+          [title]="'HOME.SERVICES.TITLE' | translate"
+        />
       </div>
 
-      <div class="service">
-        <h3>{{ 'HOME.SERVICE_RENT_TITLE' | translate }}</h3>
-        <p>{{ 'HOME.SERVICE_RENT_TEXT' | translate }}</p>
-      </div>
+      <p class="featured-services__description">
+        {{ 'HOME.SERVICES.DESCRIPTION' | translate }}
+      </p>
 
-      <div class="service">
-        <h3>{{ 'HOME.SERVICE_LEGAL_TITLE' | translate }}</h3>
-        <p>{{ 'HOME.SERVICE_LEGAL_TEXT' | translate }}</p>
-      </div>
+      <ul class="featured-services__list">
+        <li>{{ 'HOME.SERVICES.ITEM_1' | translate }}</li>
+        <li>{{ 'HOME.SERVICES.ITEM_2' | translate }}</li>
+        <li>{{ 'HOME.SERVICES.ITEM_3' | translate }}</li>
+        <li>{{ 'HOME.SERVICES.ITEM_4' | translate }}</li>
+      </ul>
+
+      <a
+        class="featured-services__button"
+        [href]="whatsappLink"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <lucide-icon
+          [img]="Phone"
+          size="15"
+        ></lucide-icon>
+
+        {{ 'HOME.SERVICES.BUTTON' | translate }}
+      </a>
     </div>
+
+    <!-- Columna derecha: galería de reseñas -->
+    <aside
+      class="reviews-gallery"
+      aria-labelledby="reviews-gallery-title"
+    >
+      <div class="reviews-gallery__header">
+        <div>
+          <span class="reviews-gallery__eyebrow">
+            {{ 'HOME.REVIEWS.EYEBROW' | translate }}
+          </span>
+
+          <h2 id="reviews-gallery-title">
+            {{ 'HOME.REVIEWS.GALLERY_TITLE' | translate }}
+          </h2>
+        </div>
+
+        <span
+          class="reviews-gallery__quote"
+          aria-hidden="true"
+        >
+          <lucide-icon
+            [img]="QuoteIcon"
+            size="26"
+          ></lucide-icon>
+        </span>
+      </div>
+
+      @if (currentReview; as review) {
+        <article
+          class="reviews-gallery__review"
+          aria-live="polite"
+        >
+          <div
+            class="reviews-gallery__stars"
+            [attr.aria-label]="
+              'HOME.REVIEWS.RATING_LABEL'
+                | translate:{ rating: review.rating }
+            "
+          >
+            @for (star of reviewStars; track star) {
+              <span
+                aria-hidden="true"
+                class="reviews-gallery__star"
+                [class.reviews-gallery__star--empty]="
+                  star > review.rating
+                "
+              >
+                ★
+              </span>
+            }
+          </div>
+
+          <blockquote>
+            “{{ review.comment }}”
+          </blockquote>
+
+          <div class="reviews-gallery__author">
+            <span class="reviews-gallery__avatar">
+              {{ getReviewInitials(review.name) }}
+            </span>
+
+            <div>
+              <strong>{{ review.name }}</strong>
+
+              <span>
+                {{ 'HOME.REVIEWS.VERIFIED_CLIENT' | translate }}
+              </span>
+            </div>
+          </div>
+        </article>
+
+        @if (reviews.length > 1) {
+          <div class="reviews-gallery__navigation">
+            <button
+              type="button"
+              class="reviews-gallery__arrow"
+              [attr.aria-label]="
+                'HOME.REVIEWS.PREVIOUS' | translate
+              "
+              (click)="previousReview()"
+            >
+              <lucide-icon
+                [img]="ChevronLeftIcon"
+                size="20"
+              ></lucide-icon>
+            </button>
+
+            <div
+              class="reviews-gallery__dots"
+              role="tablist"
+              [attr.aria-label]="
+                'HOME.REVIEWS.GALLERY_TITLE' | translate
+              "
+            >
+              @for (
+                reviewItem of reviews;
+                track reviewItem.id;
+                let index = $index
+              ) {
+                <button
+                  type="button"
+                  class="reviews-gallery__dot"
+                  [class.reviews-gallery__dot--active]="
+                    index === currentReviewIndex
+                  "
+                  [attr.aria-label]="
+                    'HOME.REVIEWS.GO_TO_REVIEW'
+                      | translate:{ number: index + 1 }
+                  "
+                  [attr.aria-selected]="
+                    index === currentReviewIndex
+                  "
+                  role="tab"
+                  (click)="selectReview(index)"
+                ></button>
+              }
+            </div>
+
+            <button
+              type="button"
+              class="reviews-gallery__arrow"
+              [attr.aria-label]="
+                'HOME.REVIEWS.NEXT' | translate
+              "
+              (click)="nextReview()"
+            >
+              <lucide-icon
+                [img]="ChevronRightIcon"
+                size="20"
+              ></lucide-icon>
+            </button>
+          </div>
+        }
+      } @else {
+        <div class="reviews-gallery__empty">
+          <p>
+            {{ 'HOME.REVIEWS.EMPTY' | translate }}
+          </p>
+        </div>
+      }
+
+      <button
+        type="button"
+        class="reviews-gallery__button"
+        (click)="openReviewModal()"
+      >
+        {{ 'HOME.REVIEWS.BUTTON' | translate }}
+      </button>
+    </aside>
+
+  </div>
+</section>
+
+<!-- Modal fuera de la cuadrícula visual -->
+<app-review-modal
+  [isOpen]="reviewModalOpen"
+  (closed)="closeReviewModal()"
+  (reviewSubmitted)="handleReviewSubmitted($event)"
+></app-review-modal>
+
+<section class="featured">
+  <div class="container">
+    <app-section-title
+      class="section-title"
+      [title]="'HOME.FEATURED_TITLE' | translate"
+    />
+
+    <app-property-list
+      [properties]="properties"
+      mode="public"
+      (view)="goToDetail($event)"
+    />
   </div>
 </section>
 
 <section class="cities">
   <div class="container">
-    <app-section-title class="section-title" [title]="'HOME.CITIES_TITLE' | translate" />
+    <div class="cities__header">
+      <app-section-title
+        class="section-title"
+        [title]="'HOME.CITIES_TITLE' | translate"
+      />
+
+      <p class="cities__description">
+        {{ 'HOME.CITIES_DESCRIPTION' | translate }}
+      </p>
+    </div>
 
     <div class="cities__grid">
-      <div class="city">Playa</div>
-      <div class="city">Plaza</div>
-      <div class="city">Cerro</div>
-      <div class="city">Centro Habana</div>
+      <a
+        class="city"
+        *ngFor="let city of cityCards; let i = index"
+        [class.city--down]="i % 2 !== 0"
+        [routerLink]="['/propiedades']"
+        [queryParams]="{ location: city.value }"
+        [style.background-image]="
+          'linear-gradient(rgba(0, 57, 120, 0.2), rgba(0, 0, 0, 0.45)), url(' +
+          city.image +
+          ')'
+        "
+      >
+        <div class="city__content">
+          <span>
+            {{
+              'HOME.CITIES_PROPERTIES_COUNT'
+                | translate: { count: city.count }
+            }}
+          </span>
+
+          <strong>
+            {{ city.labelKey | translate }}
+          </strong>
+        </div>
+
+        <span class="city__link">
+          {{ 'HOME.CITIES_MORE_DETAILS' | translate }}
+        </span>
+      </a>
     </div>
   </div>
 </section>

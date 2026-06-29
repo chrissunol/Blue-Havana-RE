@@ -1,0 +1,170 @@
+@if (isOpen && property) {
+  <div
+    class="transaction-modal__overlay"
+    role="presentation"
+    (click)="closeFromBackdrop($event)"
+  >
+    <section
+      class="transaction-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="transaction-modal-title"
+      (click)="$event.stopPropagation()"
+    >
+      <button
+        type="button"
+        class="transaction-modal__close"
+        aria-label="Cerrar modal"
+        (click)="closeModal()"
+      >
+        <lucide-icon
+          [img]="CloseIcon"
+          size="21"
+        ></lucide-icon>
+      </button>
+
+      <header class="transaction-modal__header">
+        <span
+          class="transaction-modal__icon"
+          [class.transaction-modal__icon--rent]="!isSale"
+          aria-hidden="true"
+        >
+          <lucide-icon
+            [img]="isSale ? SaleIcon : RentIcon"
+            size="24"
+          ></lucide-icon>
+        </span>
+
+        <div>
+          <span class="transaction-modal__eyebrow">
+            Registro de operación
+          </span>
+
+          <h2 id="transaction-modal-title">
+            {{ modalTitle }}
+          </h2>
+
+          <p>
+            Completa los datos para registrar esta operación en el
+            historial.
+          </p>
+        </div>
+      </header>
+
+      <div class="transaction-modal__property">
+        <span>Propiedad seleccionada</span>
+        <strong>{{ propertyTitle }}</strong>
+      </div>
+
+      <form
+        class="transaction-form"
+        [formGroup]="transactionForm"
+        (ngSubmit)="submitTransaction()"
+      >
+        <div class="transaction-form__field">
+          <label for="transaction-amount">
+            {{ amountLabel }}
+            <span>*</span>
+          </label>
+
+          <div class="transaction-form__money">
+            <span>$</span>
+
+            <input
+              id="transaction-amount"
+              type="number"
+              min="1"
+              step="0.01"
+              formControlName="finalAmount"
+            />
+          </div>
+
+          @if (
+            transactionForm.controls.finalAmount.touched &&
+            transactionForm.controls.finalAmount.invalid
+          ) {
+            <small class="transaction-form__error">
+              Introduce un importe válido.
+            </small>
+          }
+        </div>
+
+        <div class="transaction-form__field">
+          <label for="transaction-client">
+            Nombre del cliente
+            <small>Opcional</small>
+          </label>
+
+          <input
+            id="transaction-client"
+            type="text"
+            maxlength="120"
+            formControlName="clientName"
+            placeholder="Nombre del comprador o arrendatario"
+          />
+        </div>
+
+        <div class="transaction-form__field">
+          <label for="transaction-date">
+            Fecha de cierre
+            <span>*</span>
+          </label>
+
+          <input
+            id="transaction-date"
+            type="date"
+            formControlName="closedAt"
+          />
+
+          @if (
+            transactionForm.controls.closedAt.touched &&
+            transactionForm.controls.closedAt.invalid
+          ) {
+            <small class="transaction-form__error">
+              Selecciona la fecha de cierre.
+            </small>
+          }
+        </div>
+
+        <div class="transaction-form__field">
+          <div class="transaction-form__label-row">
+            <label for="transaction-notes">
+              Notas
+              <small>Opcional</small>
+            </label>
+
+            <span>
+              {{ transactionForm.controls.notes.value.length }}/600
+            </span>
+          </div>
+
+          <textarea
+            id="transaction-notes"
+            rows="4"
+            maxlength="600"
+            formControlName="notes"
+            placeholder="Información adicional sobre la operación"
+          ></textarea>
+        </div>
+
+        <footer class="transaction-form__actions">
+          <button
+            type="button"
+            class="transaction-form__cancel"
+            (click)="closeModal()"
+          >
+            Cancelar
+          </button>
+
+          <button
+            type="submit"
+            class="transaction-form__confirm"
+            [class.transaction-form__confirm--rent]="!isSale"
+          >
+            {{ isSale ? 'Registrar venta' : 'Registrar renta' }}
+          </button>
+        </footer>
+      </form>
+    </section>
+  </div>
+}

@@ -1,46 +1,193 @@
 <header class="navbar">
   <div class="navbar__container">
-    <a routerLink="/" class="navbar__logo" (click)="closeMobileMenu()">
-      <img src="assets/logotipo_bhre.svg" alt="Blue Havana Real Estate" />
+    <a
+      routerLink="/"
+      class="navbar__logo"
+      (click)="closeMobileMenu()"
+    >
+      <img
+        class="imglogo1"
+        src="assets/icono_bhre.svg"
+        alt="Blue Havana Real Estate"
+      />
+
+      <img
+        src="assets/logotipo_bhre.svg"
+        alt="Blue Havana Real Estate"
+      />
     </a>
 
-    <nav class="navbar__links" [class.open]="isMobileMenuOpen">
-      <a routerLink="/propiedades" routerLinkActive="active" (click)="closeMobileMenu()">
-        {{ 'NAV.PROPERTIES' | translate }}
+    <nav
+      class="navbar__links"
+      [class.open]="isMobileMenuOpen"
+    >
+      @if (showHomeButton) {
+        <a
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeMobileMenu()"
+        >
+          {{ 'NAV.HOME' | translate }}
+        </a>
+      }
+
+      <div
+        class="navbar__dropdown"
+        [class.open]="isPropertiesOpen"
+      >
+        <button
+          type="button"
+          class="navbar__dropdown-button"
+          (click)="togglePropertiesMenu()"
+        >
+          <span>
+            {{ selectedPropertyLabelKey | translate }}
+          </span>
+
+          <lucide-icon
+            [img]="ChevronDown"
+            class="navbar__icon"
+          ></lucide-icon>
+        </button>
+
+        <div class="navbar__dropdown-menu">
+          <a
+            routerLink="/propiedades"
+            [queryParams]="{
+              operation: 'venta',
+              listingType: 'property'
+            }"
+            (click)="closeMobileMenu()"
+          >
+            {{ 'NAV.SALE' | translate }}
+          </a>
+
+          <a
+            routerLink="/propiedades"
+            [queryParams]="{
+              operation: 'renta',
+              listingType: 'property'
+            }"
+            (click)="closeMobileMenu()"
+          >
+            {{ 'NAV.RENT' | translate }}
+          </a>
+
+          <a
+            routerLink="/propiedades"
+            [queryParams]="{
+              listingType: 'business'
+            }"
+            (click)="closeMobileMenu()"
+          >
+            {{ 'NAV.BUSINESSES' | translate }}
+          </a>
+        </div>
+      </div>
+
+      <a
+        routerLink="/diseno-renovacion"
+        routerLinkActive="active"
+        (click)="closeMobileMenu()"
+      >
+        {{ 'NAV.DESIGN_RENOVATION' | translate }}
       </a>
 
-      <a routerLink="/quienes-somos" routerLinkActive="active" (click)="closeMobileMenu()">
+      <a
+        routerLink="/blog"
+        routerLinkActive="active"
+        (click)="closeMobileMenu()"
+      >
+        {{ 'NAV.BLOG' | translate }}
+      </a>
+
+      <a
+        routerLink="/quienes-somos"
+        routerLinkActive="active"
+        (click)="closeMobileMenu()"
+      >
         {{ 'NAV.ABOUT' | translate }}
-      </a>
-
-      <a routerLink="/contacto" routerLinkActive="active" (click)="closeMobileMenu()">
-        {{ 'NAV.CONTACT_PAGE' | translate }}
       </a>
     </nav>
 
     <div class="navbar__right">
-      <div class="navbar__language">
-        <button type="button" class="navbar__lang" (click)="toggleLanguageMenu()">
-          <span>{{ selectedLanguage.toUpperCase() }}</span>
-          <lucide-icon [img]="ChevronDown" class="navbar__icon"></lucide-icon>
-        </button>
+      <div
+  class="navbar__language"
+  [class.open]="isLanguageOpen"
+>
+  <button
+    type="button"
+    class="navbar__lang"
+    aria-haspopup="menu"
+    [attr.aria-expanded]="isLanguageOpen"
+    (click)="toggleLanguageMenu()"
+  >
+    <span>{{ selectedLanguage.toUpperCase() }}</span>
 
-        @if (isLanguageOpen) {
-        <div class="navbar__language-menu">
-          <button type="button" (click)="changeLang('es')">Español</button>
-          <button type="button" (click)="changeLang('en')">English</button>
-          <button type="button" (click)="changeLang('fr')">Français</button>
-        </div>
-        }
-      </div>
+    <lucide-icon
+      [img]="ChevronDown"
+      class="navbar__icon"
+    ></lucide-icon>
+  </button>
 
-      <a [href]="whatsappLink" target="_blank" rel="noopener noreferrer" class="navbar__contact">
-        <lucide-icon [img]="Phone" class="navbar__contact-icon"></lucide-icon>
-        <span>{{ 'NAV.CONTACT' | translate }}</span>
+  <div
+    class="navbar__language-menu"
+    role="menu"
+  >
+    <button
+      type="button"
+      role="menuitem"
+      (click)="changeLang('es')"
+    >
+      Español
+    </button>
+
+    <button
+      type="button"
+      role="menuitem"
+      (click)="changeLang('en')"
+    >
+      English
+    </button>
+
+    <button
+      type="button"
+      role="menuitem"
+      (click)="changeLang('fr')"
+    >
+      Français
+    </button>
+  </div>
+</div>
+
+      <a
+        [href]="whatsappLink"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="navbar__contact"
+      >
+        <lucide-icon
+          [img]="Phone"
+          class="navbar__contact-icon"
+          [size]="16"
+        ></lucide-icon>
+
+        <span>
+          {{ 'NAV.CONTACT' | translate }}
+        </span>
       </a>
 
-      <button type="button" class="navbar__burger" (click)="toggleMobileMenu()" aria-label="Abrir menú">
-        <lucide-icon [img]="Menu" class="navbar__burger-icon"></lucide-icon>
+      <button
+        type="button"
+        class="navbar__burger"
+        aria-label="Abrir menú"
+        (click)="toggleMobileMenu()"
+      >
+        <lucide-icon
+          [img]="Menu"
+          class="navbar__burger-icon"
+        ></lucide-icon>
       </button>
     </div>
   </div>

@@ -1,0 +1,236 @@
+<section class="review-management">
+
+  <header class="review-management__header">
+    <div class="review-management__title">
+      <span
+        class="review-management__title-icon"
+        aria-hidden="true"
+      >
+        <lucide-icon
+          [img]="ReviewsIcon"
+          size="22"
+        ></lucide-icon>
+      </span>
+
+      <div>
+        <h2>Moderación de reseñas</h2>
+
+        <p>
+          Revisa los comentarios enviados por los clientes antes de
+          publicarlos.
+        </p>
+      </div>
+    </div>
+
+    <label class="review-management__search">
+      <lucide-icon
+        [img]="SearchIcon"
+        size="18"
+      ></lucide-icon>
+
+      <input
+        type="search"
+        [(ngModel)]="searchText"
+        placeholder="Buscar por nombre, correo o comentario"
+        aria-label="Buscar reseñas"
+      />
+    </label>
+  </header>
+
+  <div
+    class="review-management__filters"
+    role="tablist"
+    aria-label="Filtrar reseñas"
+  >
+    <button
+      type="button"
+      [class.review-management__filter--active]="
+        activeFilter === 'pending'
+      "
+      (click)="setFilter('pending')"
+    >
+      Pendientes
+
+      <span>{{ pendingCount }}</span>
+    </button>
+
+    <button
+      type="button"
+      [class.review-management__filter--active]="
+        activeFilter === 'approved'
+      "
+      (click)="setFilter('approved')"
+    >
+      Publicadas
+
+      <span>{{ approvedCount }}</span>
+    </button>
+
+    <button
+      type="button"
+      [class.review-management__filter--active]="
+        activeFilter === 'rejected'
+      "
+      (click)="setFilter('rejected')"
+    >
+      Rechazadas
+
+      <span>{{ rejectedCount }}</span>
+    </button>
+
+    <button
+      type="button"
+      [class.review-management__filter--active]="
+        activeFilter === 'all'
+      "
+      (click)="setFilter('all')"
+    >
+      Todas
+
+      <span>{{ reviews.length }}</span>
+    </button>
+  </div>
+
+  <div class="review-management__list">
+    @for (review of filteredReviews; track review.id) {
+      <article class="review-card">
+
+        <div class="review-card__header">
+          <div class="review-card__customer">
+            <span class="review-card__avatar">
+              {{ getInitials(review.name) }}
+            </span>
+
+            <div class="review-card__customer-info">
+              <strong>{{ review.name }}</strong>
+
+              <span>
+                {{ review.email || 'Correo no proporcionado' }}
+              </span>
+            </div>
+          </div>
+
+          <span
+            class="review-card__status"
+            [class.review-card__status--pending]="
+              review.status === 'pending'
+            "
+            [class.review-card__status--approved]="
+              review.status === 'approved'
+            "
+            [class.review-card__status--rejected]="
+              review.status === 'rejected'
+            "
+          >
+            {{ getStatusLabel(review.status) }}
+          </span>
+        </div>
+
+        <div
+          class="review-card__stars"
+          [attr.aria-label]="
+            'Calificación de ' + review.rating + ' estrellas'
+          "
+        >
+          @for (star of stars; track star) {
+            <span
+              aria-hidden="true"
+              [class.review-card__star--empty]="
+                star > review.rating
+              "
+            >
+              ★
+            </span>
+          }
+        </div>
+
+        <p class="review-card__comment">
+          {{ review.comment }}
+        </p>
+
+        <footer class="review-card__footer">
+          <time [attr.datetime]="review.createdAt">
+            {{ review.createdAt | date:'dd/MM/yyyy, h:mm a' }}
+          </time>
+
+          <div class="review-card__actions">
+            @if (review.status !== 'approved') {
+              <button
+                type="button"
+                class="review-action review-action--approve"
+                (click)="approveReview(review.id)"
+              >
+                <lucide-icon
+                  [img]="ApproveIcon"
+                  size="17"
+                ></lucide-icon>
+
+                Aprobar
+              </button>
+            }
+
+            @if (review.status !== 'rejected') {
+              <button
+                type="button"
+                class="review-action review-action--reject"
+                (click)="rejectReview(review.id)"
+              >
+                <lucide-icon
+                  [img]="RejectIcon"
+                  size="17"
+                ></lucide-icon>
+
+                Rechazar
+              </button>
+            }
+
+            <button
+              type="button"
+              class="review-action review-action--delete"
+              (click)="requestDeleteReview(review)"
+            >
+              <lucide-icon
+                [img]="DeleteIcon"
+                size="17"
+              ></lucide-icon>
+
+              Eliminar
+            </button>
+          </div>
+        </footer>
+
+      </article>
+    } @empty {
+      <div class="review-management__empty">
+        <lucide-icon
+          [img]="ReviewsIcon"
+          size="38"
+        ></lucide-icon>
+
+        <strong>No hay reseñas</strong>
+
+        <p>
+          No se encontraron reseñas que coincidan con el filtro
+          seleccionado.
+        </p>
+      </div>
+    }
+  </div>
+
+</section>
+
+<app-confirmation-modal
+[isOpen]="reviewDeleteModalOpen"
+  action="delete"
+  title="Eliminar reseña"
+  message="¿Estás seguro de que deseas eliminar esta reseña?"
+  confirmLabel="Sí, eliminar reseña"
+  warningMessage="La reseña desaparecerá del sitio y esta acción no se puede deshacer."
+  [itemName]="
+    reviewPendingDelete
+      ? reviewPendingDelete.id
+      : ''
+  "
+  (confirmed)="confirmDeleteReview()"
+  (cancelled)="cancelDeleteReview()"
+></app-confirmation-modal>

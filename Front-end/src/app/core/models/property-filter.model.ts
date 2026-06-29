@@ -1,5 +1,6 @@
 export interface PropertyFilters {
   operation?: 'all' | 'rent' | 'sale';
+  listingType?: 'all' | 'property' | 'business';
   category?: string;
   location?: string;
   bedrooms?: number | null;

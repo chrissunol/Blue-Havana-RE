@@ -1,0 +1,177 @@
+@if (isOpen) {
+  <div
+    class="review-modal__overlay"
+    role="presentation"
+    (click)="closeFromBackdrop($event)"
+  >
+    <section
+      class="review-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="review-modal-title"
+    >
+      <button
+        type="button"
+        class="review-modal__close"
+        aria-label="Cerrar formulario"
+        (click)="closeModal()"
+      >
+        ×
+      </button>
+
+      <header class="review-modal__header">
+        <span class="review-modal__eyebrow">
+          Tu opinión es importante
+        </span>
+
+        <h2 id="review-modal-title">
+          Déjanos una reseña
+        </h2>
+
+        <p>
+          Comparte tu experiencia para ayudar a otras personas a encontrar
+          la propiedad ideal.
+        </p>
+      </header>
+
+      <form
+        class="review-form"
+        [formGroup]="reviewForm"
+        (ngSubmit)="submitReview()"
+      >
+        <div class="review-form__field">
+          <label for="review-name">
+            Nombre
+            <span aria-hidden="true">*</span>
+          </label>
+
+          <input
+            id="review-name"
+            type="text"
+            formControlName="name"
+            placeholder="Escribe tu nombre"
+            autocomplete="name"
+          />
+
+          @if (
+            reviewForm.controls.name.touched &&
+            reviewForm.controls.name.invalid
+          ) {
+            <small class="review-form__error">
+              Introduce un nombre válido.
+            </small>
+          }
+        </div>
+
+        <div class="review-form__field">
+          <label for="review-email">
+            Correo electrónico
+            <span class="review-form__optional">Opcional</span>
+          </label>
+
+          <input
+            id="review-email"
+            type="email"
+            formControlName="email"
+            placeholder="correo@ejemplo.com"
+            autocomplete="email"
+          />
+
+          @if (
+            reviewForm.controls.email.touched &&
+            reviewForm.controls.email.invalid
+          ) {
+            <small class="review-form__error">
+              Introduce un correo electrónico válido.
+            </small>
+          }
+        </div>
+
+        <div class="review-form__field">
+          <label>
+            Calificación
+            <span aria-hidden="true">*</span>
+          </label>
+
+          <div
+            class="review-form__stars"
+            role="radiogroup"
+            aria-label="Selecciona una calificación"
+          >
+            @for (star of stars; track star) {
+              <button
+                type="button"
+                class="review-form__star"
+                [class.review-form__star--active]="
+                  star <= (hoveredRating || selectedRating)
+                "
+                [attr.aria-label]="star + ' estrellas'"
+                [attr.aria-checked]="selectedRating === star"
+                role="radio"
+                (mouseenter)="hoveredRating = star"
+                (mouseleave)="hoveredRating = 0"
+                (focus)="hoveredRating = star"
+                (blur)="hoveredRating = 0"
+                (click)="setRating(star)"
+              >
+                ★
+              </button>
+            }
+          </div>
+
+          @if (
+            reviewForm.controls.rating.touched &&
+            reviewForm.controls.rating.invalid
+          ) {
+            <small class="review-form__error">
+              Selecciona una calificación.
+            </small>
+          }
+        </div>
+
+        <div class="review-form__field">
+          <div class="review-form__label-row">
+            <label for="review-comment">
+              Comentario
+              <span aria-hidden="true">*</span>
+            </label>
+
+            <span>
+              {{ reviewForm.controls.comment.value.length }}/600
+            </span>
+          </div>
+
+          <textarea
+            id="review-comment"
+            formControlName="comment"
+            maxlength="600"
+            rows="5"
+            placeholder="Cuéntanos cómo fue tu experiencia..."
+          ></textarea>
+
+          @if (
+            reviewForm.controls.comment.touched &&
+            reviewForm.controls.comment.invalid
+          ) {
+            <small class="review-form__error">
+              El comentario debe tener al menos 10 caracteres.
+            </small>
+          }
+        </div>
+
+        <p class="review-form__notice">
+          Tu correo electrónico no será mostrado públicamente. Las reseñas
+          serán revisadas antes de ser publicadas.
+        </p>
+
+        <button
+          type="submit"
+          class="review-form__submit"
+          [disabled]="isSubmitting"
+        >
+          {{ isSubmitting ? 'Enviando...' : 'Enviar reseña' }}
+        </button>
+      </form>
+    </section>
+  </div>
+}

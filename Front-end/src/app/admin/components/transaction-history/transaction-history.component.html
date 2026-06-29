@@ -1,0 +1,219 @@
+<section class="transaction-history">
+
+  <header class="transaction-history__header">
+    <div class="transaction-history__title">
+      <span
+        class="transaction-history__title-icon"
+        aria-hidden="true"
+      >
+        <lucide-icon
+          [img]="BuildingIcon"
+          size="22"
+        ></lucide-icon>
+      </span>
+
+      <div>
+        <h2>Historial de ventas y rentas</h2>
+
+        <p>
+          Consulta las operaciones completadas por la inmobiliaria.
+        </p>
+      </div>
+    </div>
+
+    <label class="transaction-history__search">
+      <lucide-icon
+        [img]="SearchIcon"
+        size="18"
+      ></lucide-icon>
+
+      <input
+        type="search"
+        [(ngModel)]="searchText"
+        placeholder="Buscar propiedad o cliente"
+        aria-label="Buscar operación"
+      />
+    </label>
+  </header>
+
+  <div
+    class="transaction-history__filters"
+    role="tablist"
+    aria-label="Filtrar operaciones"
+  >
+    <button
+      type="button"
+      [class.transaction-history__filter--active]="
+        activeFilter === 'all'
+      "
+      (click)="setFilter('all')"
+    >
+      Todas
+
+      <span>{{ transactions.length }}</span>
+    </button>
+
+    <button
+      type="button"
+      [class.transaction-history__filter--active]="
+        activeFilter === 'sale'
+      "
+      (click)="setFilter('sale')"
+    >
+      Ventas
+
+      <span>{{ salesCount }}</span>
+    </button>
+
+    <button
+      type="button"
+      [class.transaction-history__filter--active]="
+        activeFilter === 'rent'
+      "
+      (click)="setFilter('rent')"
+    >
+      Rentas
+
+      <span>{{ rentsCount }}</span>
+    </button>
+  </div>
+
+  <div class="transaction-history__table-wrapper">
+    <table class="transaction-history__table">
+      <thead>
+        <tr>
+          <th>Propiedad</th>
+          <th>Operación</th>
+          <th>Precio final</th>
+          <th>Cliente</th>
+          <th>Fecha</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (
+          transaction of filteredTransactions;
+          track transaction.id
+        ) {
+          <tr>
+            <td>
+              <div class="transaction-property">
+                <span
+                  class="transaction-property__icon"
+                  [class.transaction-property__icon--rent]="
+                    transaction.transactionType === 'rent'
+                  "
+                >
+                  <lucide-icon
+                    [img]="
+                      transaction.transactionType === 'sale'
+                        ? BuildingIcon
+                        : KeyIcon
+                    "
+                    size="18"
+                  ></lucide-icon>
+                </span>
+
+                <div class="transaction-property__content">
+                  <strong>
+                    {{ transaction.propertyTitle }}
+                  </strong>
+
+                  <span>
+                    ID: {{ transaction.propertyId }}
+                  </span>
+                </div>
+              </div>
+            </td>
+
+            <td>
+              <span
+                class="transaction-type"
+                [class.transaction-type--rent]="
+                  transaction.transactionType === 'rent'
+                "
+              >
+                {{ getTypeLabel(transaction.transactionType) }}
+              </span>
+            </td>
+
+            <td>
+              <strong class="transaction-price">
+                ${{ transaction.finalAmount | number:'1.0-2' }}
+              </strong>
+
+              @if (transaction.transactionType === 'rent') {
+                <span class="transaction-price__period">
+                  / mes
+                </span>
+              }
+            </td>
+
+            <td>
+              @if (transaction.clientName) {
+                {{ transaction.clientName }}
+              } @else {
+                <span class="transaction-muted">
+                  No registrado
+                </span>
+              }
+            </td>
+
+            <td>
+              <time [attr.datetime]="transaction.closedAt">
+                {{ transaction.closedAt | date:'dd/MM/yyyy' }}
+              </time>
+            </td>
+
+            <td>
+              <span
+                class="transaction-status"
+                [class.transaction-status--cancelled]="
+                  transaction.status === 'cancelled'
+                "
+              >
+                {{ getStatusLabel(transaction.status) }}
+              </span>
+            </td>
+
+            <td>
+              <button
+                type="button"
+                class="transaction-view"
+                (click)="openTransaction(transaction)"
+              >
+                <lucide-icon
+                  [img]="EyeIcon"
+                  size="17"
+                ></lucide-icon>
+
+                Ver
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="7">
+              <div class="transaction-history__empty">
+                <lucide-icon
+                  [img]="BuildingIcon"
+                  size="38"
+                ></lucide-icon>
+
+                <strong>No hay operaciones</strong>
+
+                <p>
+                  No se encontraron ventas o rentas que coincidan con
+                  el filtro seleccionado.
+                </p>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+</section>

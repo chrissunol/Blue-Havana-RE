@@ -18,15 +18,18 @@
       <div class="info-grid">
         <div class="main-info" id="contact-info">
           <div class="contact-grid">
-            <label>
-              Teléfono de oficina
-              <input formControlName="phone" placeholder="+53 00000000" />
-            </label>
+            <div class="hp">
+              <label>
+                Teléfono de oficina
+                <input formControlName="phone" placeholder="+53 00000000" />
+              </label>
 
-            <label class="full">
-              WhatsApp
-              <input formControlName="whatsapp" placeholder="+5352627046" />
-            </label>
+              <label class="full">
+                WhatsApp
+                <input formControlName="whatsapp" placeholder="+5352627046" />
+              </label>
+            </div>
+
 
             <label class="full">
               Dirección de la oficina
@@ -44,18 +47,23 @@
           <h2>Redes sociales</h2>
 
           <label class="social-row">
-            <span>◎</span>
+            <lucide-icon [img]="InstagramIcon" size="21" />
             <input formControlName="instagram" placeholder="@bluehavanars" />
           </label>
 
           <label class="social-row">
-            <span>f</span>
+            <lucide-icon [img]="FacebookIcon" size="21" />
             <input formControlName="facebook" placeholder="@bluehavanars" />
           </label>
 
           <label class="social-row">
-            <span>𝕏</span>
-            <input formControlName="x" placeholder="@bluehavanars" />
+            <lucide-icon [img]="TwitterIcon" size="21" />
+            <input formControlName="twitter" placeholder="@bluehavanars" />
+          </label>
+
+          <label class="social-row">
+            <lucide-icon [img]="TelegramIcon" size="21" />
+            <input formControlName="telegram" placeholder="@bluehavanars" />
           </label>
         </div>
       </div>

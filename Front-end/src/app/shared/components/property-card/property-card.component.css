@@ -9,7 +9,7 @@
   border-radius: 0;
   box-shadow: none;
   overflow: hidden;
-  color: var(--color-primary, #0072bc);
+  color: var(--color-primary);
   font-family: inherit;
 }
 
@@ -40,7 +40,7 @@
   font-size: 16px;
   line-height: 1.2;
   font-weight: 400;
-  color: var(--color-primary, #0072bc);
+  color: var(--color-info);
 }
 
 /* PRICE */
@@ -56,14 +56,14 @@
   font-size: 18px;
   line-height: 1.1;
   font-weight: 800;
-  color: var(--color-primary, #0072bc);
+  color: var(--color-info);
 }
 
 .property-card__m2 {
   font-size: 15px;
   line-height: 1.1;
   font-weight: 400;
-  color: var(--color-primary, #0072bc);
+  color: var(--color-info);
   white-space: nowrap;
 }
 
@@ -73,7 +73,7 @@
   font-size: 17px;
   line-height: 1.15;
   font-weight: 800;
-  color: var(--color-primary, #0072bc);
+  color: var(--color-info);
 }
 
 /* LOCATION */
@@ -86,7 +86,7 @@
   font-size: 15px;
   line-height: 1.2;
   font-weight: 400;
-  color: var(--color-primary, #0072bc);
+  color: var(--color-info);
 }
 
 /* FEATURES */
@@ -95,7 +95,7 @@
   align-items: center;
   gap: 15px;
   margin-bottom: 8px;
-  color: var(--color-primary, #0072bc);
+  color: var(--color-info);
 }
 
 .property-card__features span {
@@ -104,7 +104,7 @@
   gap: 5px;
   font-size: 15px;
   line-height: 1;
-  color: var(--color-primary, #0072bc);
+  color: var(--color-info);
 }
 
 /* ICONS */
@@ -172,4 +172,98 @@
   width: 100%;
   height: 100%;
   stroke: currentColor;
+}
+
+/* ESTADO DE VENTA O RENTA */
+
+.property-card__transaction-button {
+  width: 100%;
+  min-height: 40px;
+  margin: 4px 0 12px;
+  padding: 0 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  border: 2px solid var(--color-secondary, #8cc63f);
+  border-radius: 8px;
+
+  background: transparent;
+  color: var(--color-secondary, #8cc63f);
+
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 800;
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.property-card__transaction-button:hover {
+  transform: translateY(-1px);
+  background: var(--color-secondary, #8cc63f);
+  color: #ffffff;
+}
+
+.property-card__transaction-button--completed {
+  background: var(--color-secondary, #8cc63f);
+  color: #ffffff;
+}
+
+.property-card__transaction-button--completed:hover {
+  opacity: 0.88;
+}
+
+.transaction-icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  color: currentColor;
+}
+
+/* ETIQUETA SOBRE LA IMAGEN */
+
+.property-card__image {
+  position: relative;
+}
+
+.property-card__status-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+
+  padding: 8px 14px;
+
+  border-radius: 999px;
+
+  background: var(--color-secondary, #8cc63f);
+  color: #ffffff;
+
+  font-size: 13px;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+}
+
+/* Efecto opcional en una propiedad cerrada */
+
+.property-card--closed .property-card__image img {
+  filter: grayscale(20%);
+  opacity: 0.84;
+}
+
+.property-card--closed .property-card__price {
+  opacity: 0.7;
 }

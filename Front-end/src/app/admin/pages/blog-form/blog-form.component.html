@@ -1,0 +1,508 @@
+<main class="blog-form-page">
+  <header class="blog-form-header">
+    <div>
+      <a
+        routerLink="/admin/blog"
+        class="blog-form-header__back"
+      >
+        <lucide-icon
+          [img]="BackIcon"
+          size="18"
+        ></lucide-icon>
+
+        Volver al Blog
+      </a>
+
+      <span class="blog-form-header__eyebrow">
+        Administración
+      </span>
+
+      <h1>{{ pageTitle }}</h1>
+
+      <p>{{ pageDescription }}</p>
+    </div>
+  </header>
+
+  <form
+    class="blog-form"
+    [formGroup]="articleForm"
+    (ngSubmit)="saveArticle()"
+  >
+    <div class="blog-form__main">
+      <section class="form-card form-card--content">
+        <div class="form-card__heading">
+          <span>
+            <lucide-icon
+              [img]="LanguageIcon"
+              size="22"
+            ></lucide-icon>
+          </span>
+
+          <div>
+            <h2>Contenido del artículo</h2>
+
+            <p>
+              Completa el contenido en los tres
+              idiomas.
+            </p>
+          </div>
+        </div>
+
+        <div class="language-tabs">
+          @for (
+            language of languages;
+            track language.code
+          ) {
+            <button
+              type="button"
+              class="language-tab"
+              [class.language-tab--active]="
+                activeLanguage === language.code
+              "
+              [class.language-tab--error]="
+                isFieldInvalid(
+                  'title.' + language.code
+                ) ||
+                isFieldInvalid(
+                  'excerpt.' + language.code
+                ) ||
+                isFieldInvalid(
+                  'content.' + language.code
+                )
+              "
+              (click)="
+                selectLanguage(language.code)
+              "
+            >
+              {{ language.label }}
+            </button>
+          }
+        </div>
+
+        <div class="translation-fields">
+          <div
+            class="form-field"
+            formGroupName="title"
+          >
+            <div class="form-field__label">
+              <label
+                [for]="
+                  'article-title-' +
+                  activeLanguage
+                "
+              >
+                Título
+              </label>
+
+              <span>
+                {{
+                  getFieldLength(
+                    'title.' + activeLanguage
+                  )
+                }}/180
+              </span>
+            </div>
+
+            <input
+              [id]="
+                'article-title-' +
+                activeLanguage
+              "
+              type="text"
+              [formControlName]="activeLanguage"
+              placeholder="Escribe el título del artículo"
+              maxlength="180"
+            />
+
+            @if (
+              isFieldInvalid(
+                'title.' + activeLanguage
+              )
+            ) {
+              <small class="form-field__error">
+                El título es obligatorio.
+              </small>
+            }
+          </div>
+
+          <div
+            class="form-field"
+            formGroupName="excerpt"
+          >
+            <div class="form-field__label">
+              <label
+                [for]="
+                  'article-excerpt-' +
+                  activeLanguage
+                "
+              >
+                Resumen
+              </label>
+
+              <span>
+                {{
+                  getFieldLength(
+                    'excerpt.' + activeLanguage
+                  )
+                }}/350
+              </span>
+            </div>
+
+            <textarea
+              [id]="
+                'article-excerpt-' +
+                activeLanguage
+              "
+              [formControlName]="activeLanguage"
+              placeholder="Escribe una descripción breve"
+              maxlength="350"
+              rows="4"
+            ></textarea>
+
+            @if (
+              isFieldInvalid(
+                'excerpt.' + activeLanguage
+              )
+            ) {
+              <small class="form-field__error">
+                El resumen es obligatorio.
+              </small>
+            }
+          </div>
+
+          <div
+            class="form-field"
+            formGroupName="content"
+          >
+            <div class="form-field__label">
+              <label
+                [for]="
+                  'article-content-' +
+                  activeLanguage
+                "
+              >
+                Contenido
+              </label>
+
+              <span>
+                {{
+                  getFieldLength(
+                    'content.' + activeLanguage
+                  )
+                }} caracteres
+              </span>
+            </div>
+
+            <textarea
+              [id]="
+                'article-content-' +
+                activeLanguage
+              "
+              [formControlName]="activeLanguage"
+              placeholder="Escribe el contenido completo. Separa los párrafos dejando una línea en blanco."
+              rows="16"
+            ></textarea>
+
+            <small class="form-field__help">
+              Separa los párrafos dejando una línea
+              en blanco entre ellos.
+            </small>
+
+            @if (
+              isFieldInvalid(
+                'content.' + activeLanguage
+              )
+            ) {
+              <small class="form-field__error">
+                El contenido debe tener al menos
+                50 caracteres.
+              </small>
+            }
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <aside class="blog-form__sidebar">
+      <section class="form-card">
+        <div class="form-card__heading">
+          <span>
+            <lucide-icon
+              [img]="ImageIcon"
+              size="21"
+            ></lucide-icon>
+          </span>
+
+          <div>
+            <h2>Imagen principal</h2>
+
+            <p>Portada del artículo.</p>
+          </div>
+        </div>
+
+        <div class="cover-preview">
+          <img
+            [src]="coverPreview"
+            alt="Vista previa de la portada"
+            (error)="handleImageError($event)"
+          />
+        </div>
+
+        <label class="upload-button">
+          <lucide-icon
+            [img]="UploadIcon"
+            size="18"
+          ></lucide-icon>
+
+          Seleccionar imagen
+
+          <input
+            type="file"
+            accept="image/*"
+            (change)="
+              onCoverFileSelected($event)
+            "
+          />
+        </label>
+
+        @if (selectedFileName) {
+          <small class="selected-file">
+            {{ selectedFileName }}
+          </small>
+        }
+
+        <div class="form-field form-field--compact">
+          <label for="cover-image">
+            O utiliza una URL
+          </label>
+
+          <input
+            id="cover-image"
+            type="text"
+            formControlName="coverImage"
+            placeholder="https://..."
+            (input)="onCoverUrlChange()"
+          />
+        </div>
+
+        @if (imageErrorMessage) {
+          <div class="form-warning">
+            <lucide-icon
+              [img]="WarningIcon"
+              size="17"
+            ></lucide-icon>
+
+            {{ imageErrorMessage }}
+          </div>
+        }
+      </section>
+
+      <section class="form-card">
+        <div class="form-card__heading">
+          <span>
+            <lucide-icon
+              [img]="ArticleIcon"
+              size="21"
+            ></lucide-icon>
+          </span>
+
+          <div>
+            <h2>Configuración</h2>
+
+            <p>Datos generales.</p>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="article-category">
+            Categoría
+          </label>
+
+          <select
+            id="article-category"
+            formControlName="category"
+          >
+            @for (
+              category of categories;
+              track category.value
+            ) {
+              <option
+                [value]="category.value"
+              >
+                {{ category.label }}
+              </option>
+            }
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="article-author">
+            Autor
+          </label>
+
+          <input
+            id="article-author"
+            type="text"
+            formControlName="author"
+            maxlength="120"
+          />
+
+          @if (isFieldInvalid('author')) {
+            <small class="form-field__error">
+              El autor es obligatorio.
+            </small>
+          }
+        </div>
+
+        <div class="form-field">
+          <label for="reading-time">
+            Tiempo de lectura
+          </label>
+
+          <div class="reading-time">
+            <lucide-icon
+              [img]="ClockIcon"
+              size="18"
+            ></lucide-icon>
+
+            <input
+              id="reading-time"
+              type="number"
+              formControlName="readingTime"
+              min="1"
+              max="120"
+            />
+
+            <span>minutos</span>
+          </div>
+
+          @if (isFieldInvalid('readingTime')) {
+            <small class="form-field__error">
+              Introduce un tiempo entre 1 y
+              120 minutos.
+            </small>
+          }
+        </div>
+      </section>
+
+      <section class="form-card">
+        <div class="form-card__heading">
+          <span>
+            <lucide-icon
+              [img]="PublishedIcon"
+              size="21"
+            ></lucide-icon>
+          </span>
+
+          <div>
+            <h2>Publicación</h2>
+
+            <p>Estado y visibilidad.</p>
+          </div>
+        </div>
+
+        <div class="status-options">
+          <button
+            type="button"
+            class="status-option"
+            [class.status-option--active]="
+              currentStatus === 'draft'
+            "
+            (click)="setStatus('draft')"
+          >
+            <lucide-icon
+              [img]="DraftIcon"
+              size="19"
+            ></lucide-icon>
+
+            <span>
+              <strong>Borrador</strong>
+              <small>No visible al público</small>
+            </span>
+          </button>
+
+          <button
+            type="button"
+            class="status-option"
+            [class.status-option--active]="
+              currentStatus === 'published'
+            "
+            (click)="setStatus('published')"
+          >
+            <lucide-icon
+              [img]="PublishedIcon"
+              size="19"
+            ></lucide-icon>
+
+            <span>
+              <strong>Publicado</strong>
+              <small>Visible en el Blog</small>
+            </span>
+          </button>
+        </div>
+
+        <button
+          type="button"
+          class="featured-toggle"
+          [class.featured-toggle--active]="
+            isFeatured
+          "
+          (click)="toggleFeatured()"
+        >
+          <lucide-icon
+            [img]="FeaturedIcon"
+            size="19"
+          ></lucide-icon>
+
+          <span>
+            <strong>Artículo destacado</strong>
+
+            <small>
+              Aparecerá primero en el Blog
+            </small>
+          </span>
+        </button>
+      </section>
+
+      @if (submitted && articleForm.invalid) {
+        <div class="form-submit-error">
+          <lucide-icon
+            [img]="WarningIcon"
+            size="19"
+          ></lucide-icon>
+
+          Revisa los campos obligatorios en los
+          tres idiomas.
+        </div>
+      }
+
+      <div class="form-actions">
+        <a
+          routerLink="/admin/blog"
+          class="form-actions__cancel"
+        >
+          Cancelar
+        </a>
+
+        <button
+          type="submit"
+          class="form-actions__save"
+          [disabled]="isSaving"
+        >
+          <lucide-icon
+            [img]="SaveIcon"
+            size="19"
+          ></lucide-icon>
+
+          {{
+            isSaving
+              ? 'Guardando...'
+              : isEditMode
+                ? 'Guardar cambios'
+                : 'Crear artículo'
+          }}
+        </button>
+      </div>
+    </aside>
+  </form>
+</main>

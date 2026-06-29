@@ -5,6 +5,7 @@ import {
   PropertyCardComponent,
   PropertyCardMode,
 } from '../property-card/property-card.component';
+import { PropertyTransactionRequest } from '../property-card/property-card.component';
 
 @Component({
   selector: 'app-property-list',
@@ -22,4 +23,8 @@ export class PropertyListComponent {
   @Output() remove = new EventEmitter<Property>();
   @Output() toggleVisibility = new EventEmitter<Property>();
   @Output() toggleFeatured = new EventEmitter<Property>();
+  @Output() toggleTransactionStatus = new EventEmitter<Property>();
+  @Output()
+transactionRequested =
+  new EventEmitter<PropertyTransactionRequest>();
 }

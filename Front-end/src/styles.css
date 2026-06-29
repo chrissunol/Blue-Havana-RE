@@ -2,10 +2,12 @@
 :root {
   --color-primary: #33CCCC;   /* Azul */
   --color-secondary: #99CC66; /* Verde */
-  --color-background: #F8F6F6; /* Blanco hueso */
+  --color-background: #F2EFEF; /* Blanco hueso */
+
 
   --color-text: #33CCCC;
   --color-white: #ffffff;
+  --color-info: #000;
 }
 
 * {
@@ -16,6 +18,7 @@ body {
   margin: 0;
   background-color: var(--color-background);
   color: var(--color-text);
+  font-size: 20px;
 }
 
 

@@ -2,6 +2,8 @@
   background: var(--color-background);
   padding: 44px 0 24px;
   color: var(--color-text);
+  margin-top: 60px;
+  box-shadow: 0 -12px 28px rgba(0, 0, 0, 0.08);
 }
 
 .footer__container {

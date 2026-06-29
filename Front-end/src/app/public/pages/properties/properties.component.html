@@ -1,9 +1,9 @@
 <section class="properties-page">
   <div class="container">
-    <app-section-title title="Propiedades" />
+    <app-section-title title="Propiedades" style="margin-bottom: 50px;" />
 
     <div class="properties-page__search">
-      <app-property-search (search)="onSearch($event)" />
+      <app-property-search (search)="onSearch($event)"/>
 
     </div>
     @if (hasSearched && properties.length === 0) {

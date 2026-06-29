@@ -6,12 +6,12 @@
   <div class="form-grid">
     <div class="left-column">
       <div class="field">
-        <label>Nombre Propiedad</label>
+        <label>Nombre Propiedad*</label>
         <input formControlName="title" placeholder="Nombre" />
       </div>
 
       <div class="field">
-        <label>Tipo de propiedad</label>
+        <label>Tipo de propiedad*</label>
         <select title="Tipo de propiedad" formControlName="category">
           <option value="" disabled>Seleccione un tipo</option>
           @for (type of propertyTypes; track type) {
@@ -21,7 +21,7 @@
       </div>
 
       <div class="field">
-        <label>Zona</label>
+        <label>Zona*</label>
         <select title="Zona" formControlName="location">
           <option value="" disabled>Seleccione un municipio</option>
           @for (municipality of municipalities; track municipality) {
@@ -32,24 +32,24 @@
 
       <div class="row-3">
         <div class="field small">
-          <label>Tamaño (m2)</label>
+          <label>Tamaño (m2)*</label>
           <input type="number" formControlName="area" placeholder="0" />
         </div>
 
         <div class="field small">
-          <label>Dormitorios</label>
+          <label>Dormitorios*</label>
           <input type="number" formControlName="bedrooms" placeholder="0" />
         </div>
       </div>
 
       <div class="row-3">
         <div class="field small">
-          <label>Baños</label>
+          <label>Baños*</label>
           <input type="number" formControlName="bathrooms" placeholder="0" />
         </div>
 
         <div class="field small">
-          <label>Plantas</label>
+          <label>Plantas*</label>
           <input type="number" formControlName="floors" placeholder="0" />
         </div>
       </div>
@@ -62,12 +62,12 @@
 
     <div class="right-column">
       <div class="field">
-        <label>Identificador</label>
+        <label>Identificador*</label>
         <input formControlName="id" placeholder="000000" />
       </div>
 
       <div class="field">
-        <label>Tipo de operación</label>
+        <label>Tipo de operación*</label>
         <select title="Tipo de operación" formControlName="operation">
           <option value="sale">Venta</option>
           <option value="rent">Renta</option>
@@ -76,7 +76,7 @@
 
       <div class="field cost-field">
         <label>
-          {{ operation === 'rent' ? 'Costo Mensual' : 'Costo' }}
+          {{ operation === 'rent' ? 'Costo Mensual*' : 'Costo*' }}
         </label>
         <input type="number" formControlName="price" placeholder="$ 0" />
       </div>
@@ -144,7 +144,7 @@
   </div>
 
   <div class="photos">
-    <label>Fotos</label>
+    <label>Fotos*</label>
 
     <div class="photos-box">
       <input #fileInput type="file" accept="image/*" multiple (change)="onFilesSelected($event)" hidden />

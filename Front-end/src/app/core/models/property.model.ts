@@ -1,4 +1,5 @@
 export type PropertyOperation = 'rent' | 'sale';
+export type PropertyListingType = 'property' | 'business';
 export type PropertyStatus = 'available' | 'sold' | 'rented';
 
 export interface TranslatedText {
@@ -20,6 +21,11 @@ export interface PropertyFeatures {
   otherText?: string;
 }
 
+export type PropertyTransactionStatus = 
+| 'available'
+| 'sold'
+| 'rented';
+
 export interface Property {
   id: string;
   title: TranslatedText;
@@ -28,6 +34,7 @@ export interface Property {
   annualPrice?: number;
   pricePerM2?: number;
   operation: PropertyOperation;
+  listingType?: PropertyListingType;
   location: TranslatedText;
   bedrooms: number;
   bathrooms: number;
@@ -39,5 +46,8 @@ export interface Property {
   description?: TranslatedText;
   features?: PropertyFeatures;
   status?: PropertyStatus;
+  createdAt?: string;
+  transactionStatus?: PropertyStatus;
+
 }
 

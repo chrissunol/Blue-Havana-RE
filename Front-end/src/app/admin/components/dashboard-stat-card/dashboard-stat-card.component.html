@@ -1,0 +1,27 @@
+<article
+  class="dashboard-stat"
+  [class.dashboard-stat--pending]="variant === 'pending'"
+  [class.dashboard-stat--approved]="variant === 'approved'"
+  [class.dashboard-stat--sold]="variant === 'sold'"
+  [class.dashboard-stat--rented]="variant === 'rented'"
+>
+  <span
+    class="dashboard-stat__icon"
+    aria-hidden="true"
+  >
+    <lucide-icon
+      [img]="icon"
+      size="22"
+    ></lucide-icon>
+  </span>
+
+  <div class="dashboard-stat__content">
+    <strong>
+      {{ value }}
+    </strong>
+
+    <span>
+      {{ title }}
+    </span>
+  </div>
+</article>

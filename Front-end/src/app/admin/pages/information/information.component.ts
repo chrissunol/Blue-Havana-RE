@@ -4,17 +4,22 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 import { CompanyInfo } from '../../../core/models/information.model';
 import { InformationService } from '../../../core/services/information.service';
+import { LucideAngularModule, Instagram, Twitter, Facebook, Send } from 'lucide-angular';
 
 @Component({
   selector: 'app-information',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, LucideAngularModule],
   templateUrl: './information.component.html',
   styleUrl: './information.component.css',
 })
 export class InformationComponent implements OnInit {
   savedMessage = '';
   sectionSearch = this.fb.control('');
+  readonly InstagramIcon = Instagram;
+  readonly TelegramIcon = Send;
+  readonly TwitterIcon = Twitter;
+  readonly FacebookIcon = Facebook;
 
   form = this.fb.group({
     phone: [''],
