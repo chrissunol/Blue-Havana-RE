@@ -1,16 +1,17 @@
+from typing import Literal
+
 from pydantic import BaseModel, Field
 
 
-class ModificationRequestBase(BaseModel):
-    field: str  # e.g., "full_name", "email"
+class ModificationRequestCreate(BaseModel):
+    field: Literal["full_name", "email", "username", "phone"]
     new_value: str = Field(min_length=1, max_length=200)
 
 
-class ModificationRequestCreate(ModificationRequestBase):
-    pass
-
-
-class ModificationRequestResponse(ModificationRequestBase):
+class ModificationRequestResponse(ModificationRequestCreate):
     id: str
     user_id: str
-    status: str = "pending"  # pending, approved, denied
+    status: Literal["pending", "approved", "denied"] = "pending"
+    reviewed_by: str | None = None
+    reviewed_at: str | None = None
+    created_at: str | None = None

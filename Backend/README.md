@@ -1,44 +1,83 @@
-# Inmobiliaria API - FastAPI + Supabase
+# Blue Havana Real Estate API V2
 
-API preparada para una web inmobiliaria con dos partes separadas:
+Backend FastAPI conectado a Supabase para el frontend público y los paneles de administración.
 
-1. **Frontend público:** solo muestra casas publicadas.
-2. **Panel admin/superadmin:** login separado para crear, editar, publicar, ocultar y subir imágenes.
+## Funcionalidades incluidas
 
-## Requisitos
+- Autenticación JWT para admin y superadmin.
+- Administración de usuarios con desactivación segura.
+- Propiedades y negocios mediante `listingType`.
+- Publicación, edición, filtros e imágenes de propiedades.
+- Registro atómico de ventas y rentas.
+- Cancelación de operaciones y restauración de disponibilidad.
+- Blog público y administrativo con imágenes.
+- Reseñas públicas con moderación.
+- Dashboard real con reseñas y transacciones.
+- Información de empresa, incluyendo Telegram y YouTube.
+- Solicitudes persistentes de modificación de perfil.
 
-- Python 3.10+
-- Cuenta/proyecto en Supabase
-- Supabase `SERVICE_ROLE_KEY` solo en backend. Nunca en frontend.
+## 1. Preparar Supabase
 
-## Instalación
+Para una base existente, ejecuta en **Supabase > SQL Editor**:
+
+```text
+supabase/migration_backend_v2.sql
+```
+
+Para una instalación nueva puedes ejecutar:
+
+```text
+supabase/schema.sql
+```
+
+La migración crea o actualiza:
+
+- `properties.listing_type`
+- `blog_articles`
+- `reviews`
+- nuevas columnas en `property_transactions`
+- nuevas columnas en `company_information`
+- `modification_requests`
+- bucket público `blog-images`
+- funciones SQL atómicas para completar y cancelar operaciones
+
+## 2. Configurar variables de entorno
+
+Copia `.env.example` como `.env` y completa los valores reales.
+
+```bash
+cp .env.example .env
+```
+
+En Windows PowerShell:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Nunca subas `.env` ni `SUPABASE_SERVICE_ROLE_KEY` a GitHub o al frontend.
+
+## 3. Instalar y ejecutar
 
 ```bash
 python -m venv .venv
-# Windows PowerShell:
-.\.venv\Scripts\Activate.ps1
-# macOS/Linux:
-source .venv/bin/activate
-
-pip install -r requirements.txt
 ```
 
-Copia `.env.example` a `.env` y completa tus valores.
+Windows PowerShell:
 
-## Supabase
-
-1. Entra a Supabase > SQL Editor.
-2. Ejecuta `supabase/schema.sql`.
-3. Asegúrate de tener el bucket público `property-images`.
-4. Usa `SUPABASE_SERVICE_ROLE_KEY` en `.env`, nunca la anon key para este backend.
-
-## Ejecutar
-
-```bash
+```powershell
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
 uvicorn app.main:app --reload --host 127.0.0.1 --port 4000
 ```
 
-El frontend de esta copia usa `http://127.0.0.1:4000/api`. Incluye `http://localhost:4200` en `CORS_ORIGINS`.
+macOS/Linux:
+
+```bash
+source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload --host 127.0.0.1 --port 4000
+```
 
 Swagger:
 
@@ -49,147 +88,108 @@ http://localhost:4000/docs
 Health check:
 
 ```text
-GET http://localhost:4000/health
+GET /health
 ```
 
-## Primer superadmin
+## Endpoints principales
 
-Al levantar la API se crea automáticamente el superadmin usando:
-
-```env
-ADMIN_EMAIL=admin@inmobiliaria.com
-ADMIN_PASSWORD=Admin12345!
-```
-
-Cambia esos datos en `.env` antes de producción.
-
-## Flujo para frontend público
-
-El frontend público NO necesita token.
-
-### Listar propiedades publicadas
-
-```http
-GET /api/properties
-```
-
-Filtros disponibles:
+### Propiedades y negocios
 
 ```text
-operation=rent|sale
-category=casa
-location=miami
-city=miami
-min_price=100000
-max_price=500000
-bedrooms=3
-bathrooms=2
-featured=true
+GET    /api/properties
+GET    /api/properties?listingType=business
+GET    /api/properties/admin/all
+POST   /api/properties
+PATCH  /api/properties/{id}
+DELETE /api/properties/{id}
 ```
 
-Ejemplo:
-
-```http
-GET /api/properties?operation=venta&min_price=100000&max_price=400000&bedrooms=3
-```
-
-### Ver detalle público
-
-```http
-GET /api/properties/{property_id}
-```
-
-Solo devuelve la propiedad si `is_published=true`.
-
-## Flujo para panel admin separado
-
-### Login admin/superadmin
-
-```http
-POST /api/auth/login
-Content-Type: application/json
-
-{
-  "username": "admin",
-  "password": "Admin12345!"
-}
-```
-
-Respuesta:
+El backend acepta y devuelve:
 
 ```json
 {
-  "access_token": "...",
-  "token_type": "bearer",
-  "user": {
-    "id": "superadmin",
-    "email": "admin@inmobiliaria.com",
-    "full_name": "Super Admin",
-    "role": "superadmin",
-    "is_active": true
-  }
+  "listingType": "property",
+  "transactionStatus": "available"
 }
 ```
 
-En el panel admin, enviar siempre:
+### Ventas y rentas
 
-```http
-Authorization: Bearer TOKEN_AQUI
+```text
+POST  /api/properties/{id}/mark-sold
+POST  /api/properties/{id}/mark-rented
+GET   /api/transactions
+GET   /api/transactions/sales
+GET   /api/transactions/rents
+PATCH /api/transactions/{transaction_id}/cancel
 ```
 
-### Admin/superadmin puede
-
-```http
-GET /api/properties/admin/all
-GET /api/properties/admin/{property_id}
-POST /api/properties
-PATCH /api/properties/{property_id}
-PATCH /api/properties/{property_id}/publish
-PATCH /api/properties/{property_id}/unpublish
-DELETE /api/properties/{property_id}
-POST /api/properties/{property_id}/images
-```
-
-### Solo superadmin puede
-
-```http
-GET /api/users
-POST /api/users
-PATCH /api/users/{user_id}
-PATCH /api/users/{user_id}/deactivate
-```
-
-## Modelo para crear propiedad
+El backend acepta el formato actual del frontend:
 
 ```json
 {
-  "title": "Casa moderna en zona céntrica",
-  "description": "Casa amplia, remodelada y lista para vivir.",
-  "operation": "venta",
-  "price": 350000,
-  "property_type": "casa",
-  "bedrooms": 3,
-  "bathrooms": 2,
-  "area_m2": 180,
-  "lot_size_m2": 300,
-  "floors": 1,
-  "location": "Miami, FL",
-  "address": "123 Main St",
-  "city": "Miami",
-  "state": "FL",
-  "amenities": ["garage", "patio", "piscina"],
-  "images": [],
-  "is_published": false,
-  "featured": false
+  "finalAmount": 125000,
+  "clientName": "Juan Pérez",
+  "closedAt": "2026-06-29",
+  "notes": "Operación completada"
 }
 ```
 
-Recomendación: crear la propiedad como `is_published=false`, subir imágenes, revisar en el panel, y luego llamar `/publish`.
+### Blog
 
-## Notas importantes para producción
+```text
+GET    /api/blog/articles
+GET    /api/blog/articles/{slug}
+GET    /api/blog/admin/articles
+POST   /api/blog/admin/articles
+PATCH  /api/blog/admin/articles/{id}
+PATCH  /api/blog/admin/articles/{id}/status
+PATCH  /api/blog/admin/articles/{id}/featured
+DELETE /api/blog/admin/articles/{id}
+POST   /api/blog/admin/images
+```
 
-- No subir `.env` al repositorio.
-- No mandar `SUPABASE_SERVICE_ROLE_KEY` al frontend.
-- Configurar `CORS_ORIGINS` con los dominios reales.
-- Cambiar `JWT_SECRET` y password del superadmin.
-- El frontend público solo debe usar `/api/properties` y `/api/properties/{id}`.
+### Reseñas
+
+```text
+POST   /api/reviews
+GET    /api/reviews/public
+GET    /api/reviews/admin
+PATCH  /api/reviews/{id}/approve
+PATCH  /api/reviews/{id}/reject
+DELETE /api/reviews/{id}
+```
+
+### Dashboard
+
+```text
+GET /api/dashboard
+```
+
+Devuelve estadísticas, reseñas y transacciones reales en una sola respuesta.
+
+## Despliegue en Render
+
+1. Ejecuta primero la migración SQL en Supabase.
+2. Sube este backend a GitHub sin `.env`.
+3. En Render configura todas las variables de `.env.example`.
+4. Usa como comando de inicio:
+
+```text
+uvicorn app.main:app --host 0.0.0.0 --port $PORT
+```
+
+5. Verifica:
+
+```text
+https://TU-SERVICIO.onrender.com/health
+https://TU-SERVICIO.onrender.com/docs
+```
+
+## Comprobaciones realizadas
+
+- Compilación de todos los módulos Python.
+- Generación correcta del esquema OpenAPI.
+- Validación de aliases usados por Angular.
+- Pruebas HTTP de contratos para propiedades, transacciones, blog, reseñas y dashboard.
+- Validación sintáctica del SQL de migración y del esquema completo.

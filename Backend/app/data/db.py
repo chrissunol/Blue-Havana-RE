@@ -21,6 +21,8 @@ DEFAULT_COMPANY_INFO = {
     "facebook": "@bluehavanars",
     "instagram": "@bluehavanars",
     "x": "@bluehavanars",
+    "telegram": "",
+    "youtube": "",
     "origin_text": "Blue Havana Real Estate transforma el mercado inmobiliario cubano con estándares internacionales de transparencia, eficiencia y excelencia.",
     "today_text": "Brindar soluciones inmobiliarias integrales y de alto nivel.",
     "future_text": "Ser la empresa inmobiliaria líder y referente en Cuba.",
@@ -117,6 +119,9 @@ def frontend_property_to_db(payload: dict, property_id: str | None = None) -> di
     if "location" in data:
         data["location"] = translated_to_text(data["location"])
 
+    if "listingType" in data:
+        data["listing_type"] = data.pop("listingType")
+
     if "operation" in data:
         operation = frontend_operation_to_db(data["operation"])
         if operation:
@@ -135,6 +140,12 @@ def frontend_property_to_db(payload: dict, property_id: str | None = None) -> di
 
     if "images" in data and property_id:
         data["images"] = _normalize_images_for_db(data.get("images"), property_id)
+
+    # Compatibilidad con el nombre usado por el frontend compilado.
+    if "transactionStatus" in data:
+        data["status"] = data.pop("transactionStatus")
+    if "transaction_status" in data:
+        data["status"] = data.pop("transaction_status")
 
     # Campos que existen en el frontend pero no en la tabla actual.
     data.pop("annualPrice", None)
@@ -162,8 +173,11 @@ def db_property_to_frontend(prop: dict | None) -> dict | None:
         "code": data.get("code"),
         "title": text_to_translated(data.get("title")),
         "category": text_to_translated(data.get("property_type")),
+        "listingType": data.get("listing_type", "property"),
         "price": price,
-        "annualPrice": price * 12 if db_operation_to_frontend(data.get("operation")) == "rent" else None,
+        "annualPrice": price * 12
+        if db_operation_to_frontend(data.get("operation")) == "rent"
+        else None,
         "pricePerM2": round(price / area_float, 2) if area_float else None,
         "operation": db_operation_to_frontend(data.get("operation")),
         "location": text_to_translated(data.get("location")),
@@ -177,6 +191,7 @@ def db_property_to_frontend(prop: dict | None) -> dict | None:
         "description": text_to_translated(data.get("description")),
         "features": _safe_features(data.get("amenities")),
         "status": data.get("status", "available"),
+        "transactionStatus": data.get("status", "available"),
         "created_by": data.get("created_by"),
         "created_at": str(data.get("created_at")) if data.get("created_at") else None,
         "updated_at": str(data.get("updated_at")) if data.get("updated_at") else None,
@@ -184,7 +199,9 @@ def db_property_to_frontend(prop: dict | None) -> dict | None:
 
 
 def db_properties_to_frontend(properties: list[dict]) -> list[dict]:
-    return [item for item in (db_property_to_frontend(prop) for prop in properties) if item]
+    return [
+        item for item in (db_property_to_frontend(prop) for prop in properties) if item
+    ]
 
 
 def ensure_superadmin() -> None:
@@ -196,12 +213,14 @@ def ensure_superadmin() -> None:
     inserta si realmente no existe.
     """
     admin_email = settings.admin_email.lower()
-    admin_username = (settings.admin_username or admin_email.split('@')[0]).strip().lower()
+    admin_username = (
+        (settings.admin_username or admin_email.split("@")[0]).strip().lower()
+    )
     admin_payload = {
         "email": admin_email,
         "full_name": settings.admin_full_name,
         "username": admin_username,
-        "phone": '',
+        "phone": "",
         "hashed_password": hash_password(settings.admin_password),
         "role": "superadmin",
         "is_active": True,
@@ -214,13 +233,17 @@ def ensure_superadmin() -> None:
 
     existing_by_email = get_user_by_email(admin_email)
     if existing_by_email:
-        supabase.table("users").update(admin_payload).eq("id", existing_by_email["id"]).execute()
+        supabase.table("users").update(admin_payload).eq(
+            "id", existing_by_email["id"]
+        ).execute()
         return
 
-    supabase.table("users").insert({
-        "id": SUPERADMIN_ID,
-        **admin_payload,
-    }).execute()
+    supabase.table("users").insert(
+        {
+            "id": SUPERADMIN_ID,
+            **admin_payload,
+        }
+    ).execute()
 
 
 def sanitize_user(user: dict | None) -> dict | None:
@@ -232,7 +255,13 @@ def sanitize_user(user: dict | None) -> dict | None:
 
 
 def get_user_by_email(email: str) -> dict | None:
-    res = supabase.table("users").select("*").eq("email", email.lower()).limit(1).execute()
+    res = (
+        supabase.table("users")
+        .select("*")
+        .eq("email", email.lower())
+        .limit(1)
+        .execute()
+    )
     return response_single(res)
 
 
@@ -240,7 +269,13 @@ def get_user_by_username(username: str) -> dict | None:
     normalized = (username or "").strip().lower()
     if not normalized:
         return None
-    res = supabase.table("users").select("*").ilike("username", normalized).limit(1).execute()
+    res = (
+        supabase.table("users")
+        .select("*")
+        .ilike("username", normalized)
+        .limit(1)
+        .execute()
+    )
     return response_single(res)
 
 
@@ -250,7 +285,12 @@ def get_user_by_id(user_id: str) -> dict | None:
 
 
 def list_users() -> list[dict]:
-    res = supabase.table("users").select("id,email,full_name,username,phone,role,is_active,created_at").order("created_at", desc=True).execute()
+    res = (
+        supabase.table("users")
+        .select("id,email,full_name,username,phone,role,is_active,created_at")
+        .order("created_at", desc=True)
+        .execute()
+    )
     return response_data(res)
 
 
@@ -259,7 +299,9 @@ def create_user(payload: dict) -> dict:
     password = data.pop("password")
     data["id"] = str(data.get("id") or uuid4())
     data["email"] = data["email"].lower()
-    data["username"] = (data.get("username") or data["email"].split("@")[0]).strip().lower()
+    data["username"] = (
+        (data.get("username") or data["email"].split("@")[0]).strip().lower()
+    )
     data["phone"] = str(data.get("phone") or "").strip()
     data["hashed_password"] = hash_password(password)
     res = supabase.table("users").insert(data).execute()
@@ -284,7 +326,9 @@ def update_user(user_id: str, payload: dict) -> dict | None:
 
 
 def deactivate_user(user_id: str) -> dict | None:
-    res = supabase.table("users").update({"is_active": False}).eq("id", user_id).execute()
+    res = (
+        supabase.table("users").update({"is_active": False}).eq("id", user_id).execute()
+    )
     return sanitize_user(response_single(res))
 
 
@@ -308,6 +352,8 @@ def _apply_property_filters(query, filters: dict):
         query = query.gte("bathrooms", filters["bathrooms"])
     if filters.get("featured") is not None:
         query = query.eq("featured", filters["featured"])
+    if filters.get("listing_type"):
+        query = query.eq("listing_type", filters["listing_type"])
 
     for feature in filters.get("features") or []:
         if isinstance(feature, str) and feature.strip():
@@ -317,14 +363,31 @@ def _apply_property_filters(query, filters: dict):
 
 
 def list_public_properties(filters: dict) -> list[dict]:
-    query = supabase.table("properties").select("*").eq("is_published", True).eq("status", "available")
-    data = _apply_property_filters(query, filters).order("created_at", desc=True).execute().data or []
+    query = (
+        supabase.table("properties")
+        .select("*")
+        .eq("is_published", True)
+        .eq("status", "available")
+    )
+    data = (
+        _apply_property_filters(query, filters)
+        .order("created_at", desc=True)
+        .execute()
+        .data
+        or []
+    )
     return db_properties_to_frontend(data)
 
 
 def list_admin_properties(filters: dict) -> list[dict]:
     query = supabase.table("properties").select("*")
-    data = _apply_property_filters(query, filters).order("created_at", desc=True).execute().data or []
+    data = (
+        _apply_property_filters(query, filters)
+        .order("created_at", desc=True)
+        .execute()
+        .data
+        or []
+    )
     return db_properties_to_frontend(data)
 
 
@@ -342,7 +405,13 @@ def get_public_property(property_id: str) -> dict | None:
 
 
 def get_any_property(property_id: str) -> dict | None:
-    res = supabase.table("properties").select("*").eq("id", property_id).limit(1).execute()
+    res = (
+        supabase.table("properties")
+        .select("*")
+        .eq("id", property_id)
+        .limit(1)
+        .execute()
+    )
     return db_property_to_frontend(response_single(res))
 
 
@@ -386,6 +455,8 @@ def company_info_to_frontend(info: dict | None) -> dict:
         "facebook": data.get("facebook", ""),
         "instagram": data.get("instagram", ""),
         "x": data.get("x", ""),
+        "telegram": data.get("telegram", ""),
+        "youtube": data.get("youtube", ""),
         "originText": data.get("origin_text", ""),
         "todayText": data.get("today_text", ""),
         "futureText": data.get("future_text", ""),
@@ -394,28 +465,42 @@ def company_info_to_frontend(info: dict | None) -> dict:
 
 
 def company_info_to_db(payload: dict) -> dict:
-    return {
-        "id": COMPANY_INFO_ID,
-        "phone": payload.get("phone", ""),
-        "whatsapp": payload.get("whatsapp", ""),
-        "email": payload.get("email", ""),
-        "address": payload.get("address", ""),
-        "facebook": payload.get("facebook", ""),
-        "instagram": payload.get("instagram", ""),
-        "x": payload.get("x", ""),
-        "origin_text": payload.get("originText", ""),
-        "today_text": payload.get("todayText", ""),
-        "future_text": payload.get("futureText", ""),
-        "where_text": payload.get("whereText", ""),
+    field_mapping = {
+        "phone": "phone",
+        "whatsapp": "whatsapp",
+        "email": "email",
+        "address": "address",
+        "facebook": "facebook",
+        "instagram": "instagram",
+        "x": "x",
+        "telegram": "telegram",
+        "youtube": "youtube",
+        "originText": "origin_text",
+        "todayText": "today_text",
+        "futureText": "future_text",
+        "whereText": "where_text",
     }
+    data = {"id": COMPANY_INFO_ID}
+    for frontend_key, database_key in field_mapping.items():
+        if frontend_key in payload:
+            data[database_key] = payload[frontend_key] or ""
+    return data
 
 
 def ensure_company_info() -> dict:
-    res = supabase.table("company_information").select("*").eq("id", COMPANY_INFO_ID).limit(1).execute()
+    res = (
+        supabase.table("company_information")
+        .select("*")
+        .eq("id", COMPANY_INFO_ID)
+        .limit(1)
+        .execute()
+    )
     existing = response_single(res)
     if existing:
         return existing
-    inserted = supabase.table("company_information").insert(DEFAULT_COMPANY_INFO).execute()
+    inserted = (
+        supabase.table("company_information").insert(DEFAULT_COMPANY_INFO).execute()
+    )
     return response_single(inserted) or DEFAULT_COMPANY_INFO
 
 
@@ -424,9 +509,18 @@ def get_company_info() -> dict:
 
 
 def update_company_info(payload: dict) -> dict:
+    ensure_company_info()
     data = company_info_to_db(payload)
-    res = supabase.table("company_information").upsert(data).execute()
-    return company_info_to_frontend(response_single(res))
+    data.pop("id", None)
+    if not data:
+        return get_company_info()
+    res = (
+        supabase.table("company_information")
+        .update(data)
+        .eq("id", COMPANY_INFO_ID)
+        .execute()
+    )
+    return company_info_to_frontend(response_single(res) or ensure_company_info())
 
 
 def reset_company_info() -> dict:

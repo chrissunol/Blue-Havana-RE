@@ -8,11 +8,15 @@ from app.routers.properties import router as properties_router
 from app.routers.users import router as users_router
 from app.routers.transactions import router as transactions_router
 from app.routers.information import router as information_router
+from app.routers.blog import router as blog_router
+from app.routers.reviews import router as reviews_router
+from app.routers.dashboard import router as dashboard_router
+from app.routers.requests import router as requests_router
 
 app = FastAPI(
     title=settings.app_name,
     description="API Blue Havana RS",
-    version="1.1.0",
+    version="2.0.0",
 )
 
 allowed_origins = list(settings.cors_origin_list)
@@ -41,6 +45,10 @@ app.include_router(properties_router, prefix="/api")
 app.include_router(users_router, prefix="/api")
 app.include_router(transactions_router, prefix="/api")
 app.include_router(information_router, prefix="/api")
+app.include_router(blog_router, prefix="/api")
+app.include_router(reviews_router, prefix="/api")
+app.include_router(dashboard_router, prefix="/api")
+app.include_router(requests_router, prefix="/api")
 
 
 @app.on_event("startup")

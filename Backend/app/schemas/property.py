@@ -1,5 +1,6 @@
 from typing import Literal
-from pydantic import BaseModel, Field
+
+from pydantic import AliasChoices, BaseModel, ConfigDict, Field
 
 
 class TranslatedText(BaseModel):
@@ -24,6 +25,7 @@ class PropertyFeatures(BaseModel):
 class PropertyBase(BaseModel):
     title: TranslatedText
     category: TranslatedText
+    listingType: Literal["property", "business"] = "property"
     price: float = Field(gt=0)
     annualPrice: float | None = None
     pricePerM2: float | None = None
@@ -45,8 +47,11 @@ class PropertyCreate(PropertyBase):
 
 
 class PropertyUpdate(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
+
     title: TranslatedText | None = None
     category: TranslatedText | None = None
+    listingType: Literal["property", "business"] | None = None
     price: float | None = Field(default=None, gt=0)
     annualPrice: float | None = None
     pricePerM2: float | None = None
@@ -61,11 +66,17 @@ class PropertyUpdate(BaseModel):
     featured: bool | None = None
     description: TranslatedText | None = None
     features: PropertyFeatures | None = None
+    transactionStatus: Literal["available", "sold", "rented"] | None = Field(
+        default=None,
+        validation_alias=AliasChoices("transactionStatus", "transaction_status"),
+    )
 
 
 class PropertyResponse(PropertyBase):
     id: str
     code: str | None = None
+    status: Literal["available", "sold", "rented"] = "available"
+    transactionStatus: Literal["available", "sold", "rented"] = "available"
     created_by: str | None = None
     created_at: str | None = None
     updated_at: str | None = None

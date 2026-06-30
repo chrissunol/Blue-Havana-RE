@@ -7,7 +7,7 @@ class UserCreate(BaseModel):
     email: EmailStr
     full_name: str = Field(min_length=2, max_length=100)
     username: str = Field(min_length=1, max_length=80)
-    phone: str | None = Field(default='', max_length=30)
+    phone: str | None = Field(default="", max_length=30)
     password: str = Field(min_length=8)
     role: Literal["admin", "superadmin"] = "admin"
     is_active: bool = True
@@ -28,6 +28,6 @@ class UserResponse(BaseModel):
     email: EmailStr
     full_name: str
     username: str | None = None
-    phone: str | None = ''
+    phone: str | None = ""
     role: Literal["admin", "superadmin"]
     is_active: bool

@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     supabase_url: str
     supabase_service_role_key: str
     supabase_storage_bucket: str = "property-images"
+    supabase_blog_storage_bucket: str = "blog-images"
 
     admin_email: str
     admin_username: str | None = None
@@ -24,15 +25,17 @@ class Settings(BaseSettings):
         "http://localhost:4200,"
         "http://127.0.0.1:4200,"
         "https://bluehavanars.csunol73.workers.dev"
-    )    
-    
-    
+    )
 
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", case_sensitive=False)
+    model_config = SettingsConfigDict(
+        env_file=".env", env_file_encoding="utf-8", case_sensitive=False
+    )
 
     @property
     def cors_origin_list(self) -> list[str]:
-        return [origin.strip() for origin in self.cors_origins.split(",") if origin.strip()]
+        return [
+            origin.strip() for origin in self.cors_origins.split(",") if origin.strip()
+        ]
 
 
 @lru_cache
