@@ -284,10 +284,11 @@ def get_user_by_id(user_id: str) -> dict | None:
     return response_single(res)
 
 
-def list_users() -> list[dict]:
-    res = (
+    def list_users() -> list[dict]:
+      res = (
         supabase.table("users")
         .select("id,email,full_name,username,phone,role,is_active,created_at")
+        .eq("is_active", True)
         .order("created_at", desc=True)
         .execute()
     )

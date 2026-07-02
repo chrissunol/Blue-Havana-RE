@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, of, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
 import { environment } from '../../../environments/environment';
@@ -28,29 +28,12 @@ export class AuthService {
   private apiUrl = environment.apiUrl;
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
-  private superAdmin = {
-    id: '000000',
-    username: 'superadmin',
-    password: '123456',
-    email: 'superadmin@gmail.com',
-    full_name: 'Super Administrador',
-    role: 'superadmin' as UserRole,
-    is_active: true,
-  };
-
   login(username: string, password: string): Observable<LoginResponse> {
-    const localLogin = this.loginLocal(username, password);
-
-    if (localLogin) {
-      return of(localLogin).pipe(
-        tap((response) => {
-          this.saveSession(response);
-        })
-      );
-    }
-
     return this.http
-      .post<LoginResponse>(`${this.apiUrl}/auth/login`, { username, password })
+      .post<LoginResponse>(`${this.apiUrl}/auth/login`, {
+        username: username.trim(),
+        password,
+      })
       .pipe(
         tap((response) => {
           this.saveSession(response);
@@ -58,61 +41,34 @@ export class AuthService {
       );
   }
 
-  private loginLocal(username: string, password: string): LoginResponse | null {
-    if (!this.isBrowser) return null;
-
-    if (
-      username === this.superAdmin.username &&
-      password === this.superAdmin.password
-    ) {
-      return {
-        access_token: 'local-superadmin-token',
-        token_type: 'Bearer',
-        user: this.superAdmin,
-      };
-    }
-
-    const admins = JSON.parse(localStorage.getItem('bhre_admins') || '[]');
-
-    const admin = admins.find(
-      (item: any) => item.username === username && item.password === password
-    );
-
-    if (!admin) return null;
-
-    return {
-      access_token: `local-admin-token-${admin.id}`,
-      token_type: 'Bearer',
-      user: {
-        id: admin.id,
-        email: admin.email,
-        username: admin.username,
-        phone: admin.phone,
-        full_name: admin.fullName,
-        role: 'admin',
-        is_active: true,
-      },
-    };
-  }
-
   logout(): void {
     if (this.isBrowser) {
       localStorage.removeItem('access_token');
       localStorage.removeItem('current_user');
+      localStorage.removeItem('bhre_admins');
     }
 
     this.router.navigate(['/login']);
   }
 
   getToken(): string | null {
-    return this.isBrowser ? localStorage.getItem('access_token') : null;
+    if (!this.isBrowser) {
+      return null;
+    }
+
+    return localStorage.getItem('access_token');
   }
 
   getCurrentUser(): User | null {
-    if (!this.isBrowser) return null;
+    if (!this.isBrowser) {
+      return null;
+    }
 
     const storedUser = localStorage.getItem('current_user');
-    if (!storedUser) return null;
+
+    if (!storedUser) {
+      return null;
+    }
 
     try {
       const user = JSON.parse(storedUser);
@@ -125,7 +81,7 @@ export class AuthService {
         fullName: user.full_name,
       };
     } catch {
-      this.logout();
+      this.clearSession();
       return null;
     }
   }
@@ -135,13 +91,15 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return !!this.getToken();
+    return Boolean(this.getToken() && this.getCurrentUser());
   }
 
   hasRole(expectedRole: UserRole | UserRole[]): boolean {
     const currentRole = this.getUserRole();
 
-    if (!currentRole) return false;
+    if (!currentRole) {
+      return false;
+    }
 
     const allowedRoles = Array.isArray(expectedRole)
       ? expectedRole
@@ -167,9 +125,22 @@ export class AuthService {
   }
 
   private saveSession(response: LoginResponse): void {
-    if (!this.isBrowser) return;
+    if (!this.isBrowser) {
+      return;
+    }
 
+    localStorage.removeItem('bhre_admins');
     localStorage.setItem('access_token', response.access_token);
     localStorage.setItem('current_user', JSON.stringify(response.user));
+  }
+
+  private clearSession(): void {
+    if (!this.isBrowser) {
+      return;
+    }
+
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('current_user');
+    localStorage.removeItem('bhre_admins');
   }
 }
