@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { appTestProviders } from '../../../testing/test-providers';
 
 import { PropertyFormsComponent } from './property-forms.component';
 
@@ -8,7 +9,8 @@ describe('PropertyFormsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PropertyFormsComponent]
+      imports: [PropertyFormsComponent],
+      providers: appTestProviders
     })
     .compileComponents();
     

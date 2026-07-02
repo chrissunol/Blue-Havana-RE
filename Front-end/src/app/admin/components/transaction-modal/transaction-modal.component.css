@@ -98,14 +98,14 @@
   width: 50px;
   height: 50px;
 
-  color: var(--color-secundary);
+  color: var(--color-secondary);
   background:var(--color-white);
 
   border-radius: 15px;
 }
 
 .transaction-modal__icon--rent {
-  color: var(--color-secundary);
+  color: var(--color-secondary);
   background:var(--color-white);
 }
 
@@ -325,8 +325,8 @@
 }
 
 .transaction-form__confirm--rent {
-  background:var(--color-secundary);
-  border-color:var(--color-secundary);
+  background:var(--color-secondary);
+  border-color:var(--color-secondary);
 }
 
 @keyframes transactionOverlayIn {

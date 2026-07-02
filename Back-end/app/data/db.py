@@ -207,10 +207,8 @@ def db_properties_to_frontend(properties: list[dict]) -> list[dict]:
 def ensure_superadmin() -> None:
     """Garantiza un superadmin inicial sin fallar si ya existe.
 
-    Antes solo validaba por email. Si en Supabase ya existía un registro
-    con id='superadmin' pero con otro email, el insert fallaba por llave
-    primaria duplicada. Ahora primero busca por id, luego por email, y solo
-    inserta si realmente no existe.
+    Si ya existe, solo asegura que siga activo y con rol de superadmin.
+    No reescribe email, usuario ni contrasena en cada arranque.
     """
     admin_email = settings.admin_email.lower()
     admin_username = (
@@ -228,14 +226,16 @@ def ensure_superadmin() -> None:
 
     existing_by_id = get_user_by_id(SUPERADMIN_ID)
     if existing_by_id:
-        supabase.table("users").update(admin_payload).eq("id", SUPERADMIN_ID).execute()
+        supabase.table("users").update(
+            {"role": "superadmin", "is_active": True}
+        ).eq("id", SUPERADMIN_ID).execute()
         return
 
     existing_by_email = get_user_by_email(admin_email)
     if existing_by_email:
-        supabase.table("users").update(admin_payload).eq(
-            "id", existing_by_email["id"]
-        ).execute()
+        supabase.table("users").update(
+            {"role": "superadmin", "is_active": True}
+        ).eq("id", existing_by_email["id"]).execute()
         return
 
     supabase.table("users").insert(
@@ -280,19 +280,37 @@ def get_user_by_username(username: str) -> dict | None:
 
 
 def get_user_by_id(user_id: str) -> dict | None:
-    res = supabase.table("users").select("*").eq("id", user_id).limit(1).execute()
+    res = (
+        supabase.table("users")
+        .select("*")
+        .eq("id", user_id)
+        .limit(1)
+        .execute()
+    )
     return response_single(res)
 
 
-    def list_users() -> list[dict]:
-      res = (
+def list_users() -> list[dict]:
+    res = (
         supabase.table("users")
-        .select("id,email,full_name,username,phone,role,is_active,created_at")
+        .select(
+            "id,email,full_name,username,phone,role,is_active,created_at"
+        )
         .eq("is_active", True)
         .order("created_at", desc=True)
         .execute()
     )
     return response_data(res)
+
+def delete_user(user_id: str) -> bool:
+    existing_user = get_user_by_id(user_id)
+
+    if not existing_user:
+        return False
+
+    supabase.table("users").delete().eq("id", user_id).execute()
+
+    return get_user_by_id(user_id) is None
 
 
 def create_user(payload: dict) -> dict:

@@ -1,12 +1,8 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  DestroyRef,
-  inject
-} from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
-
+import { RouterLink } from '@angular/router';
 import {
   Clock3,
   Eye,
@@ -18,30 +14,18 @@ import {
   Search,
   Star,
   Trash2,
-  X
+  X,
 } from 'lucide-angular';
-
-import {
-  takeUntilDestroyed
-} from '@angular/core/rxjs-interop';
 
 import {
   BlogArticle,
   BlogArticleStatus,
-  BlogCategory
+  BlogCategory,
 } from '../../../core/models/blog-article.model';
+import { BlogService } from '../../../core/services/blog.service';
 
-import {
-  BlogService
-} from '../../../core/services/blog.service';
-
-type BlogStatusFilter =
-  | 'all'
-  | BlogArticleStatus;
-
-type BlogCategoryFilter =
-  | 'all'
-  | BlogCategory;
+type BlogStatusFilter = 'all' | BlogArticleStatus;
+type BlogCategoryFilter = 'all' | BlogCategory;
 
 interface CategoryOption {
   value: BlogCategoryFilter;
@@ -51,20 +35,12 @@ interface CategoryOption {
 @Component({
   selector: 'app-blog-management',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterLink,
-    LucideAngularModule,
-    FormsModule
-  ],
-  templateUrl:
-    './blog-management.component.html',
-  styleUrl:
-    './blog-management.component.css'
+  imports: [CommonModule, RouterLink, LucideAngularModule, FormsModule],
+  templateUrl: './blog-management.component.html',
+  styleUrl: './blog-management.component.css',
 })
-export class BlogManagementComponent {
-  private readonly destroyRef =
-    inject(DestroyRef);
+export class BlogManagementComponent implements OnInit {
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly SearchIcon = Search;
   readonly AddIcon = Plus;
@@ -78,66 +54,34 @@ export class BlogManagementComponent {
   readonly CloseIcon = X;
 
   articles: BlogArticle[] = [];
-
   searchTerm = '';
-
   selectedStatus: BlogStatusFilter = 'all';
-
   selectedCategory: BlogCategoryFilter = 'all';
-
   deleteCandidate: BlogArticle | null = null;
+  isLoading = false;
+  actionError = '';
 
   readonly categoryOptions: CategoryOption[] = [
-    {
-      value: 'all',
-      label: 'Todas las categorías'
-    },
-    {
-      value: 'market',
-      label: 'Mercado inmobiliario'
-    },
-    {
-      value: 'renovation',
-      label: 'Diseño y renovación'
-    },
-    {
-      value: 'investment',
-      label: 'Inversión'
-    },
-    {
-      value: 'architecture',
-      label: 'Arquitectura'
-    },
-    {
-      value: 'tips',
-      label: 'Consejos'
-    }
+    { value: 'all', label: 'Todas las categorías' },
+    { value: 'market', label: 'Mercado inmobiliario' },
+    { value: 'renovation', label: 'Diseño y renovación' },
+    { value: 'investment', label: 'Inversión' },
+    { value: 'architecture', label: 'Arquitectura' },
+    { value: 'tips', label: 'Consejos' },
   ];
 
-  constructor(
-    private readonly blogService: BlogService
-  ) {
-    this.blogService
-      .getArticlesObservable()
-      .pipe(
-        takeUntilDestroyed(this.destroyRef)
-      )
-      .subscribe(articles => {
-        this.articles = [...articles];
-      });
+  constructor(private readonly blogService: BlogService) {}
+
+  ngOnInit(): void {
+    this.loadArticles();
   }
 
   get filteredArticles(): BlogArticle[] {
-    const normalizedSearch =
-      this.searchTerm
-        .trim()
-        .toLowerCase();
+    const normalizedSearch = this.searchTerm.trim().toLowerCase();
 
     return this.articles.filter(article => {
       const matchesStatus =
-        this.selectedStatus === 'all' ||
-        article.status === this.selectedStatus;
-
+        this.selectedStatus === 'all' || article.status === this.selectedStatus;
       const matchesCategory =
         this.selectedCategory === 'all' ||
         article.category === this.selectedCategory;
@@ -150,19 +94,16 @@ export class BlogManagementComponent {
         return true;
       }
 
-      const searchableText = [
+      return [
         article.title.es,
         article.excerpt.es,
         article.author,
         article.slug,
-        this.getCategoryLabel(article.category)
+        this.getCategoryLabel(article.category),
       ]
         .join(' ')
-        .toLowerCase();
-
-      return searchableText.includes(
-        normalizedSearch
-      );
+        .toLowerCase()
+        .includes(normalizedSearch);
     });
   }
 
@@ -171,21 +112,15 @@ export class BlogManagementComponent {
   }
 
   get publishedArticlesCount(): number {
-    return this.articles.filter(
-      article => article.status === 'published'
-    ).length;
+    return this.articles.filter(article => article.status === 'published').length;
   }
 
   get draftArticlesCount(): number {
-    return this.articles.filter(
-      article => article.status === 'draft'
-    ).length;
+    return this.articles.filter(article => article.status === 'draft').length;
   }
 
   get featuredArticleCount(): number {
-    return this.articles.filter(
-      article => article.featured
-    ).length;
+    return this.articles.filter(article => article.featured).length;
   }
 
   get hasActiveFilters(): boolean {
@@ -197,10 +132,7 @@ export class BlogManagementComponent {
   }
 
   onSearch(event: Event): void {
-    const input =
-      event.target as HTMLInputElement;
-
-    this.searchTerm = input.value;
+    this.searchTerm = (event.target as HTMLInputElement).value;
   }
 
   clearSearch(): void {
@@ -213,31 +145,35 @@ export class BlogManagementComponent {
     this.selectedCategory = 'all';
   }
 
-  toggleArticleStatus(
-    article: BlogArticle
-  ): void {
+  toggleArticleStatus(article: BlogArticle): void {
     const newStatus: BlogArticleStatus =
-      article.status === 'published'
-        ? 'draft'
-        : 'published';
+      article.status === 'published' ? 'draft' : 'published';
 
-    this.blogService.changeArticleStatus(
-      article.id,
-      newStatus
-    );
+    this.blogService
+      .changeArticleStatus(article.id, newStatus)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: updated => this.replaceArticle(updated),
+        error: error => this.setActionError('No se pudo cambiar el estado.', error),
+      });
   }
 
-  toggleFeatured(
-    article: BlogArticle
-  ): void {
-    this.blogService.toggleFeatured(
-      article.id
-    );
+  toggleFeatured(article: BlogArticle): void {
+    this.blogService
+      .setFeatured(article.id, !article.featured)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: updated => {
+          this.articles = this.articles.map(current => ({
+            ...current,
+            featured: current.id === updated.id ? updated.featured : false,
+          }));
+        },
+        error: error => this.setActionError('No se pudo destacar el artículo.', error),
+      });
   }
 
-  requestDelete(
-    article: BlogArticle
-  ): void {
+  requestDelete(article: BlogArticle): void {
     this.deleteCandidate = article;
   }
 
@@ -246,53 +182,73 @@ export class BlogManagementComponent {
   }
 
   confirmDelete(): void {
-    if (!this.deleteCandidate) {
+    const article = this.deleteCandidate;
+    if (!article) {
       return;
     }
 
-    this.blogService.deleteArticle(
-      this.deleteCandidate.id
-    );
-
-    this.deleteCandidate = null;
+    this.blogService
+      .deleteArticle(article.id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.articles = this.articles.filter(item => item.id !== article.id);
+          this.deleteCandidate = null;
+        },
+        error: error => this.setActionError('No se pudo eliminar el artículo.', error),
+      });
   }
 
-  getCategoryLabel(
-    category: BlogCategory
-  ): string {
-    const categoryLabels:
-      Record<BlogCategory, string> = {
-        market: 'Mercado inmobiliario',
-        renovation: 'Diseño y renovación',
-        investment: 'Inversión',
-        architecture: 'Arquitectura',
-        tips: 'Consejos'
-      };
-
-    return categoryLabels[category];
+  getCategoryLabel(category: BlogCategory): string {
+    const labels: Record<BlogCategory, string> = {
+      market: 'Mercado inmobiliario',
+      renovation: 'Diseño y renovación',
+      investment: 'Inversión',
+      architecture: 'Arquitectura',
+      tips: 'Consejos',
+    };
+    return labels[category];
   }
 
-  getStatusLabel(
-    status: BlogArticleStatus
-  ): string {
-    return status === 'published'
-      ? 'Publicado'
-      : 'Borrador';
+  getStatusLabel(status: BlogArticleStatus): string {
+    return status === 'published' ? 'Publicado' : 'Borrador';
   }
 
   handleImageError(event: Event): void {
-    const image =
-      event.target as HTMLImageElement;
-
-    if (
-      image.src.includes(
-        'assets/images/placeholder.svg'
-      )
-    ) {
-      return;
+    const image = event.target as HTMLImageElement;
+    if (!image.src.includes('assets/images/placeholder.svg')) {
+      image.src = 'assets/images/placeholder.svg';
     }
+  }
 
-    image.src =
-      'assets/images/placeholder.svg';
+  private loadArticles(): void {
+    this.isLoading = true;
+    this.actionError = '';
+
+    this.blogService
+      .getAdminArticles()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: articles => {
+          this.articles = articles;
+          this.isLoading = false;
+        },
+        error: error => {
+          this.articles = [];
+          this.isLoading = false;
+          this.setActionError('No se pudieron cargar los artículos.', error);
+        },
+      });
+  }
+
+  private replaceArticle(updated: BlogArticle): void {
+    this.articles = this.articles.map(article =>
+      article.id === updated.id ? updated : article
+    );
+  }
+
+  private setActionError(message: string, error: unknown): void {
+    console.error(message, error);
+    this.actionError = message;
   }
 }

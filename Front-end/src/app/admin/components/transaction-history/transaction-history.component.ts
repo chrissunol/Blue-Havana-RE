@@ -118,8 +118,8 @@ export class TransactionHistoryComponent {
       : 'Cancelada';
   }
 
-  private normalize(value: string): string {
-    return value
+  private normalize(value: string | null | undefined): string {
+    return (value ?? '')
       .toLowerCase()
       .trim()
       .normalize('NFD')

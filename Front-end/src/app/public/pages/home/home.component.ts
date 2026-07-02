@@ -1,17 +1,30 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { LucideAngularModule, Phone, Facebook, Youtube, Send, Instagram, ChevronLeft, ChevronRight, Quote } from 'lucide-angular';
-import { Property } from '../../../core/models/property.model';
-import { PropertyService } from '../../../core/services/property.service';
-import { HeroSearchComponent } from '../../component/hero-search/hero-search.component';
-import { PropertyListComponent } from '../../../shared/components/property-list/property-list.component';
-import { SectionTitleComponent } from '../../../shared/components/section-title/section-title.component';
+import {
+  ChevronLeft,
+  ChevronRight,
+  Facebook,
+  Instagram,
+  LucideAngularModule,
+  Phone,
+  Quote,
+  Send,
+  Youtube,
+} from 'lucide-angular';
 import { TranslateModule } from '@ngx-translate/core';
-import { InformationService } from '../../../core/services/information.service';
+import { Subject, takeUntil } from 'rxjs';
+
 import { CompanyInfo } from '../../../core/models/information.model';
-import { ReviewModalComponent } from '../../../shared/components/review-modal/review-modal.component';
+import { Property } from '../../../core/models/property.model';
 import { ReviewFormData } from '../../../core/models/reviewForm.model';
+import { InformationService } from '../../../core/services/information.service';
+import { PropertyService } from '../../../core/services/property.service';
+import { ReviewService } from '../../../core/services/review.service';
+import { PropertyListComponent } from '../../../shared/components/property-list/property-list.component';
+import { ReviewModalComponent } from '../../../shared/components/review-modal/review-modal.component';
+import { SectionTitleComponent } from '../../../shared/components/section-title/section-title.component';
+import { HeroSearchComponent } from '../../component/hero-search/hero-search.component';
 
 interface CityCard {
   labelKey: string;
@@ -22,7 +35,7 @@ interface CityCard {
 }
 
 interface HomeReview {
-  id: number;
+  id: string;
   name: string;
   rating: number;
   comment: string;
@@ -39,16 +52,25 @@ interface HomeReview {
     TranslateModule,
     RouterLink,
     LucideAngularModule,
-    ReviewModalComponent
+    ReviewModalComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
+  private readonly destroy$ = new Subject<void>();
+
   properties: Property[] = [];
   cityCards: CityCard[] = [];
-  readonly Phone = Phone;
+  reviews: HomeReview[] = [];
+
   info!: CompanyInfo;
+
+  reviewModalOpen = false;
+  isSubmittingReview = false;
+  currentReviewIndex = 0;
+
+  readonly Phone = Phone;
   readonly FacebookIcon = Facebook;
   readonly YoutubeIcon = Youtube;
   readonly TelegramIcon = Send;
@@ -56,91 +78,7 @@ export class HomeComponent implements OnInit {
   readonly ChevronLeftIcon = ChevronLeft;
   readonly ChevronRightIcon = ChevronRight;
   readonly QuoteIcon = Quote;
-
   readonly reviewStars = [1, 2, 3, 4, 5];
-
-currentReviewIndex = 0;
-
-reviews: HomeReview[] = [
-  {
-    id: 1,
-    name: 'Carlos Martínez',
-    rating: 5,
-    comment:
-      'Excelente atención durante todo el proceso. Encontramos la propiedad que buscábamos y recibimos orientación en cada paso.'
-  },
-  {
-    id: 2,
-    name: 'Laura Rodríguez',
-    rating: 5,
-    comment:
-      'El equipo fue muy profesional y respondió rápidamente todas nuestras preguntas. Recomiendo completamente sus servicios.'
-  },
-  {
-    id: 3,
-    name: 'Miguel Hernández',
-    rating: 4,
-    comment:
-      'Muy buena experiencia. La información de las propiedades fue clara y el acompañamiento fue excelente.'
-  }
-];
-
-get currentReview(): HomeReview | undefined {
-  return this.reviews[this.currentReviewIndex];
-}
-
-previousReview(): void {
-  if (this.reviews.length === 0) {
-    return;
-  }
-
-  this.currentReviewIndex =
-    (this.currentReviewIndex - 1 + this.reviews.length) %
-    this.reviews.length;
-}
-
-nextReview(): void {
-  if (this.reviews.length === 0) {
-    return;
-  }
-
-  this.currentReviewIndex =
-    (this.currentReviewIndex + 1) % this.reviews.length;
-}
-
-selectReview(index: number): void {
-  if (index < 0 || index >= this.reviews.length) {
-    return;
-  }
-
-  this.currentReviewIndex = index;
-}
-
-getReviewInitials(name: string): string {
-  return name
-    .trim()
-    .split(/\s+/)
-    .slice(0, 2)
-    .map(part => part.charAt(0).toUpperCase())
-    .join('');
-}
-
-  reviewModalOpen = false;
-
-  openReviewModal(): void {
-    this.reviewModalOpen = true;
-  }
-
-  closeReviewModal(): void {
-    this.reviewModalOpen = false;
-  }
-
-   handleReviewSubmitted(review: ReviewFormData): void {
-    console.log('Reseña recibida:', review);
-
-    // Aquí conectaremos ReviewService con el backend.
-    this.closeReviewModal();
-  }
 
   private readonly baseCities: CityCard[] = [
     {
@@ -174,71 +112,249 @@ getReviewInitials(name: string): string {
   ];
 
   constructor(
-    private propertyService: PropertyService,
-    private router: Router,
-    private informationService: InformationService
+    private readonly propertyService: PropertyService,
+    private readonly router: Router,
+    private readonly informationService: InformationService,
+    private readonly reviewService: ReviewService
   ) {}
 
   ngOnInit(): void {
-  this.info = this.informationService.getInfo();
+    this.info = this.informationService.getInfo();
 
-  this.loadFeaturedProperties();
-  this.loadCityCards();
+    this.informationService.info$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(info => {
+        this.info = info;
+      });
 
-  this.informationService.info$.subscribe(info => {
-    this.info = info;
-  });
+    this.informationService
+      .loadInfo()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        error: error => {
+          console.error(
+            'No se pudo cargar la información de la empresa:',
+            error
+          );
+        },
+      });
 
-  this.informationService.loadInfo().subscribe();
-}
+    this.loadFeaturedProperties();
+    this.loadCityCards();
+    this.loadReviews();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  get currentReview(): HomeReview | undefined {
+    return this.reviews[this.currentReviewIndex];
+  }
+
   get whatsappLink(): string {
-    const phone = this.info.whatsapp.replace(/\D/g, '');
-    return `https://wa.me/${phone}?text=Hola,%20quiero%20información%20sobre%20una%20propiedad`;
+    const phone = (this.info?.whatsapp ?? '').replace(/\D/g, '');
+
+    if (!phone) {
+      return '#';
+    }
+
+    const message = encodeURIComponent(
+      'Hola, quiero información sobre una propiedad'
+    );
+
+    return `https://wa.me/${phone}?text=${message}`;
+  }
+
+  previousReview(): void {
+    if (this.reviews.length === 0) {
+      return;
+    }
+
+    this.currentReviewIndex =
+      (this.currentReviewIndex - 1 + this.reviews.length) %
+      this.reviews.length;
+  }
+
+  nextReview(): void {
+    if (this.reviews.length === 0) {
+      return;
+    }
+
+    this.currentReviewIndex =
+      (this.currentReviewIndex + 1) % this.reviews.length;
+  }
+
+  selectReview(index: number): void {
+    if (index < 0 || index >= this.reviews.length) {
+      return;
+    }
+
+    this.currentReviewIndex = index;
+  }
+
+  getReviewInitials(name: string): string {
+    return name
+      .trim()
+      .split(/\s+/)
+      .slice(0, 2)
+      .map(part => part.charAt(0).toUpperCase())
+      .join('');
+  }
+
+  openReviewModal(): void {
+    this.reviewModalOpen = true;
+  }
+
+  closeReviewModal(): void {
+    if (this.isSubmittingReview) {
+      return;
+    }
+
+    this.reviewModalOpen = false;
+  }
+
+  handleReviewSubmitted(review: ReviewFormData): void {
+    if (this.isSubmittingReview) {
+      return;
+    }
+
+    const payload = {
+      name: review.name.trim(),
+      email: review.email.trim() || null,
+      rating: review.rating,
+      comment: review.comment.trim(),
+    };
+
+    this.isSubmittingReview = true;
+
+    this.reviewService
+      .submitReview(payload)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.isSubmittingReview = false;
+          this.reviewModalOpen = false;
+
+          alert(
+            'Tu reseña fue enviada correctamente y está pendiente de aprobación.'
+          );
+        },
+        error: error => {
+          this.isSubmittingReview = false;
+
+          console.error('No se pudo enviar la reseña:', error);
+
+          const detail =
+            typeof error?.error?.detail === 'string'
+              ? error.error.detail
+              : 'No se pudo enviar la reseña. Inténtalo nuevamente.';
+
+          alert(detail);
+        },
+      });
+  }
+
+  goToDetail(property: Property): void {
+    if (!property?.id) {
+      return;
+    }
+
+    this.router.navigate(['/propiedades', property.id]);
+  }
+
+  private loadReviews(): void {
+    this.reviewService
+      .getPublicReviews(20)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: reviews => {
+          this.reviews = reviews.map(review => ({
+            id: review.id,
+            name: review.name,
+            rating: review.rating,
+            comment: review.comment,
+          }));
+
+          this.currentReviewIndex = 0;
+        },
+        error: error => {
+          console.error('No se pudieron cargar las reseñas:', error);
+          this.reviews = [];
+          this.currentReviewIndex = 0;
+        },
+      });
   }
 
   private loadFeaturedProperties(): void {
-    this.propertyService.getFeatured().subscribe({
-      next: (properties: Property[]) => {
-        this.properties = properties;
-      },
-      error: () => {
-        this.properties = [];
-      }
-    });
+    this.propertyService
+      .getFeatured()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: properties => {
+          this.properties = properties;
+        },
+        error: error => {
+          console.error(
+            'No se pudieron cargar las propiedades destacadas:',
+            error
+          );
+          this.properties = [];
+        },
+      });
   }
 
   private loadCityCards(): void {
-    this.propertyService.getVisible().subscribe({
-      next: (properties: Property[]) => {
-        this.cityCards = this.baseCities.map(city => {
-          const propertiesByCity = properties.filter(property =>
-            this.matchLocation(property.location, city.value)
+    this.propertyService
+      .getVisible()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: properties => {
+          this.cityCards = this.baseCities.map(city => {
+            const propertiesByCity = properties.filter(property =>
+              this.matchLocation(property.location, city.value)
+            );
+
+            const firstPropertyWithImage = propertiesByCity.find(
+              property =>
+                Array.isArray(property.images) &&
+                property.images.length > 0
+            );
+
+            return {
+              ...city,
+              count: propertiesByCity.length,
+              image:
+                firstPropertyWithImage?.images?.[0] ||
+                city.fallbackImage,
+            };
+          });
+        },
+        error: error => {
+          console.error(
+            'No se pudieron cargar las propiedades por ciudad:',
+            error
           );
 
-          const firstPropertyWithImage = propertiesByCity.find(property =>
-            property.images && property.images.length > 0
-          );
-
-          return {
+          this.cityCards = this.baseCities.map(city => ({
             ...city,
-            count: propertiesByCity.length,
-            image: firstPropertyWithImage?.images?.[0] || city.fallbackImage,
-          };
-        });
-      },
-      error: () => {
-        this.cityCards = this.baseCities.map(city => ({
-          ...city,
-          image: city.fallbackImage,
-        }));
-      }
-    });
+            count: 0,
+            image: city.fallbackImage,
+          }));
+        },
+      });
   }
 
-  private matchLocation(propertyLocation: unknown, city: string): boolean {
+  private matchLocation(
+    propertyLocation: unknown,
+    city: string
+  ): boolean {
     const locationText = this.getTranslatedText(propertyLocation);
 
-    if (!locationText) return false;
+    if (!locationText) {
+      return false;
+    }
 
     const locationValue = this.normalize(locationText);
     const cityValue = this.normalize(city);
@@ -251,7 +367,9 @@ getReviewInitials(name: string): string {
   }
 
   private getTranslatedText(value: unknown): string {
-    if (!value) return '';
+    if (!value) {
+      return '';
+    }
 
     if (typeof value === 'string') {
       return value;
@@ -261,6 +379,7 @@ getReviewInitials(name: string): string {
       const translated = value as {
         es?: string;
         en?: string;
+        fr?: string;
         value?: string;
         name?: string;
       };
@@ -268,6 +387,7 @@ getReviewInitials(name: string): string {
       return (
         translated.es ||
         translated.en ||
+        translated.fr ||
         translated.value ||
         translated.name ||
         ''
@@ -283,11 +403,5 @@ getReviewInitials(name: string): string {
       .trim()
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '');
-  }
-
-  goToDetail(property: Property): void {
-    if (!property?.id) return;
-
-    this.router.navigate(['/propiedades', property.id]);
   }
 }

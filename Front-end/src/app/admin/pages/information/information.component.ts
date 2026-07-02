@@ -29,6 +29,8 @@ export class InformationComponent implements OnInit {
     facebook: [''],
     instagram: [''],
     x: [''],
+    telegram: [''],
+    youtube: [''],
     originText: [''],
     todayText: [''],
     futureText: [''],

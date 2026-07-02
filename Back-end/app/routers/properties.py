@@ -138,7 +138,23 @@ def update_property_endpoint(
 
 @router.patch("/{property_id}/publish", response_model=PropertyResponse)
 def publish_property(property_id: str, user: dict = Depends(get_current_admin)) -> dict:
-    updated = update_property(property_id, {"visible": True, "status": "available"})
+    prop = get_any_property(property_id)
+    if not prop:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Propiedad no encontrada"
+        )
+
+    transaction_status = prop.get("transactionStatus") or prop.get("status")
+    if transaction_status != "available":
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=(
+                "No puedes publicar una propiedad vendida o rentada. "
+                "Primero debes cancelar la operación."
+            ),
+        )
+
+    updated = update_property(property_id, {"visible": True})
     if not updated:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Propiedad no encontrada"

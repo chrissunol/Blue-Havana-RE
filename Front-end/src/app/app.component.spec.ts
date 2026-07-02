@@ -1,10 +1,12 @@
 import { TestBed } from '@angular/core/testing';
+import { appTestProviders } from './testing/test-providers';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
+      providers: appTestProviders,
     }).compileComponents();
   });
 
@@ -20,10 +22,10 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('bhre');
   });
 
-  it('should render title', () => {
+  it('should render the router outlet', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, bhre');
+    expect(compiled.querySelector('router-outlet')).toBeTruthy();
   });
 });

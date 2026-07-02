@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { appTestProviders } from '../../testing/test-providers';
 
 import { PropertyService } from './property.service';
 
@@ -6,7 +7,7 @@ describe('PropertyService', () => {
   let service: PropertyService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({ providers: appTestProviders });
     service = TestBed.inject(PropertyService);
   });
 

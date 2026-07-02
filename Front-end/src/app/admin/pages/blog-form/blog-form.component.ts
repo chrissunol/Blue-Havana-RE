@@ -2,8 +2,11 @@ import { CommonModule } from '@angular/common';
 
 import {
   Component,
+  DestroyRef,
   inject
 } from '@angular/core';
+
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import {
   FormBuilder,
@@ -79,6 +82,9 @@ export class BlogFormComponent {
 
   private readonly blogService =
     inject(BlogService);
+
+  private readonly destroyRef =
+    inject(DestroyRef);
 
   readonly BackIcon = ArrowLeft;
   readonly SaveIcon = Save;
@@ -188,85 +194,27 @@ export class BlogFormComponent {
         ),
 
       title: this.formBuilder.nonNullable.group({
-        es: [
-          '',
-          [
-            Validators.required,
-            Validators.maxLength(180)
-          ]
-        ],
-
-        en: [
-          '',
-          [
-            Validators.required,
-            Validators.maxLength(180)
-          ]
-        ],
-
-        fr: [
-          '',
-          [
-            Validators.required,
-            Validators.maxLength(180)
-          ]
-        ]
+        es: [''],
+        en: [''],
+        fr: ['']
       }),
 
       excerpt: this.formBuilder.nonNullable.group({
-        es: [
-          '',
-          [
-            Validators.required,
-            Validators.maxLength(350)
-          ]
-        ],
-
-        en: [
-          '',
-          [
-            Validators.required,
-            Validators.maxLength(350)
-          ]
-        ],
-
-        fr: [
-          '',
-          [
-            Validators.required,
-            Validators.maxLength(350)
-          ]
-        ]
+        es: [''],
+        en: [''],
+        fr: ['']
       }),
 
       content: this.formBuilder.nonNullable.group({
-        es: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(50)
-          ]
-        ],
-
-        en: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(50)
-          ]
-        ],
-
-        fr: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(50)
-          ]
-        ]
+        es: [''],
+        en: [''],
+        fr: ['']
       })
     });
 
   constructor() {
+    this.applyLanguageValidators();
+
     if (this.isEditMode && this.articleId) {
       this.loadArticle(this.articleId);
     }
@@ -284,6 +232,14 @@ export class BlogFormComponent {
       : 'Prepara un nuevo artículo para el Blog.';
   }
 
+  get selectedLanguageLabel(): string {
+    return (
+      this.languages.find(
+        language => language.code === this.activeLanguage
+      )?.label || 'Español'
+    );
+  }
+
   get currentStatus(): BlogArticleStatus {
     return this.articleForm.controls.status.value;
   }
@@ -299,10 +255,59 @@ export class BlogFormComponent {
     return coverImage || this.placeholderImage;
   }
 
+  get validationSummary(): string {
+    const invalidGeneralFields: string[] = [];
+
+    if (this.articleForm.controls.author.invalid) {
+      invalidGeneralFields.push('autor');
+    }
+
+    if (this.articleForm.controls.category.invalid) {
+      invalidGeneralFields.push('categoría');
+    }
+
+    if (this.articleForm.controls.readingTime.invalid) {
+      invalidGeneralFields.push('tiempo de lectura');
+    }
+
+    const selectedLanguageIsInvalid =
+      this.articleForm.controls.title.controls[
+        this.activeLanguage
+      ].invalid ||
+      this.articleForm.controls.excerpt.controls[
+        this.activeLanguage
+      ].invalid ||
+      this.articleForm.controls.content.controls[
+        this.activeLanguage
+      ].invalid;
+
+    const messages: string[] = [];
+
+    if (selectedLanguageIsInvalid) {
+      messages.push(
+        `Completa el artículo en ${this.selectedLanguageLabel}.`
+      );
+    }
+
+    if (invalidGeneralFields.length > 0) {
+      messages.push(
+        `Revisa: ${invalidGeneralFields.join(', ')}.`
+      );
+    }
+
+    return messages.join(' ') || 'Revisa los campos obligatorios.';
+  }
+
   selectLanguage(
     language: LanguageCode
   ): void {
+    if (language === this.activeLanguage) {
+      return;
+    }
+
     this.activeLanguage = language;
+    this.submitted = false;
+    this.applyLanguageValidators();
   }
 
   setStatus(
@@ -331,11 +336,8 @@ export class BlogFormComponent {
   onCoverFileSelected(event: Event): void {
     this.imageErrorMessage = '';
 
-    const input =
-      event.target as HTMLInputElement;
-
-    const file =
-      input.files?.[0];
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
 
     if (!file) {
       return;
@@ -344,51 +346,43 @@ export class BlogFormComponent {
     if (!file.type.startsWith('image/')) {
       this.imageErrorMessage =
         'Selecciona un archivo de imagen válido.';
-
       input.value = '';
       return;
     }
 
-    const maximumFileSize =
-      5 * 1024 * 1024;
-
+    const maximumFileSize = 10 * 1024 * 1024;
     if (file.size > maximumFileSize) {
       this.imageErrorMessage =
-        'La imagen no puede superar los 5 MB.';
-
+        'La imagen no puede superar los 10 MB.';
       input.value = '';
       return;
     }
 
-    const reader = new FileReader();
+    this.isSaving = true;
+    this.selectedFileName = file.name;
 
-    reader.onload = () => {
-      const result =
-        typeof reader.result === 'string'
-          ? reader.result
-          : '';
-
-      if (!result) {
-        this.imageErrorMessage =
-          'No se pudo leer la imagen.';
-        return;
-      }
-
-      this.selectedFileName = file.name;
-
-      this.articleForm.controls.coverImage.setValue(
-        result
-      );
-
-      this.articleForm.controls.coverImage.markAsDirty();
-    };
-
-    reader.onerror = () => {
-      this.imageErrorMessage =
-        'Ocurrió un error al leer la imagen.';
-    };
-
-    reader.readAsDataURL(file);
+    this.blogService
+      .uploadImage(file)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: response => {
+          this.articleForm.controls.coverImage.setValue(
+            response.url
+          );
+          this.articleForm.controls.coverImage.markAsDirty();
+          this.isSaving = false;
+          input.value = '';
+        },
+        error: error => {
+          console.error('No se pudo subir la imagen:', error);
+          this.imageErrorMessage =
+            error?.error?.detail ||
+            'No se pudo subir la imagen.';
+          this.isSaving = false;
+          this.selectedFileName = '';
+          input.value = '';
+        }
+      });
   }
 
   handleImageError(event: Event): void {
@@ -436,137 +430,179 @@ export class BlogFormComponent {
   saveArticle(): void {
     this.submitted = true;
     this.imageErrorMessage = '';
-
     this.articleForm.markAllAsTouched();
 
     if (this.articleForm.invalid) {
-      this.focusFirstInvalidLanguage();
       return;
     }
 
     this.isSaving = true;
 
-    const formValue =
-      this.articleForm.getRawValue();
+    const formValue = this.articleForm.getRawValue();
+
+    const title = {
+      es: '',
+      en: '',
+      fr: ''
+    };
+
+    const excerpt = {
+      es: '',
+      en: '',
+      fr: ''
+    };
+
+    const content = {
+      es: '',
+      en: '',
+      fr: ''
+    };
+
+    title[this.activeLanguage] =
+      formValue.title[this.activeLanguage].trim();
+
+    excerpt[this.activeLanguage] =
+      formValue.excerpt[this.activeLanguage].trim();
+
+    content[this.activeLanguage] =
+      formValue.content[this.activeLanguage].trim();
 
     const articleData: CreateBlogArticle = {
-      title: {
-        es: formValue.title.es.trim(),
-        en: formValue.title.en.trim(),
-        fr: formValue.title.fr.trim()
-      },
-
-      excerpt: {
-        es: formValue.excerpt.es.trim(),
-        en: formValue.excerpt.en.trim(),
-        fr: formValue.excerpt.fr.trim()
-      },
-
-      content: {
-        es: formValue.content.es.trim(),
-        en: formValue.content.en.trim(),
-        fr: formValue.content.fr.trim()
-      },
-
+      title,
+      excerpt,
+      content,
       category: formValue.category,
       author: formValue.author.trim(),
-
       coverImage:
         formValue.coverImage.trim() ||
         this.placeholderImage,
-
       status: formValue.status,
       featured: formValue.featured,
-      readingTime: Number(
-        formValue.readingTime
-      )
+      readingTime: Number(formValue.readingTime)
     };
 
-    if (this.isEditMode && this.articleId) {
-      this.blogService.updateArticle(
-        this.articleId,
-        articleData
-      );
-    } else {
-      this.blogService.createArticle(
-        articleData
-      );
-    }
+    const request$ =
+      this.isEditMode && this.articleId
+        ? this.blogService.updateArticle(
+            this.articleId,
+            articleData
+          )
+        : this.blogService.createArticle(articleData);
 
-    this.isSaving = false;
-
-    this.router.navigate([
-      '/admin/blog'
-    ]);
+    request$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.isSaving = false;
+          this.router.navigate(['/admin/blog']);
+        },
+        error: error => {
+          console.error('No se pudo guardar el artículo:', error);
+          this.isSaving = false;
+          this.imageErrorMessage =
+            error?.error?.detail ||
+            'No se pudo guardar el artículo.';
+        }
+      });
   }
 
   private loadArticle(id: string): void {
-    const article =
-      this.blogService.getArticleById(id);
+    this.isSaving = true;
 
-    if (!article) {
-      this.router.navigate([
-        '/admin/blog'
-      ]);
+    this.blogService
+      .getAdminArticle(id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: article => {
+          this.article = article;
+          this.activeLanguage =
+            this.detectArticleLanguage(article);
+          this.applyLanguageValidators();
 
-      return;
-    }
+          this.articleForm.patchValue({
+            category: article.category,
+            author: article.author,
+            coverImage: article.coverImage,
+            status: article.status,
+            featured: article.featured,
+            readingTime: article.readingTime,
+            title: { ...article.title },
+            excerpt: { ...article.excerpt },
+            content: { ...article.content }
+          });
 
-    this.article = article;
-
-    this.articleForm.patchValue({
-      category: article.category,
-      author: article.author,
-      coverImage: article.coverImage,
-      status: article.status,
-      featured: article.featured,
-      readingTime: article.readingTime,
-
-      title: {
-        es: article.title.es,
-        en: article.title.en,
-        fr: article.title.fr
-      },
-
-      excerpt: {
-        es: article.excerpt.es,
-        en: article.excerpt.en,
-        fr: article.excerpt.fr
-      },
-
-      content: {
-        es: article.content.es,
-        en: article.content.en,
-        fr: article.content.fr
-      }
-    });
+          this.isSaving = false;
+        },
+        error: error => {
+          console.error('No se pudo cargar el artículo:', error);
+          this.isSaving = false;
+          this.router.navigate(['/admin/blog']);
+        }
+      });
   }
 
-  private focusFirstInvalidLanguage(): void {
-    const languages: LanguageCode[] = [
-      'es',
-      'en',
-      'fr'
-    ];
+  private applyLanguageValidators(): void {
+    for (const language of this.languages) {
+      const code = language.code;
 
-    const invalidLanguage =
-      languages.find(language => {
-        return (
-          this.articleForm.get(
-            `title.${language}`
-          )?.invalid ||
-          this.articleForm.get(
-            `excerpt.${language}`
-          )?.invalid ||
-          this.articleForm.get(
-            `content.${language}`
-          )?.invalid
-        );
+      const titleControl =
+        this.articleForm.controls.title.controls[code];
+
+      const excerptControl =
+        this.articleForm.controls.excerpt.controls[code];
+
+      const contentControl =
+        this.articleForm.controls.content.controls[code];
+
+      titleControl.clearValidators();
+      excerptControl.clearValidators();
+      contentControl.clearValidators();
+
+      if (code === this.activeLanguage) {
+        titleControl.setValidators([
+          Validators.required,
+          Validators.maxLength(180)
+        ]);
+
+        excerptControl.setValidators([
+          Validators.required,
+          Validators.maxLength(350)
+        ]);
+
+        contentControl.setValidators([
+          Validators.required,
+          Validators.minLength(50)
+        ]);
+      }
+
+      titleControl.updateValueAndValidity({
+        emitEvent: false
       });
 
-    if (invalidLanguage) {
-      this.activeLanguage =
-        invalidLanguage;
+      excerptControl.updateValueAndValidity({
+        emitEvent: false
+      });
+
+      contentControl.updateValueAndValidity({
+        emitEvent: false
+      });
     }
   }
+
+  private detectArticleLanguage(
+    article: BlogArticle
+  ): LanguageCode {
+    return (
+      this.languages.find(language => {
+        const code = language.code;
+
+        return Boolean(
+          article.title[code]?.trim() ||
+          article.excerpt[code]?.trim() ||
+          article.content[code]?.trim()
+        );
+      })?.code || 'es'
+    );
+  }
+
 }

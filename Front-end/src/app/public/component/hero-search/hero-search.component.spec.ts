@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { appTestProviders } from '../../../testing/test-providers';
 
 import { HeroSearchComponent } from './hero-search.component';
 
@@ -8,7 +9,8 @@ describe('HeroSearchComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HeroSearchComponent]
+      imports: [HeroSearchComponent],
+      providers: appTestProviders
     })
     .compileComponents();
     

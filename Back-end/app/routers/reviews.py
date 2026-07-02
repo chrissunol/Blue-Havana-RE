@@ -9,7 +9,7 @@ from app.data.reviews_repository import (
     list_public_reviews,
     moderate_review,
 )
-from app.dependencies import get_current_superadmin
+from app.dependencies import get_current_admin
 from app.schemas.reviews import ReviewCreate, ReviewResponse
 
 router = APIRouter(prefix="/reviews", tags=["reviews"])
@@ -30,14 +30,14 @@ def admin_reviews(
     review_status: Literal["pending", "approved", "rejected"] | None = Query(
         default=None, alias="status"
     ),
-    user: dict = Depends(get_current_superadmin),
+    user: dict = Depends(get_current_admin),
 ) -> list[dict]:
     return list_admin_reviews(status=review_status)
 
 
 @router.patch("/{review_id}/approve", response_model=ReviewResponse)
 def approve_review(
-    review_id: str, user: dict = Depends(get_current_superadmin)
+    review_id: str, user: dict = Depends(get_current_admin)
 ) -> dict:
     review = moderate_review(review_id, "approved", user["id"])
     if not review:
@@ -48,7 +48,7 @@ def approve_review(
 
 
 @router.patch("/{review_id}/reject", response_model=ReviewResponse)
-def reject_review(review_id: str, user: dict = Depends(get_current_superadmin)) -> dict:
+def reject_review(review_id: str, user: dict = Depends(get_current_admin)) -> dict:
     review = moderate_review(review_id, "rejected", user["id"])
     if not review:
         raise HTTPException(
@@ -58,7 +58,7 @@ def reject_review(review_id: str, user: dict = Depends(get_current_superadmin)) 
 
 
 @router.delete("/{review_id}", status_code=status.HTTP_204_NO_CONTENT)
-def remove_review(review_id: str, user: dict = Depends(get_current_superadmin)) -> None:
+def remove_review(review_id: str, user: dict = Depends(get_current_admin)) -> None:
     if not delete_review(review_id):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Reseña no encontrada"

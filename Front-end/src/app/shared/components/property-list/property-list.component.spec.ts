@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { appTestProviders } from '../../../testing/test-providers';
 
 import { PropertyListComponent } from './property-list.component';
 
@@ -8,7 +9,8 @@ describe('PropertyListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PropertyListComponent]
+      imports: [PropertyListComponent],
+      providers: appTestProviders
     })
     .compileComponents();
     

@@ -4,14 +4,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.data.db import ensure_superadmin
 from app.routers.auth import router as auth_router
-from app.routers.properties import router as properties_router
-from app.routers.users import router as users_router
-from app.routers.transactions import router as transactions_router
-from app.routers.information import router as information_router
 from app.routers.blog import router as blog_router
-from app.routers.reviews import router as reviews_router
 from app.routers.dashboard import router as dashboard_router
+from app.routers.information import router as information_router
+from app.routers.properties import router as properties_router
 from app.routers.requests import router as requests_router
+from app.routers.reviews import router as reviews_router
+from app.routers.transactions import router as transactions_router
+from app.routers.users import router as users_router
 
 app = FastAPI(
     title=settings.app_name,
@@ -19,18 +19,7 @@ app = FastAPI(
     version="2.0.0",
 )
 
-allowed_origins = list(settings.cors_origin_list)
-
-extra_origins = [
-    "http://localhost:4200",
-    "http://127.0.0.1:4200",
-    "https://bluehavanare.csunol73.workers.dev",
-    "https://bluehavanars.csunol73.workers.dev",
-]
-
-for origin in extra_origins:
-    if origin not in allowed_origins:
-        allowed_origins.append(origin)
+allowed_origins = settings.cors_origin_list
 
 app.add_middleware(
     CORSMiddleware,
@@ -59,11 +48,3 @@ def startup() -> None:
 @app.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
-
-
-@app.get("/debug-cors")
-def debug_cors() -> dict:
-    return {
-        "allowed_origins": allowed_origins,
-        "settings_cors_origin_list": settings.cors_origin_list,
-    }

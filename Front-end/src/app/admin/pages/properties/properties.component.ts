@@ -152,24 +152,38 @@ closeTransactionModal(): void {
   this.selectedProperty = null;
   this.selectedTransactionType = 'sale';
 }
-confirmTransaction(
-  transaction: CreatePropertyTransaction
-): void {
-  console.log('Operación registrada:', transaction);
+confirmTransaction(transaction: any): void {
+  const propertyId = transaction.propertyId;
 
-  this.properties = this.properties.map(property =>
-    String(property.id) === transaction.propertyId
-      ? {
-          ...property,
-          transactionStatus:
-            transaction.transactionType === 'rent'
-              ? 'rented'
-              : 'sold'
-        }
-      : property
-  );
+  const payload = {
+    finalAmount: transaction.finalAmount,
+    closedAt: transaction.closedAt,
+    clientName: transaction.clientName || null,
+    clientPhone: transaction.clientPhone || null,
+    clientEmail: transaction.clientEmail || null,
+    notes: transaction.notes || null,
+  };
 
-  this.closeTransactionModal();
+  const request$ =
+    transaction.transactionType === 'rent'
+      ? this.propertyService.markAsRented(propertyId, payload)
+      : this.propertyService.markAsSold(propertyId, payload);
+
+  request$.subscribe({
+    next: () => {
+      // Volvemos a cargar desde el backend para mostrar el estado real.
+      this.loadProperties();
+      this.closeTransactionModal();
+    },
+    error: (error) => {
+      console.error('No se pudo registrar la operación:', error);
+
+      alert(
+        error.error?.detail ||
+          'No se pudo registrar la venta o renta. Inténtalo nuevamente.'
+      );
+    },
+  });
 }
 requestEditConfirmation(
   property: Property

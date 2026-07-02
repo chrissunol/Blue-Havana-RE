@@ -1,4 +1,7 @@
+import logging
+
 from typing import Literal
+
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 
@@ -7,6 +10,7 @@ from app.data.transactions_repository import (
     create_transaction,
     get_transaction,
     list_transactions,
+    
 )
 from app.dependencies import get_current_admin
 from app.schemas.transactions import (
@@ -14,17 +18,26 @@ from app.schemas.transactions import (
     TransactionCreate,
     TransactionResponse,
 )
+logger = logging.getLogger(__name__)
 
 router = APIRouter(tags=["transactions"])
 
 
 def _raise_transaction_error(exc: Exception) -> None:
+    logger.exception("Error registrando operación inmobiliaria: %s", exc)
+
     message = str(exc)
     lowered = message.lower()
-    if "property not found" in lowered or "propiedad" in lowered and "no" in lowered:
+
+    if (
+        "property not found" in lowered
+        or "propiedad no encontrada" in lowered
+    ):
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Propiedad no encontrada"
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Propiedad no encontrada",
         ) from exc
+
     if (
         "not available" in lowered
         or "no está disponible" in lowered
@@ -34,11 +47,21 @@ def _raise_transaction_error(exc: Exception) -> None:
             status_code=status.HTTP_409_CONFLICT,
             detail="La propiedad ya tiene una operación activa",
         ) from exc
+
+    if "does not match property operation" in lowered:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=(
+                "El tipo de operación no coincide con la propiedad. "
+                "Una propiedad en venta debe marcarse como vendida y "
+                "una propiedad en renta debe marcarse como rentada."
+            ),
+        ) from exc
+
     raise HTTPException(
         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-        detail="No se pudo registrar la operación",
+        detail=f"No se pudo registrar la operación: {message}",
     ) from exc
-
 
 @router.post(
     "/properties/{property_id}/mark-sold",

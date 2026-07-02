@@ -12,6 +12,17 @@ from app.data.supabase_client import response_data, response_single, supabase
 PLACEHOLDER_IMAGE = "assets/images/placeholder.svg"
 
 
+def _first_translation(value: dict | None) -> str:
+    translations = value or {}
+
+    for language in ("es", "en", "fr"):
+        text = str(translations.get(language) or "").strip()
+        if text:
+            return text
+
+    return ""
+
+
 def _slugify(value: str) -> str:
     normalized = unicodedata.normalize("NFD", value or "")
     ascii_text = "".join(
@@ -179,7 +190,9 @@ def get_admin_article(article_id: str) -> dict | None:
 def create_article(payload: dict, user_id: str) -> dict:
     article_id = str(uuid4())
     requested_slug = (
-        payload.get("slug") or ((payload.get("title") or {}).get("es")) or article_id
+        payload.get("slug")
+        or _first_translation(payload.get("title"))
+        or article_id
     )
     data = _to_db(payload, article_id)
     data.update(
@@ -215,8 +228,13 @@ def update_article(article_id: str, payload: dict, user_id: str) -> dict | None:
     data = _to_db(payload, article_id, partial=True)
     if "slug" in payload and payload.get("slug"):
         data["slug"] = _unique_slug(payload["slug"], exclude_id=article_id)
-    elif payload.get("title") and (payload["title"].get("es") or "").strip():
-        data["slug"] = _unique_slug(payload["title"]["es"], exclude_id=article_id)
+    elif payload.get("title"):
+        translated_title = _first_translation(payload["title"])
+        if translated_title:
+            data["slug"] = _unique_slug(
+                translated_title,
+                exclude_id=article_id,
+            )
 
     if data.get("status") == "published" and current.get("status") != "published":
         from datetime import datetime, timezone

@@ -42,8 +42,8 @@
             <h2>Contenido del artículo</h2>
 
             <p>
-              Completa el contenido en los tres
-              idiomas.
+              Selecciona un idioma y escribe el artículo
+              únicamente en ese idioma.
             </p>
           </div>
         </div>
@@ -60,14 +60,17 @@
                 activeLanguage === language.code
               "
               [class.language-tab--error]="
-                isFieldInvalid(
-                  'title.' + language.code
-                ) ||
-                isFieldInvalid(
-                  'excerpt.' + language.code
-                ) ||
-                isFieldInvalid(
-                  'content.' + language.code
+                activeLanguage === language.code &&
+                (
+                  isFieldInvalid(
+                    'title.' + language.code
+                  ) ||
+                  isFieldInvalid(
+                    'excerpt.' + language.code
+                  ) ||
+                  isFieldInvalid(
+                    'content.' + language.code
+                  )
                 )
               "
               (click)="
@@ -79,11 +82,13 @@
           }
         </div>
 
+        <small class="form-field__help">
+          Idioma seleccionado: <strong>{{ selectedLanguageLabel }}</strong>.
+          Al guardar, solo se conservará el contenido de este idioma.
+        </small>
+
         <div class="translation-fields">
-          <div
-            class="form-field"
-            formGroupName="title"
-          >
+          <div class="form-field">
             <div class="form-field__label">
               <label
                 [for]="
@@ -109,7 +114,7 @@
                 activeLanguage
               "
               type="text"
-              [formControlName]="activeLanguage"
+              [formControl]="articleForm.controls.title.controls[activeLanguage]"
               placeholder="Escribe el título del artículo"
               maxlength="180"
             />
@@ -125,10 +130,7 @@
             }
           </div>
 
-          <div
-            class="form-field"
-            formGroupName="excerpt"
-          >
+          <div class="form-field">
             <div class="form-field__label">
               <label
                 [for]="
@@ -153,7 +155,7 @@
                 'article-excerpt-' +
                 activeLanguage
               "
-              [formControlName]="activeLanguage"
+              [formControl]="articleForm.controls.excerpt.controls[activeLanguage]"
               placeholder="Escribe una descripción breve"
               maxlength="350"
               rows="4"
@@ -170,10 +172,7 @@
             }
           </div>
 
-          <div
-            class="form-field"
-            formGroupName="content"
-          >
+          <div class="form-field">
             <div class="form-field__label">
               <label
                 [for]="
@@ -198,7 +197,7 @@
                 'article-content-' +
                 activeLanguage
               "
-              [formControlName]="activeLanguage"
+              [formControl]="articleForm.controls.content.controls[activeLanguage]"
               placeholder="Escribe el contenido completo. Separa los párrafos dejando una línea en blanco."
               rows="16"
             ></textarea>
@@ -471,8 +470,7 @@
             size="19"
           ></lucide-icon>
 
-          Revisa los campos obligatorios en los
-          tres idiomas.
+          {{ validationSummary }}
         </div>
       }
 

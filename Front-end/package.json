@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:bhre": "node dist/bhre/server/server.mjs"
+    "build:cloudflare": "ng build --configuration production",
+    "deploy": "npm run build:cloudflare && wrangler deploy --config wrangler.jsonc"
   },
   "private": true,
   "dependencies": {

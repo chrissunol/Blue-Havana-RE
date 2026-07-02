@@ -1,21 +1,14 @@
-import {
-  CommonModule,
-  isPlatformBrowser
-} from '@angular/common';
-
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
   Component,
   DestroyRef,
   Inject,
+  OnInit,
   PLATFORM_ID,
-  inject
+  inject,
 } from '@angular/core';
-
-import {
-  ActivatedRoute,
-  RouterLink
-} from '@angular/router';
-
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import {
   ArrowLeft,
   ArrowRight,
@@ -23,49 +16,31 @@ import {
   Clock3,
   LucideAngularModule,
   Newspaper,
-  UserRound
+  UserRound,
 } from 'lucide-angular';
-
-import {
-  TranslateModule
-} from '@ngx-translate/core';
-
-import {
-  takeUntilDestroyed
-} from '@angular/core/rxjs-interop';
+import { TranslateModule } from '@ngx-translate/core';
+import { switchMap } from 'rxjs';
 
 import {
   BlogArticle,
-  BlogCategory
+  BlogCategory,
 } from '../../../core/models/blog-article.model';
-
-import {
-  BlogService
-} from '../../../core/services/blog.service';
-
-import {
-  LanguageService
-} from '../../../core/services/language.service';
+import { BlogService } from '../../../core/services/blog.service';
+import { LanguageService } from '../../../core/services/language.service';
 
 @Component({
   selector: 'app-blog-detail',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterLink,
-    LucideAngularModule,
-    TranslateModule
-  ],
+  imports: [CommonModule, RouterLink, LucideAngularModule, TranslateModule],
   templateUrl: './blog-detail.component.html',
-  styleUrl: './blog-detail.component.css'
+  styleUrl: './blog-detail.component.css',
 })
-export class BlogDetailComponent {
-  private readonly destroyRef =
-    inject(DestroyRef);
+export class BlogDetailComponent implements OnInit {
+  private readonly destroyRef = inject(DestroyRef);
 
   article: BlogArticle | null = null;
-
   relatedArticles: BlogArticle[] = [];
+  loadError = '';
 
   readonly BackIcon = ArrowLeft;
   readonly ArrowIcon = ArrowRight;
@@ -78,99 +53,89 @@ export class BlogDetailComponent {
     private readonly route: ActivatedRoute,
     private readonly blogService: BlogService,
     public readonly languageService: LanguageService,
+    @Inject(PLATFORM_ID) private readonly platformId: object
+  ) {}
 
-    @Inject(PLATFORM_ID)
-    private readonly platformId: object
-  ) {
+  ngOnInit(): void {
     this.route.paramMap
       .pipe(
+        switchMap(parameters => {
+          const slug = parameters.get('slug') ?? '';
+          this.article = null;
+          this.relatedArticles = [];
+          this.loadError = '';
+          return this.blogService.getArticleBySlug(slug);
+        }),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe(parameters => {
-        const slug =
-          parameters.get('slug') ?? '';
-
-        this.article =
-          this.blogService.getArticleBySlug(slug);
-
-        this.relatedArticles = this.article
-          ? this.blogService.getRelatedArticles(
-              this.article
-            )
-          : [];
-
-        this.scrollToTop();
+      .subscribe({
+        next: article => {
+          this.article = article;
+          this.scrollToTop();
+          this.loadRelatedArticles(article);
+        },
+        error: error => {
+          console.error('No se pudo cargar el artículo:', error);
+          this.article = null;
+          this.relatedArticles = [];
+          this.loadError = 'El artículo no existe o no está publicado.';
+          this.scrollToTop();
+        },
       });
   }
 
-  getArticleTitle(
-    article: BlogArticle
-  ): string {
-    return this.languageService.translateText(
-      article.title
-    );
+  getArticleTitle(article: BlogArticle): string {
+    return this.languageService.translateText(article.title);
   }
 
-  getArticleExcerpt(
-    article: BlogArticle
-  ): string {
-    return this.languageService.translateText(
-      article.excerpt
-    );
+  getArticleExcerpt(article: BlogArticle): string {
+    return this.languageService.translateText(article.excerpt);
   }
 
-  getArticleContent(
-    article: BlogArticle
-  ): string {
-    return this.languageService.translateText(
-      article.content
-    );
+  getArticleContent(article: BlogArticle): string {
+    return this.languageService.translateText(article.content);
   }
 
-  getArticleContentParagraphs(
-    article: BlogArticle
-  ): string[] {
-    const translatedContent =
-      this.getArticleContent(article);
-
-    return translatedContent
+  getArticleContentParagraphs(article: BlogArticle): string[] {
+    return this.getArticleContent(article)
       .split(/\n\s*\n/)
       .map(paragraph => paragraph.trim())
       .filter(paragraph => paragraph.length > 0);
   }
 
-  getCategoryLabelKey(
-    category: BlogCategory
-  ): string {
-    const categoryKeys:
-      Record<BlogCategory, string> = {
-        market: 'BLOG.CATEGORIES.MARKET',
-        renovation:
-          'BLOG.CATEGORIES.RENOVATION',
-        investment:
-          'BLOG.CATEGORIES.INVESTMENT',
-        architecture:
-          'BLOG.CATEGORIES.ARCHITECTURE',
-        tips: 'BLOG.CATEGORIES.TIPS'
-      };
+  getCategoryLabelKey(category: BlogCategory): string {
+    const categoryKeys: Record<BlogCategory, string> = {
+      market: 'BLOG.CATEGORIES.MARKET',
+      renovation: 'BLOG.CATEGORIES.RENOVATION',
+      investment: 'BLOG.CATEGORIES.INVESTMENT',
+      architecture: 'BLOG.CATEGORIES.ARCHITECTURE',
+      tips: 'BLOG.CATEGORIES.TIPS',
+    };
 
     return categoryKeys[category];
   }
 
   handleImageError(event: Event): void {
-    const image =
-      event.target as HTMLImageElement;
-
-    if (
-      image.src.includes(
-        'assets/images/placeholder.svg'
-      )
-    ) {
+    const image = event.target as HTMLImageElement;
+    if (image.src.includes('assets/images/placeholder.svg')) {
       return;
     }
+    image.src = 'assets/images/placeholder.svg';
+  }
 
-    image.src =
-      'assets/images/placeholder.svg';
+  private loadRelatedArticles(article: BlogArticle): void {
+    this.blogService
+      .getRelatedArticles(article)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: relatedArticles => {
+          this.relatedArticles = relatedArticles;
+        },
+        error: error => {
+          console.error('No se pudieron cargar artículos relacionados:', error);
+          this.relatedArticles = [];
+        },
+      });
   }
 
   private scrollToTop(): void {
@@ -178,9 +143,6 @@ export class BlogDetailComponent {
       return;
     }
 
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }

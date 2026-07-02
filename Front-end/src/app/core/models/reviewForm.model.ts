@@ -1,7 +1,4 @@
-export type ReviewStatus =
-  | 'pending'
-  | 'approved'
-  | 'rejected';
+export type ReviewStatus = 'pending' | 'approved' | 'rejected';
 
 export interface ReviewFormData {
   name: string;
@@ -13,11 +10,13 @@ export interface ReviewFormData {
 export interface Review {
   id: string;
   name: string;
-  email?: string;
+  email?: string | null;
   rating: number;
   comment: string;
   status: ReviewStatus;
+  reviewedBy?: string | null;
+  reviewedById?: string | null;
+  reviewedAt?: string | null;
   createdAt: string;
-  reviewedAt?: string;
-  reviewedBy?: string;
+  updatedAt?: string | null;
 }

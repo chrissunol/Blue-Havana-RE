@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { appTestProviders } from '../../../testing/test-providers';
 
 import { TransactionModalComponent } from './transaction-modal.component';
 
@@ -8,7 +9,8 @@ describe('TransactionModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TransactionModalComponent]
+      imports: [TransactionModalComponent],
+      providers: appTestProviders
     })
     .compileComponents();
     

@@ -39,10 +39,29 @@ export class LanguageService {
   }
 
   translateText(text?: TranslatedText): string {
-  if (!text) return '';
+    if (!text) {
+      return '';
+    }
 
-  const lang = this.getCurrentLang();
+    const lang = this.getCurrentLang();
+    const currentTranslation = text[lang]?.trim();
 
-  return text[lang] || text.es;
-}
+    if (currentTranslation) {
+      return text[lang];
+    }
+
+    const fallbackLanguages: Language[] = [
+      'es',
+      'en',
+      'fr'
+    ];
+
+    const fallbackLanguage = fallbackLanguages.find(
+      language => text[language]?.trim()
+    );
+
+    return fallbackLanguage
+      ? text[fallbackLanguage]
+      : '';
+  }
 }

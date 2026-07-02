@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { appTestProviders } from '../../testing/test-providers';
 
 import { PublicLayoutComponent } from './public-layout.component';
 
@@ -8,7 +9,8 @@ describe('PublicLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PublicLayoutComponent]
+      imports: [PublicLayoutComponent],
+      providers: appTestProviders
     })
     .compileComponents();
     

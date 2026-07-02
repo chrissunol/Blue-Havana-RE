@@ -7,6 +7,8 @@ export interface CompanyInfo {
   facebook: string;
   instagram: string;
   x: string;
+  telegram: string;
+  youtube: string;
 
   originText: string;
   todayText: string;

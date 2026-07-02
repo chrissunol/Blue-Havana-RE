@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { appTestProviders } from '../../../testing/test-providers';
 
 import { ConfirmationModalComponent } from './confirmation-modal.component';
 
@@ -8,7 +9,8 @@ describe('ConfirmationModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ConfirmationModalComponent]
+      imports: [ConfirmationModalComponent],
+      providers: appTestProviders
     })
     .compileComponents();
     

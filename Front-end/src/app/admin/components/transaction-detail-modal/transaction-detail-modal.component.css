@@ -99,7 +99,7 @@
 }
 
 .transaction-detail__main-icon--rent {
-  color: var(--color-secundary);
+  color: var(--color-secondary);
   background: #e6f4dc;
 }
 
@@ -324,7 +324,7 @@
   padding: 0 22px;
 
   color: #ffffff;
-  background: var(--color-secundary);
+  background: var(--color-secondary);
 
   border: 0;
   border-radius: 10px;

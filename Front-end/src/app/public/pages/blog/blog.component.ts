@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import {
@@ -17,6 +17,8 @@ import {
   TranslateModule,
   TranslateService
 } from '@ngx-translate/core';
+
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import {
   BlogArticle,
@@ -50,7 +52,8 @@ interface BlogCategoryOption {
   templateUrl: './blog.component.html',
   styleUrl: './blog.component.css'
 })
-export class BlogComponent {
+export class BlogComponent implements OnInit {
+  private readonly destroyRef = inject(DestroyRef);
   readonly SearchIcon = Search;
   readonly CloseIcon = X;
   readonly ArrowRightIcon = ArrowRight;
@@ -89,19 +92,30 @@ export class BlogComponent {
     }
   ];
 
-  readonly articles: BlogArticle[];
+  articles: BlogArticle[] = [];
+  loadError = '';
 
   constructor(
     public readonly languageService: LanguageService,
     private readonly translateService: TranslateService,
     private readonly blogService: BlogService
-  ) {
-    /*
-     * En la página pública solo deben mostrarse
-     * los artículos publicados.
-     */
-    this.articles =
-      this.blogService.getPublishedArticles();
+  ) {}
+
+  ngOnInit(): void {
+    this.blogService
+      .getPublishedArticles()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: articles => {
+          this.articles = articles;
+          this.loadError = '';
+        },
+        error: error => {
+          console.error('No se pudieron cargar los artículos:', error);
+          this.articles = [];
+          this.loadError = 'No se pudieron cargar los artículos.';
+        },
+      });
   }
 
   get filteredArticles(): BlogArticle[] {

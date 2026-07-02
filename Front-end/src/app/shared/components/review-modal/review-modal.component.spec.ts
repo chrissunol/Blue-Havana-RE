@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { appTestProviders } from '../../../testing/test-providers';
 
 import { ReviewModalComponent } from './review-modal.component';
 
@@ -8,7 +9,8 @@ describe('ReviewModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReviewModalComponent]
+      imports: [ReviewModalComponent],
+      providers: appTestProviders
     })
     .compileComponents();
     
